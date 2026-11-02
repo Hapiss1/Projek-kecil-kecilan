@@ -115,3 +115,4 @@ export function DebugModeHUD({ debugMode, setDebugMode }) {
     </>
   );
 }
+

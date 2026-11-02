@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Lenis from 'lenis';
-import { Canvas } from '@react-three/fiber';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { portfolioData } from './data/portfolioData';
-import { ProceduralSceneRig } from './components/ProceduralHeroScene';
 import { HeroSection } from './components/HeroSection';
 import { Navbar } from './components/Navbar';
 import { ProjectsShowcase } from './components/ProjectsShowcase';
@@ -10,7 +10,8 @@ import { SkillsMatrix } from './components/SkillsMatrix';
 import { EducationTimeline } from './components/EducationTimeline';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
-import { Preloader } from './components/Preloader';
+import { CinematicPreloader } from './components/CinematicPreloader';
+import { FilmGrainOverlay } from './components/FilmGrainOverlay';
 import { CustomCursor } from './components/CustomCursor';
 import { DebugModeHUD } from './components/DebugModeHUD';
 import { soundEngine } from './utils/soundEngine';
@@ -31,8 +32,10 @@ export default function App() {
   const [preloaderDone, setPreloaderDone] = useState(false);
   const lenisRef = useRef(null);
 
-  // 1. Inisialisasi Global Smooth Inertia Scrolling & Sound Velocity Listener
+  // 1. Inisialisasi Global Smooth Inertia Scrolling & GSAP ScrollTrigger Integration
   useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential ease-out
@@ -45,9 +48,13 @@ export default function App() {
 
     lenisRef.current = lenis;
 
-    // Sinkronisasi kecepatan scroll dengan Web Audio ambient hum
+    // Sinkronisasi frame-perfect antara Lenis, ScrollTrigger, dan Velocity Skew
     lenis.on('scroll', (e) => {
+      ScrollTrigger.update();
       soundEngine.updateScrollHum(e.velocity);
+      // Sinkronisasi skew organik (maksimal 2.5 deg agar tidak mendistorsi keterbacaan)
+      const clampedSkew = Math.max(-2.5, Math.min(2.5, e.velocity * 0.04));
+      document.documentElement.style.setProperty('--scroll-skew', `${clampedSkew}deg`);
     });
 
     // Loop requestAnimationFrame
@@ -66,9 +73,12 @@ export default function App() {
   return (
     <div className={`portfolio-app-root ${debugMode ? 'debug-mode-active' : ''}`}>
       
+      {/* Global Cinematic Film Grain Overlay (Procedural SVG 0% GPU penalty) */}
+      <FilmGrainOverlay />
+
       {/* 1. Cinematic WebGL Curtain Preloader */}
       {!preloaderDone && (
-        <Preloader onComplete={() => setPreloaderDone(true)} />
+        <CinematicPreloader onComplete={() => setPreloaderDone(true)} />
       )}
 
       {/* 2. Magnetic Precision Custom Cursor */}
@@ -80,21 +90,6 @@ export default function App() {
         setDebugMode={setDebugMode} 
       />
 
-      {/* 4. R3F Procedural WebGL Canvas (Fixed Interactive Background) */}
-      <div className="webgl-canvas-fixed" aria-hidden="true">
-        <Canvas
-          camera={{ position: [0, 0, 5], fov: 45 }}
-          dpr={[1, 1.5]} // Clamped DPR untuk 60 FPS mobile
-          gl={{
-            antialias: true,
-            alpha: true,
-            powerPreference: 'high-performance',
-          }}
-        >
-          <ProceduralSceneRig debugMode={debugMode} />
-        </Canvas>
-      </div>
-
       {/* Persistent Floating HUD Navigation */}
       <Navbar 
         lang={lang} 
@@ -102,38 +97,41 @@ export default function App() {
         content={portfolioData} 
       />
 
-      {/* Main Editorial Content Flow */}
-      <main style={{ position: 'relative', zIndex: 2 }}>
-        {/* Hero Section */}
-        <HeroSection 
-          content={portfolioData} 
-          lang={lang} 
-        />
+      {/* Main Editorial Content Flow dengan Velocity Skew Responsive Transform */}
+      <div className="velocity-skew-wrap">
+        <main style={{ position: 'relative', zIndex: 2 }}>
+          {/* Hero Section dengan WebGL Typographic Masking */}
+          <HeroSection 
+            content={portfolioData} 
+            lang={lang} 
+            debugMode={debugMode}
+          />
 
-        {/* Selected Works dengan WebGL Liquid Distortion & Fluid Case Studies */}
-        <ProjectsShowcase 
-          lang={lang} 
-          content={portfolioData} 
-        />
+          {/* Selected Works dengan WebGL Liquid Distortion & Fluid Case Studies */}
+          <ProjectsShowcase 
+            lang={lang} 
+            content={portfolioData} 
+          />
 
-        {/* Swiss Technical Matrix */}
-        <SkillsMatrix 
-          lang={lang} 
-          content={portfolioData} 
-        />
+          {/* Swiss Technical Matrix */}
+          <SkillsMatrix 
+            lang={lang} 
+            content={portfolioData} 
+          />
 
-        {/* Academic Journey */}
-        <EducationTimeline 
-          lang={lang} 
-          content={portfolioData} 
-        />
+          {/* Academic Journey */}
+          <EducationTimeline 
+            lang={lang} 
+            content={portfolioData} 
+          />
 
-        {/* High-Impact Contact */}
-        <ContactSection 
-          lang={lang} 
-          content={portfolioData} 
-        />
-      </main>
+          {/* High-Impact Contact */}
+          <ContactSection 
+            lang={lang} 
+            content={portfolioData} 
+          />
+        </main>
+      </div>
 
       {/* Minimalist Footer */}
       <Footer 

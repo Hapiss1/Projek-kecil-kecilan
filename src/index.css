@@ -1,4 +1,32 @@
 /* ==========================================================================
+   CONTEXTUAL COLOR MORPHING REGISTERED PROPERTIES (W3C CSS Houdini)
+   ========================================================================== */
+
+@property --bg-ground {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #05080e;
+}
+
+@property --accent {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #38bdf8;
+}
+
+@property --accent-subtle {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: rgba(56, 189, 248, 0.12);
+}
+
+@property --accent-border {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: rgba(56, 189, 248, 0.28);
+}
+
+/* ==========================================================================
    ANTI-SLOP DESIGN SYSTEM & EDITORIAL CSS ARCHITECTURE
    Subject: Muhammad Hafizh Farsya Syahputra
    Identity: Telkom University Information Systems & SMK Telkom Banjarbaru RPL
@@ -46,6 +74,19 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+html,
+body,
+.portfolio-app-root,
+.hero-editorial-section,
+.projects-editorial-section,
+.skills-editorial-section,
+.timeline-editorial-section,
+.contact-editorial-section,
+.hero-mask-stage,
+.hero-typographic-mask-svg rect {
+  transition: background-color 0.85s cubic-bezier(0.16, 1, 0.3, 1), fill 0.85s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.85s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 html {
@@ -460,13 +501,344 @@ button {
   z-index: 15;
 }
 
-/* Large Typography Project List */
-.projects-editorial-list {
+/* ==========================================================================
+   ASYMMETRIC EDITORIAL SHOWCASE (HIGH-FASHION OVERLAP GRID)
+   ========================================================================== */
+
+.asymmetric-editorial-feed {
   display: flex;
   flex-direction: column;
-  border-top: 1px solid var(--border-subtle);
+  gap: clamp(70px, 12vh, 130px);
   position: relative;
   z-index: 3;
+}
+
+.project-asymmetric-card {
+  display: grid;
+  align-items: center;
+  gap: clamp(32px, 5vw, 64px);
+  position: relative;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Sibling Focus Dimming */
+.project-asymmetric-card.is-dimmed {
+  opacity: 0.28;
+  filter: grayscale(0.5);
+}
+
+.project-asymmetric-card.is-active {
+  opacity: 1;
+  filter: none;
+  transform: translateY(-4px);
+}
+
+/* Left-Heavy Asymmetry */
+.project-asymmetric-card.asymmetric-left {
+  grid-template-columns: 1.15fr 0.85fr;
+}
+
+.project-asymmetric-card.asymmetric-left .asymmetric-text-block {
+  order: 1;
+  margin-right: -36px;
+  z-index: 3;
+}
+
+.project-asymmetric-card.asymmetric-left .asymmetric-visual-frame {
+  order: 2;
+  z-index: 1;
+}
+
+/* Right-Shifted Asymmetry (Diagonal Visual Tension) */
+.project-asymmetric-card.asymmetric-right {
+  grid-template-columns: 0.85fr 1.15fr;
+}
+
+.project-asymmetric-card.asymmetric-right .asymmetric-visual-frame {
+  order: 1;
+  z-index: 1;
+}
+
+.project-asymmetric-card.asymmetric-right .asymmetric-text-block {
+  order: 2;
+  margin-left: -36px;
+  z-index: 3;
+}
+
+/* Text Block Editorial Styling */
+.asymmetric-text-block {
+  display: flex;
+  flex-direction: column;
+  background: rgba(8, 14, 24, 0.88);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+  padding: clamp(28px, 4vw, 44px);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-asymmetric-card:hover .asymmetric-text-block {
+  border-color: rgba(56, 189, 248, 0.35);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+}
+
+.asymmetric-meta-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.asymmetric-index {
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.asymmetric-category-pill {
+  color: #94a3b8;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.asymmetric-tag-pill {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.asymmetric-project-title {
+  font-size: clamp(1.8rem, 3.2vw, 2.75rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--text-ink);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  transition: color 0.25s ease;
+}
+
+.project-asymmetric-card:hover .asymmetric-project-title {
+  color: var(--accent);
+}
+
+.asymmetric-project-headline {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+.asymmetric-project-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.asymmetric-highlights-box {
+  background: rgba(2, 6, 12, 0.5);
+  border-left: 2px solid var(--accent);
+  padding: 14px 16px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-bottom: 24px;
+}
+
+.asymmetric-highlights-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.asymmetric-highlight-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.88rem;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+.highlight-bullet {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.asymmetric-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.asymmetric-stack-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.asymmetric-stack-badge {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #94a3b8;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+}
+
+.asymmetric-cta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--accent);
+  transition: transform 0.25s ease;
+}
+
+.project-asymmetric-card:hover .asymmetric-cta-pill {
+  transform: translateX(4px);
+}
+
+/* Overlapping Visual Frame */
+.asymmetric-visual-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: #020612;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.project-asymmetric-card:hover .asymmetric-visual-frame {
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+
+.asymmetric-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.asymmetric-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+}
+
+.project-asymmetric-card:hover .asymmetric-preview-img {
+  transform: scale(1.05);
+}
+
+.asymmetric-frame-chrome {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+  background: linear-gradient(180deg, rgba(2, 6, 12, 0.75) 0%, rgba(2, 6, 12, 0.2) 50%, rgba(2, 6, 12, 0.85) 100%);
+  pointer-events: none;
+}
+
+.chrome-meta-top, .chrome-meta-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #64748b;
+  font-size: 0.75rem;
+}
+
+.chrome-center-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #38bdf8;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.project-asymmetric-card:hover .chrome-center-hint {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Monospace 10px Micro-Copy Chip on Magnetic Cursor */
+.cursor-microcopy-badge {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 100001;
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #38bdf8;
+  background: rgba(5, 8, 14, 0.92);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm, 3px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.cursor-microcopy-badge.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Mobile Breakpoint for Asymmetric Layout */
+@media (max-width: 900px) {
+  .project-asymmetric-card.asymmetric-left,
+  .project-asymmetric-card.asymmetric-right {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .project-asymmetric-card.asymmetric-left .asymmetric-text-block,
+  .project-asymmetric-card.asymmetric-right .asymmetric-text-block {
+    order: 2;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .project-asymmetric-card.asymmetric-left .asymmetric-visual-frame,
+  .project-asymmetric-card.asymmetric-right .asymmetric-visual-frame {
+    order: 1;
+  }
 }
 
 .project-editorial-row {
@@ -1227,14 +1599,99 @@ button {
   z-index: 1 !important;
 }
 
+/* ==========================================================================
+   WEBGL TYPOGRAPHIC MASKING HERO SECTION
+   ========================================================================== */
+
 .hero-editorial-section {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   position: relative;
   z-index: 2;
-  padding: clamp(110px, 16vh, 180px) 0 80px;
+  padding: clamp(90px, 11vh, 130px) 0 36px;
+}
+
+.hero-fullscreen-stage {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Typographic Mask Stage Container */
+.hero-mask-stage {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  aspect-ratio: 1200 / 460;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background: var(--bg-ground, #05080e);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.4);
+}
+
+.hero-webgl-canvas-box {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-typographic-mask-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+  display: block;
+}
+
+.mask-stroke-line {
+  transition: stroke 0.35s ease, opacity 0.35s ease;
+}
+
+.hero-mask-stage:hover .mask-stroke-line {
+  stroke: rgba(56, 189, 248, 0.45);
+}
+
+.hero-role-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0 16px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.editorial-role-tag {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.editorial-role-line {
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 1.8vw, 1.35rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-ink);
+  text-transform: uppercase;
+}
+
+.hero-scroll-hint {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 24px;
 }
 
 .hero-editorial-inner {
@@ -1359,6 +1816,16 @@ button {
 }
 
 @media (max-width: 768px) {
+  .hero-mask-stage {
+    min-height: 180px;
+  }
+  
+  .hero-editorial-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
   .hero-bottom-row {
     grid-template-columns: 1fr;
     gap: 24px;
@@ -1368,6 +1835,35 @@ button {
     justify-content: flex-start;
     flex-wrap: wrap;
   }
+}
+
+/* ==========================================================================
+   GLOBAL FILM GRAIN OVERLAY & VELOCITY SKEW
+   ========================================================================== */
+
+.global-film-grain-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 99998;
+  opacity: 0.055;
+  mix-blend-mode: overlay;
+  overflow: hidden;
+}
+
+.film-grain-svg-filter {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Velocity Skew Responsive Element */
+.velocity-skew-wrap {
+  will-change: transform;
+  transform: skewY(var(--scroll-skew, 0deg));
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ==========================================================================

@@ -219,3 +219,4 @@ export function ProjectCaseStudyModal({ project, lang = 'id', onClose }) {
     </div>
   );
 }
+

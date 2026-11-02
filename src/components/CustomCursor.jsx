@@ -1,19 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 /**
- * CustomCursor Component (Magnetic Precision Cursor)
+ * CustomCursor Component (Magnetic Precision Cursor + Monospace Micro-Copy)
  * 
  * Fitur:
  * 1. Double cursor: Core dot + Inverted follower ring dengan `mix-blend-mode: difference`.
- * 2. Magnetic Pull: Menghitung jarak Euclidean ke elemen interaktif (tombol/baris proyek).
+ * 2. Magnetic Pull: Menghitung jarak Euclidean ke elemen interaktif (tombol/kartu proyek).
  *    Saat berada dalam radius pengaruh, kursor secara elastis tertarik ke pusat elemen.
- * 3. Dynamic Cursor Scaling & Context Label ("VIEW", "EXPLORE").
+ * 3. Dynamic Monospace Micro-Copy: Membaca atribut `data-cursor-meta` (misal: `[Stack: React/Flutter] — [2026]`)
+ *    dan merendernya dalam lencana monospace 10px yang melayang mengikuti posisi kursor.
  * 4. Otomatis dinonaktifkan pada perangkat sentuh (touchscreen) demi kenyamanan pengguna.
  */
 export function CustomCursor() {
   const dotRef = useRef(null);
   const ringRef = useRef(null);
+  const badgeRef = useRef(null);
   const [cursorText, setCursorText] = useState('');
+  const [cursorMeta, setCursorMeta] = useState('');
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -27,6 +30,8 @@ export function CustomCursor() {
     let mouseY = -100;
     let ringX = -100;
     let ringY = -100;
+    let badgeX = -100;
+    let badgeY = -100;
     let animationFrameId;
 
     const onMouseMove = (e) => {
@@ -40,9 +45,9 @@ export function CustomCursor() {
         dotRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
       }
 
-      // Deteksi elemen interaktif terdekat untuk efek magnetik
+      // Deteksi elemen interaktif terdekat untuk efek magnetik & micro-copy
       const target = document.elementFromPoint(mouseX, mouseY);
-      const interactiveEl = target?.closest('a, button, .project-editorial-row, [data-magnetic]');
+      const interactiveEl = target?.closest('a, button, .project-asymmetric-card, .project-editorial-row, [data-magnetic], [data-cursor-meta]');
 
       if (interactiveEl) {
         setIsHovered(true);
@@ -53,14 +58,22 @@ export function CustomCursor() {
         // Vektor jarak ke pusat elemen
         const dist = Math.hypot(centerX - mouseX, centerY - mouseY);
 
-        if (dist < 80) {
+        if (dist < 90) {
           // Magnetic snapping: tarik ring ke arah pusat elemen
           mouseX = centerX + (mouseX - centerX) * 0.35;
           mouseY = centerY + (mouseY - centerY) * 0.35;
         }
 
-        // Tampilkan label kontekstual jika pada baris proyek
-        if (interactiveEl.classList.contains('project-editorial-row')) {
+        // Baca micro-copy khusus proyek jika tersedia
+        const metaText = interactiveEl.getAttribute('data-cursor-meta');
+        if (metaText) {
+          setCursorMeta(metaText);
+        } else {
+          setCursorMeta('');
+        }
+
+        // Tampilkan label kontekstual ring
+        if (interactiveEl.classList.contains('project-asymmetric-card') || interactiveEl.classList.contains('project-editorial-row')) {
           setCursorText('VIEW');
         } else {
           setCursorText('');
@@ -68,6 +81,7 @@ export function CustomCursor() {
       } else {
         setIsHovered(false);
         setCursorText('');
+        setCursorMeta('');
       }
     };
 
@@ -75,13 +89,20 @@ export function CustomCursor() {
       setIsVisible(false);
     };
 
-    // Loop animasi lerp (Linear Interpolation) untuk kelancaran cincin pengikut
+    // Loop animasi lerp (Linear Interpolation) untuk kelancaran cincin & micro-copy pengikut
     const render = () => {
       ringX += (mouseX - ringX) * 0.18;
       ringY += (mouseY - ringY) * 0.18;
 
+      badgeX += (mouseX - badgeX) * 0.12;
+      badgeY += (mouseY - badgeY) * 0.12;
+
       if (ringRef.current) {
         ringRef.current.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
+      }
+
+      if (badgeRef.current) {
+        badgeRef.current.style.transform = `translate3d(${badgeX + 24}px, ${badgeY + 24}px, 0)`;
       }
 
       animationFrameId = requestAnimationFrame(render);
@@ -118,6 +139,15 @@ export function CustomCursor() {
             {cursorText}
           </span>
         )}
+      </div>
+
+      {/* 3. Dynamic Monospace 10px Micro-Copy Chip */}
+      <div
+        ref={badgeRef}
+        className={`cursor-microcopy-badge ${isVisible && cursorMeta ? 'is-active' : ''}`}
+        aria-hidden="true"
+      >
+        {cursorMeta}
       </div>
     </>
   );

@@ -1,27 +1,26 @@
-# Architectural Blueprint: Awwwards-Level Procedural 3D WebGL Portfolio
+# Architectural Blueprint: Editorial, Tactile & Cinematic 3D Portfolio
 ## Muhammad Hafizh Farsya — Creative Developer & Systems Architect
 
-> **Vision**: Portofolio 3D interaktif berstandar Awwwards SOTD untuk calon Software Engineer & Mahasiswa Sistem Informasi.  
-> **Aesthetic Tone**: *Clean, Intentional, High Technical Depth* (Anti-Slop, Deep Midnight `#080C14` & Ice Blue `#7DD3FC`, Swiss Editorial Typography, 60fps Mobile Performance).  
-> **Tech Stack**: React 18 (Vite), Three.js & React Three Fiber (`@react-three/fiber` v8, `@react-three/drei` v9), GSAP v3, Lenis, Web Audio API.
+> **Art Direction**: *Editorial, Tactile, dan Cinematic* (Awwwards SOTD / FWA Standards).  
+> **Core Pillars**: Typographic Masking, Asymmetric High-Fashion Editorial Layout, Film Grain Texture, Contextual Color Morphing, Bespoke Easing & Scroll Velocity Skew.  
+> **Tech Stack**: React 18 (Vite), Three.js & React Three Fiber (R3F v8), GSAP v3, Lenis.
 
 ---
 
 ## 1. Architectural Decisions (ADR)
 | Decision | Rationale |
 |---|---|
-| **Cinematic WebGL Preloader** | Loading screen editorial minimalis 0%-100% yang menyembunyikan kompilasi shader WebGL dan membuka tirai transisi via GSAP (`power4.inOut`). |
-| **Magnetic Custom Cursor** | Kursor presisi tinggi dengan `mix-blend-mode: difference` dan kalkulasi vektor jarak untuk daya tarik magnetis pada tautan & baris proyek. |
-| **Engineering / Debug Mode** | Mode hacker-style monokromatik (`#030704` & `#10B981`), memicu wireframe 3D murni dan FPS telemetry counter untuk memukau senior engineer. |
-| **Micro-Audio Sound Design (Web Audio API)** | Sintesis suara prosedural murni menggunakan `AudioContext` (0 KB audio file download) untuk ketukan mekanis subtil dan ambient hum responsif terhadap scroll velocity. |
-| **Fluid Case Study Page Transition** | Transisi layar penuh tanpa reload kasar dengan transisi gelombang cairan WebGL menuju studi kasus arsitektur mendalam. |
+| **Global Film Grain Overlay** | Tekstur film grain SVG statis beresolusi tinggi pada layer z-index teratas dengan `pointer-events: none` dan `mix-blend-mode: overlay` untuk memberikan sensasi taktil seperti kertas cetak/majalah analog. |
+| **Bespoke Cubic Easing & Velocity Tracking** | Menggantikan ease standar dengan kurva bespoke `cubic-bezier(0.16, 1, 0.3, 1)` dan menghubungkan kecepatan inersia Lenis (`e.velocity`) ke transformasi skew UI (`transform: skewY(...)`). |
+| **Cinematic Curtain Preloader** | Hitungan persentase monospaced 0%-100% yang menyembunyikan inisialisasi shader & WebGL, diakhiri dengan tarikan tirai teater GSAP yang mulus tanpa lag. |
+| **Typographic Masking Hero (Next Iteration)** | Teks nama raksasa dengan `background-clip: text` atau WebGL render target mask, sehingga objek 3D interaktif hanya terlihat di dalam rongga huruf. |
+| **Asymmetric Editorial Layout (Next Iteration)** | Grid asimetris ala majalah editorial high-fashion dengan teks dan visual yang saling overlap secara harmonis. |
 
 ---
 
-## 2. Phased Roadmap
-- [x] **Phase 1: Project Setup & Core Dependencies** (Vite, R3F v8, Drei v9, GSAP v3, Lenis, DPR management)
-- [x] **Phase 2: Core Foundation & Hero Section** (`App.jsx` + R3F Canvas + Procedural Mesh + GSAP Reveal)
-- [x] **Phase 3: WebGL Liquid Distortion Project Showcase** (Editorial Typography list + Floating WebGL Image Displacement Shader + Architectural Drawer)
-- [x] **Phase 4: Skills Matrix & Academic Track** (Editorial Data Layout, Zero dead code, GSAP Staggered Scroll Reveals)
-- [x] **Phase 5: High-Impact Direct Contact HUD, Zero Dead Code Cleanup & Production Verification**
-- [/] **Phase 6: Awwwards Polish: Preloader, Magnetic Cursor, Debug Mode, Micro-Audio & Fluid Transitions** `[CURRENT FOCUS]`
+## 2. Iteration Roadmap
+- [/] **Iteration 1: Foundation, Lenis Scroll, Cinematic Preloader, & Global Film Grain Overlay** `[CURRENT FOCUS]`
+- [ ] **Iteration 2: Typographic Masking Hero Section with Procedural R3F WebGL**
+- [ ] **Iteration 3: Asymmetric Editorial Showcase & Liquid Ripple Shader with Magnetic Micro-Copy**
+- [ ] **Iteration 4: Contextual Color Morphing on Scroll (GSAP ScrollTrigger)**
+- [ ] **Iteration 5: Performance Verification & 60 FPS Mobile Audit**
