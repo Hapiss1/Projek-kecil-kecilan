@@ -1,94 +1,66 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { 
   Globe, 
   Smartphone, 
-  Database, 
+  Layers, 
   PenTool, 
-  Users, 
-  MessageCircle, 
-  Sparkles, 
-  CheckCircle,
-  Languages
+  CheckCircle, 
+  Languages as LangIcon,
+  Users,
+  Compass
 } from 'lucide-react';
 
+/**
+ * SkillsMatrix Component (Swiss Editorial Clean Data Presentation)
+ * 
+ * Groups competencies into 4 core software engineering domains:
+ * 1. Web & Backend Engineering (PHP, Laravel, CI4, Python, Flask, JS, HTML/CSS)
+ * 2. Mobile & Cloud Engineering (Flutter, Dart, Firebase, MySQL)
+ * 3. Enterprise Systems & BPM (BPM, ERP, Teaching Assistant)
+ * 4. UI/UX Design & Tooling (Figma, Canva, Git/GitHub)
+ */
 export function SkillsMatrix({ lang, content }) {
   const { skillCategories, softSkills, languages } = content;
-  const [activeCategory, setActiveCategory] = useState('all');
 
-  const domainIcons = {
-    "Pengembangan Web": Globe,
-    "Pengembangan Mobile": Smartphone,
-    "Basis Data & Cloud": Database,
-    "Desain & Prototyping": PenTool
-  };
-
-  const filteredCategories = activeCategory === 'all' 
-    ? skillCategories 
-    : skillCategories.filter((_, idx) => idx.toString() === activeCategory);
+  const domainIcons = [Globe, Smartphone, Layers, PenTool];
 
   return (
     <section id="keahlian" className="skills-section">
       <div className="container">
         
-        {/* Section Headline */}
-        <div className="section-head-wrap">
+        {/* Section Header */}
+        <div className="section-head">
           <h2 className="section-headline">
-            {lang === 'id' ? "Keahlian Teknis & Domain Kerja" : "Technical Skills & Competencies"}
+            {lang === 'id' ? "Matriks Keahlian & Sistem Enterprise" : "Technical Matrix & Enterprise Systems"}
           </h2>
-          <p className="section-lead">
+          <p className="section-sub">
             {lang === 'id'
-              ? "Kombinasi kemampuan pengembangan software web, mobile cross-platform, manajemen basis data, serta kolaborasi tim."
-              : "A versatile suite of technical competencies spanning fullstack web, cross-platform mobile, databases, and proactive teamwork."}
+              ? "Kombinasi kompetensi rekayasa perangkat lunak fullstack, aplikasi mobile cross-platform, pemahaman arsitektur proses bisnis (BPM & ERP), serta peran aktif sebagai asisten praktikum kampus."
+              : "A comprehensive stack spanning fullstack backend, cross-platform mobile, enterprise business process management (BPM & ERP), and academic lab leadership."}
           </p>
         </div>
 
-        {/* Category Filter Tabs */}
-        <div className="skills-filter-nav">
-          <button
-            type="button"
-            className={`filter-pill ${activeCategory === 'all' ? 'active' : ''}`}
-            onClick={() => setActiveCategory('all')}
-          >
-            {lang === 'id' ? "Semua Bidang" : "All Domains"}
-          </button>
-          {skillCategories.map((cat, idx) => (
-            <button
-              key={idx}
-              type="button"
-              className={`filter-pill ${activeCategory === idx.toString() ? 'active' : ''}`}
-              onClick={() => setActiveCategory(idx.toString())}
-            >
-              {cat.domain[lang]}
-            </button>
-          ))}
-        </div>
-
-        {/* Technical Skills Grid */}
-        <div className="skills-domain-grid">
-          {filteredCategories.map((cat, catIdx) => {
-            const IconComp = domainIcons[cat.domain.id] || Globe;
+        {/* 4-Domain Grid */}
+        <div className="skills-domains-grid">
+          {skillCategories.map((domainItem, idx) => {
+            const IconComponent = domainIcons[idx] || Globe;
             return (
-              <div key={catIdx} className="domain-card">
-                <div className="domain-header">
-                  <div className="domain-icon-wrapper">
-                    <IconComp size={20} />
-                  </div>
-                  <div>
-                    <h3 className="domain-title">{cat.domain[lang]}</h3>
-                    <p className="domain-desc">{cat.description[lang]}</p>
-                  </div>
+              <div key={idx} className="domain-card">
+                <div className="domain-card-head">
+                  <IconComponent size={20} className="domain-icon" />
+                  <h3 className="domain-name">{domainItem.domain[lang]}</h3>
                 </div>
 
-                <div className="skills-items-list">
-                  {cat.skills.map((skill, sIdx) => (
-                    <div key={sIdx} className="skill-item-row">
-                      <div className="skill-main-info">
-                        <span className="skill-name">{skill.name}</span>
-                        <span className="skill-badge">{skill.badge}</span>
+                <div className="skills-chips-wrap">
+                  {domainItem.skills.map((skill, sIdx) => (
+                    <div key={sIdx} className="skill-chip-row">
+                      <div>
+                        <div className="skill-name">{skill.name}</div>
+                        <div style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '2px' }}>
+                          {skill.detail}
+                        </div>
                       </div>
-                      <div className="skill-detail-text">
-                        {skill.detail}
-                      </div>
+                      <span className="skill-badge">{skill.level}</span>
                     </div>
                   ))}
                 </div>
@@ -97,59 +69,55 @@ export function SkillsMatrix({ lang, content }) {
           })}
         </div>
 
-        {/* Soft Skills & Languages Split Grid */}
-        <div className="soft-skills-and-lang-grid">
+        {/* Soft Skills & Languages Split Section */}
+        <div style={{ marginTop: '56px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
           
           {/* Soft Skills */}
-          <div className="soft-skills-panel">
-            <div className="panel-title-row">
-              <Users size={18} className="panel-icon" />
-              <h3 className="panel-title">
-                {lang === 'id' ? "Karakter & Soft Skill" : "Soft Skills & Teamwork"}
+          <div className="domain-card">
+            <div className="domain-card-head">
+              <Users size={18} className="domain-icon" />
+              <h3 className="domain-name">
+                {lang === 'id' ? "Etos Kerja & Kolaborasi" : "Work Ethic & Collaboration"}
               </h3>
             </div>
-            <div className="soft-skills-list">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
               {softSkills.map((s, idx) => (
-                <div key={idx} className="soft-skill-item">
-                  <div className="soft-skill-head">
-                    <CheckCircle size={16} className="soft-check" />
-                    <h4 className="soft-skill-name">{s.name[lang]}</h4>
+                <div key={idx}>
+                  <div style={{ fontSize: '0.85rem', fontWeight: '700', color: '#f8fafc', marginBottom: '3px' }}>
+                    {s.name[lang]}
                   </div>
-                  <p className="soft-skill-desc">{s.desc[lang]}</p>
+                  <div style={{ fontSize: '0.8rem', color: '#94a3b8', lineHeight: '1.5' }}>
+                    {s.desc[lang]}
+                  </div>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Languages */}
-          <div className="languages-panel">
-            <div className="panel-title-row">
-              <Languages size={18} className="panel-icon" />
-              <h3 className="panel-title">
-                {lang === 'id' ? "Kemampuan Bahasa" : "Languages"}
+          <div className="domain-card">
+            <div className="domain-card-head">
+              <LangIcon size={18} className="domain-icon" />
+              <h3 className="domain-name">
+                {lang === 'id' ? "Kemampuan Bahasa" : "Language Proficiency"}
               </h3>
             </div>
-            <div className="languages-list">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
               {languages.map((l, idx) => (
-                <div key={idx} className="language-item-card">
-                  <div className="lang-badge-pill">{l.badge}</div>
-                  <div className="lang-info">
-                    <div className="lang-name">{l.language[lang]}</div>
-                    <div className="lang-level">{l.proficiency[lang]}</div>
+                <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-ground)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', padding: '12px 14px' }}>
+                  <div>
+                    <div style={{ fontSize: '0.9rem', fontWeight: '700', color: '#f8fafc' }}>
+                      {l.language[lang]}
+                    </div>
+                    <div style={{ fontSize: '0.8rem', color: '#94a3b8' }}>
+                      {l.proficiency[lang]}
+                    </div>
                   </div>
+                  <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#7dd3fc', background: 'rgba(125,211,252,0.12)', padding: '4px 10px', borderRadius: '4px', fontFamily: 'var(--font-mono)' }}>
+                    {l.badge}
+                  </span>
                 </div>
               ))}
-            </div>
-
-            <div className="internship-readiness-box">
-              <div className="readiness-title">
-                {lang === 'id' ? "Kesiapan Praktik Kerja Lapangan (PKL)" : "Internship Availability"}
-              </div>
-              <p className="readiness-desc">
-                {lang === 'id'
-                  ? "Siap bergabung dengan tim engineering industri, beradaptasi dengan alur kerja Git, task ticketing, dan kultur kerja profesional."
-                  : "Prepared to integrate into industrial engineering teams, adapting swiftly to Git workflows, issue ticketing, and engineering rigor."}
-              </p>
             </div>
           </div>
 
@@ -159,4 +127,3 @@ export function SkillsMatrix({ lang, content }) {
     </section>
   );
 }
-
