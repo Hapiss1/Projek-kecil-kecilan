@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" fill="none">
+  <rect width="1200" height="800" fill="#080C14"/>
+  <rect x="40" y="40" width="1120" height="720" rx="16" fill="#101726" stroke="#1E293B" stroke-width="2"/>
+  
+  <!-- Header Bar -->
+  <rect x="40" y="40" width="1120" height="64" rx="16" fill="#162032"/>
+  <circle cx="80" cy="72" r="6" fill="#EF4444"/>
+  <circle cx="104" cy="72" r="6" fill="#F59E0B"/>
+  <circle cx="128" cy="72" r="6" fill="#10B981"/>
+  <text x="160" y="77" fill="#94A3B8" font-family="monospace" font-size="14" letter-spacing="1">FLUTTER SYSTEM // CROSS-PLATFORM MOBILE ECOSYSTEM</text>
+  <rect x="960" y="58" width="160" height="28" rx="6" fill="#0284C7"/>
+  <text x="980" y="76" fill="#FFFFFF" font-family="sans-serif" font-size="12" font-weight="700">FLUTTER 3 · DART</text>
+
+  <!-- Left: Smartphone Device Mockup Frame -->
+  <rect x="120" y="140" width="320" height="580" rx="36" fill="#0D1322" stroke="#38BDF8" stroke-width="2"/>
+  <!-- Phone Notch & Speaker -->
+  <rect x="220" y="155" width="120" height="20" rx="10" fill="#162032"/>
+  
+  <!-- App Screen Header inside Mockup -->
+  <text x="150" y="215" fill="#F8FAFC" font-family="sans-serif" font-size="20" font-weight="800">Field Telematics</text>
+  <text x="150" y="235" fill="#7DD3FC" font-family="monospace" font-size="12">BANDUNG HUB · ONLINE</text>
+  
+  <!-- Mobile Card 1 -->
+  <rect x="145" y="260" width="270" height="90" rx="12" fill="#162032" stroke="#334155"/>
+  <text x="165" y="295" fill="#38BDF8" font-family="sans-serif" font-size="14" font-weight="700">Real-Time Sync</text>
+  <text x="165" y="320" fill="#94A3B8" font-family="sans-serif" font-size="12">Cloud Firestore bidirectional stream</text>
+  <circle cx="385" cy="305" r="8" fill="#10B981"/>
+
+  <!-- Mobile Card 2 -->
+  <rect x="145" y="365" width="270" height="110" rx="12" fill="#162032" stroke="#334155"/>
+  <text x="165" y="400" fill="#38BDF8" font-family="sans-serif" font-size="14" font-weight="700">Offline-First Cache</text>
+  <text x="165" y="425" fill="#94A3B8" font-family="sans-serif" font-size="12">SQLite + Hive persistent store with auto merge conflict resolver.</text>
+
+  <!-- Mobile Floating Action Bar -->
+  <rect x="145" y="620" width="270" height="60" rx="30" fill="#0284C7"/>
+  <text x="215" y="656" fill="#FFFFFF" font-family="sans-serif" font-size="14" font-weight="700">SYNCHRONIZE (60 FPS)</text>
+
+  <!-- Right: Technical Architecture Breakdown -->
+  <rect x="490" y="140" width="630" height="580" rx="12" fill="#0D1322" stroke="#1E293B"/>
+  <text x="520" y="180" fill="#7DD3FC" font-family="monospace" font-size="13" font-weight="700">ARCHITECTURE DIAGRAM // BLOC PATTERN</text>
+  <text x="520" y="215" fill="#F8FAFC" font-family="sans-serif" font-size="22" font-weight="800">Reactive State &amp; Clean Layering</text>
+
+  <!-- Bloc Stream Flow -->
+  <rect x="520" y="250" width="170" height="90" rx="8" fill="#162032" stroke="#334155"/>
+  <text x="540" y="285" fill="#7DD3FC" font-family="monospace" font-size="13" font-weight="700">UI / WIDGET</text>
+  <text x="540" y="315" fill="#94A3B8" font-family="sans-serif" font-size="12">Dispatches Events</text>
+
+  <text x="705" y="300" fill="#38BDF8" font-family="monospace" font-size="20">&gt;&gt;</text>
+
+  <rect x="740" y="250" width="170" height="90" rx="8" fill="#162032" stroke="#0284C7" stroke-width="1.5"/>
+  <text x="760" y="285" fill="#38BDF8" font-family="monospace" font-size="13" font-weight="700">BLOC ENGINE</text>
+  <text x="760" y="315" fill="#94A3B8" font-family="sans-serif" font-size="12">Transforms States</text>
+
+  <text x="925" y="300" fill="#38BDF8" font-family="monospace" font-size="20">&gt;&gt;</text>
+
+  <rect x="960" y="250" width="130" height="90" rx="8" fill="#162032" stroke="#334155"/>
+  <text x="975" y="285" fill="#10B981" font-family="monospace" font-size="13" font-weight="700">DATA / API</text>
+  <text x="975" y="315" fill="#94A3B8" font-family="sans-serif" font-size="12">REST / Firebase</text>
+
+  <!-- Dart Code Snippet Card -->
+  <rect x="520" y="370" width="570" height="210" rx="8" fill="#162032" stroke="#1E293B"/>
+  <text x="545" y="405" fill="#38BDF8" font-family="monospace" font-size="13">class DataBloc extends Bloc&lt;DataEvent, DataState&gt; {</text>
+  <text x="565" y="435" fill="#F8FAFC" font-family="monospace" font-size="13">  DataBloc(this.repository) : super(DataInitial()) {</text>
+  <text x="585" y="465" fill="#7DD3FC" font-family="monospace" font-size="13">    on&lt;FetchData&gt;((event, emit) async {</text>
+  <text x="605" y="495" fill="#94A3B8" font-family="monospace" font-size="13">      emit(DataLoading());</text>
+  <text x="605" y="525" fill="#10B981" font-family="monospace" font-size="13">      final result = await repository.loadTelemetry();</text>
+  <text x="605" y="555" fill="#94A3B8" font-family="monospace" font-size="13">      emit(DataSuccess(result));</text>
+  <text x="565" y="575" fill="#F8FAFC" font-family="monospace" font-size="13">    });</text>
+  <text x="545" y="595" fill="#38BDF8" font-family="monospace" font-size="13">}</text>
+
+  <!-- Performance Badge -->
+  <rect x="520" y="605" width="220" height="45" rx="6" fill="#10B981"/>
+  <text x="540" y="633" fill="#080C14" font-family="sans-serif" font-size="13" font-weight="800">120 FPS FLUTTER ENGINE</text>
+</svg>

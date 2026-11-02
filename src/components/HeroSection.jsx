@@ -104,3 +104,4 @@ export function HeroSection({ content, lang = 'id' }) {
     </section>
   );
 }
+

@@ -71,6 +71,7 @@ export const portfolioData = {
   projects: [
     {
       id: "ecommerce-platform",
+      image: "/projects/ecommerce.svg",
       title: {
         id: "Website E-Commerce Multi-Kategori",
         en: "Multi-Category E-Commerce Platform"
@@ -163,6 +164,7 @@ export const portfolioData = {
     },
     {
       id: "prestasi-siswa",
+      image: "/projects/portal-prestasi.svg",
       title: {
         id: "Website Dokumentasi Prestasi Siswa",
         en: "Student Achievement Documentation Portal"
@@ -237,6 +239,7 @@ export const portfolioData = {
     },
     {
       id: "mobile-portfolio",
+      image: "/projects/flutter-mobile.svg",
       title: {
         id: "Aplikasi Portofolio Digital Mobile",
         en: "Mobile Developer Portfolio Application"
@@ -303,6 +306,7 @@ export const portfolioData = {
     },
     {
       id: "python-logic",
+      image: "/projects/python-automation.svg",
       title: {
         id: "Logika Pemrograman & Algoritma Python",
         en: "Python Algorithms & Logic Implementation"
