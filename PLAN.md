@@ -1,65 +1,39 @@
-# Project Blueprint & Architecture Plan — Portfolio Muhammad Hafizh Farsya Syahputra
+# Architectural Blueprint: Awwwards-Level Anti-Slop 3D Portfolio
+## Muhammad Hafizh Farsya Syahputra — Information Systems (Telkom University) & RPL Alumnus (SMK Telkom Banjarbaru)
 
-> **Note**: This file represents the strategic, architectural, and design decisions of the project. It acts as long-term memory to prevent drift and ensure consistency.
+> **Status**: Completed & Verified (Sprint 1 to 4 fully implemented)  
+> **Repository**: [https://github.com/Hapiss1/Projek-kecil-kecilan](https://github.com/Hapiss1/Projek-kecil-kecilan)
 
 ---
 
 ## 1. Project Overview & Scope
-- **Project Name**: Hafizh Farsya Portfolio — Software Engineering & Digital Solutions
-- **Vision**: Website portofolio personal kelas dunia untuk Muhammad Hafizh Farsya Syahputra (siswa Rekayasa Perangkat Lunak SMK Telkom Banjarbaru). Menampilkan profil, proyek nyata sekolah, stack teknologi (Flutter, Laravel, MySQL, Firebase), dan kesiapan menghadapi Praktik Kerja Lapangan (PKL) industri.
-- **Surface Mode**: Experience & Persuade (Memikat recruiter industri dan pembimbing PKL dengan eksekusi teknis presisi dan interaktivitas nyata).
-- **Primary User Action**: Menjelajahi proyek nyata secara interaktif dan menghubungi Hafizh langsung untuk tawaran PKL/proyek via WhatsApp/Email.
+- **Subject**: Muhammad Hafizh Farsya Syahputra — Mahasiswa S1 Sistem Informasi (Telkom University, 2026) & Alumni Rekayasa Perangkat Lunak (SMK Telkom Banjarbaru, 2023-2026).
+- **Surface Mode**: **Experience & Persuade** (Portfolio calon software engineer profesional, asisten praktikum Algoritma, dan praktisi sistem informasi enterprise).
+- **Visual Identity**: **Deep Night Navy & Ice Blue** (`#080C14` / `#7DD3FC`).
+- **Core Invariant**: Anti-Slop (No pill kickers, Two-Line headline rule, Swiss editorial typography, tone-step surfaces, no generic 3-card rows, zero purple SaaS gradients).
 
 ---
 
-## 2. Technical Architecture & Invariants
-- **Core Stack**: React 18 / 19, Vite, Lucide React (ikon SVG authored, bebas emoji slop), CSS Custom Properties (Design Tokens terpusat).
-- **Styling Methodology**: Strict tokenized CSS architecture (`src/index.css`) dengan high contrast editorial aesthetics, fluid responsive layout, dan tone-step depth tanpa border hairlines generik.
-- **State Management & Data Flow**: React state terdistribusi, stateful interactive workbench, tab navigasi proyek, dan bilingual content engine (ID / EN).
-- **Hard Technical Invariants**:
-  - Invariant 1: No external CSS frameworks (no bootstrap/tailwind bloat) — murni custom modern CSS tokens dengan performa kilat dan arsitektur rapi.
-  - Invariant 2: Semantic HTML5 elements (`<header>`, `<main>`, `<section>`, `<article>`, `<nav>`, `<footer>`) dengan ARIA accessibility lengkap.
-  - Invariant 3: Zero console errors, zero lint warnings, audit lulus responsive di Desktop (1440px), Tablet (768px), dan Mobile (390px).
-  - Invariant 4: Patuhi aturan Anti-Slop (headline ≤ 2 baris, tanpa pill kickers/eyebrows, tanpa gradien ungu SaaS, tanpa fake monospace).
+## 2. Technical Architecture
+1. **WebGL 3D Canvas**: Vanilla Three.js (`Background3DCanvas.jsx`) rendering a procedural wireframe icosahedron crystal with mouse inertia tilt (lerp 0.05), scroll camera travel, and visibility pause.
+2. **Smooth Scroll Engine**: Lenis (`SmoothScrollProvider.jsx`) running a 60 FPS rAF loop with exponential ease-out curve.
+3. **Showcase Layout**: Sticky Depth Stacking (`ProjectsShowcase.jsx`) with 4 featured systems.
+4. **"The One Live Thing"**: In-Card Interactive Sandbox directly embedded into each project card (E-Commerce POS, Student Achievement Search, Flutter Device Preview, Python Algorithmic Inspector).
+5. **Authentic Imagery**: Portrait photo `/hapiss.jpg` in school uniform seamlessly integrated into the Hero grid.
+6. **ATS Resume**: Printable CV modal with `@media print` black-and-white output.
 
 ---
 
-## 3. Design System & Visual World
-- **Palette Roles**:
-  - `ground`: `#0a0e17` (Deep Obsidian Navy)
-  - `surface`: `#111827` (Charcoal Blue tone step)
-  - `surface-elevated`: `#1a2333` (Card/workbench elevated tone)
-  - `ink`: `#f9fafb` (Crisp readable white)
-  - `ink-muted`: `#94a3b8` (Slate secondary text)
-  - `accent`: `#10b981` (Emerald Tech / Terminal Vitality)
-  - `accent-surface`: `rgba(16, 185, 129, 0.12)` (Subtle highlight background)
-- **Typography Scale**:
-  - Primary Font: Plus Jakarta Sans / Inter / system-ui (Modern, clean, highly legible)
-  - Code/Numbers Font: JetBrains Mono / Fira Code (Hanya untuk syntax code dan data tabular)
-- **The Signature "One Live Thing"**:
-  - **The Interactive Project Workbench & Simulator**: Pengunjung dapat langsung berinteraksi dengan simulasi fungsional dari 3 proyek unggulan Hafizh:
-    1. *E-Commerce Interactive POS/Cart & Filter Simulator*
-    2. *Student Achievement Data Inspector & Verifier*
-    3. *Flutter Mobile App Interactive Screen Frame Preview*
-  - Dilengkapi juga dengan Mini Developer Console untuk mengetes perintah langsung (`help`, `skills`, `contact`, `about`).
+## 3. Milestones & Completion Matrix
 
----
-
-## 4. Architectural Decisions Log (ADR)
-
-| Date | Decision | Rationale | Alternatives Considered |
-| :--- | :--- | :--- | :--- |
-| 2026-10-28 | Vite + React Single-Page Application | Kecepatan bundling super cepat, arsitektur modular, state management reaktif | Vanilla JS, Next.js (terlalu berat untuk portfolio statis) |
-| 2026-10-28 | Lucide React for Icons | Konsistensi stroke weight, zero emoji icon slop, aksesibel | FontAwesome, inline unmaintained SVGs |
-| 2026-10-28 | Bilingual Data Structure (ID/EN) | Hafizh mencantumkan Bahasa Indonesia & Inggris di CV; meningkatkan daya saing PKL | Hanya bahasa Indonesia |
-| 2026-10-28 | Interactive Workbench as "One Live Thing" | Membuktikan kemampuan coding dan pemahaman alur aplikasi secara langsung | Video demo pasif atau screenshot statis |
-
----
-
-## 5. Phase Milestones
-
-- [x] **Phase 1**: Analisis CV ATS & Pemetaan Arsitektur Proyek
-- [ ] **Phase 2**: Setup Scaffolding Vite + React, Dependencies, dan Design Tokens
-- [ ] **Phase 3**: Implementasi Komponen Inti (Hero, Proyek Alternating Geometry, Skills Matrix, Timeline)
-- [ ] **Phase 4**: Implementasi "One Live Thing" (Interactive Project Workbench & Console)
-- [ ] **Phase 5**: Contact Section, CV Downloader, Responsive Verification & Anti-Slop Audit
+- [x] **Phase 1**: Brainstorming & Visual Companion Exploration *(Completed)*
+- [x] **Phase 2**: Spec & Design Doc Approval + Builder Check Review *(Completed)*
+- [x] **Phase 3**: Dependency Setup & Design Tokens (`three`, `lenis`, `src/index.css`) *(Verified)*
+- [x] **Phase 4**: Background 3D Canvas & Smooth Scroll Engine *(Verified)*
+- [x] **Phase 5**: HUD Minimalist Navbar with Live Bandung Time (WIB) *(Verified)*
+- [x] **Phase 6**: Hero Section with Two-Line Headline & Authentic Portrait *(Verified)*
+- [x] **Phase 7**: Sticky Depth Projects Showcase & In-Card Interactive Sandbox *(Verified)*
+- [x] **Phase 8**: Swiss Editorial Skills & Enterprise Architecture Matrix *(Verified)*
+- [x] **Phase 9**: Education & Academic Telematics Track *(Verified)*
+- [x] **Phase 10**: Contact HUD, ATS CV Printable Modal, and Footer *(Verified)*
+- [x] **Phase 11**: App Assembly, Bundle Optimization, and Git Push *(Verified)*

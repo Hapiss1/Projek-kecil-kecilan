@@ -3,53 +3,72 @@ export const portfolioData = {
     name: "Muhammad Hafizh Farsya Syahputra",
     shortName: "Hafizh Farsya",
     title: {
-      id: "Siswa Rekayasa Perangkat Lunak (RPL) & Calon Praktik Kerja Lapangan",
-      en: "Software Engineering Student & Prospective Industry Intern"
+      id: "Mahasiswa S1 Sistem Informasi (Telkom University) & Alumni Rekayasa Perangkat Lunak (SMK Telkom Banjarbaru)",
+      en: "Information Systems Student (Telkom University) & Software Engineering Alumnus (SMK Telkom Banjarbaru)"
     },
     heroTagline: {
-      id: "Membangun solusi perangkat lunak web dan mobile dengan kode yang terstruktur.",
-      en: "Crafting structured web and mobile software with engineered precision."
+      id: "Membangun sistem web, mobile, dan proses bisnis digital dengan arsitektur kode terstruktur.",
+      en: "Crafting structured web, mobile, and digital business systems with engineered precision."
     },
-    school: "SMK Telkom Banjarbaru",
-    major: {
-      id: "Rekayasa Perangkat Lunak (RPL)",
-      en: "Software Engineering"
+    university: {
+      name: "Telkom University",
+      major: {
+        id: "S1 Sistem Informasi (Information Systems)",
+        en: "B.Sc. in Information Systems"
+      },
+      period: "2026 — Sekarang",
+      role: {
+        id: "Asisten Praktikum Algoritma & Pemrograman",
+        en: "Teaching Assistant for Algorithm & Programming"
+      }
     },
-    period: "2023 — Sekarang",
-    location: "Kota Banjarbaru, Kalimantan Selatan, Indonesia",
+    school: {
+      name: "SMK Telkom Banjarbaru",
+      major: {
+        id: "Rekayasa Perangkat Lunak (RPL)",
+        en: "Software Engineering"
+      },
+      period: "2023 — 2026",
+      status: {
+        id: "Alumni",
+        en: "Alumnus"
+      }
+    },
+    location: "Indonesia, Kota Bandung",
     phone: "+62811-5003-018",
     phoneClean: "628115003018",
-    email: "hafizhfarsya@gmail.com",
+    email: "hapissf3001@gmail.com",
+    photoUrl: "/hapiss.jpg",
     availability: {
-      id: "Tersedia untuk Praktik Kerja Lapangan (PKL) / Magang",
-      en: "Available for Vocational Internship (PKL)"
+      id: "Tersedia untuk Peluang Profesional / Magang Industri",
+      en: "Available for Professional Opportunities & Internships"
     },
     bio: {
-      id: "Saya adalah siswa jurusan Rekayasa Perangkat Lunak (RPL) di SMK Telkom Banjarbaru dengan minat mendalam pada rekayasa perangkat lunak dan teknologi digital. Terbiasa membangun aplikasi web dan mobile menggunakan ekosistem Flutter, Laravel, PHP, MySQL, serta Firestore. Berpengalaman mengerjakan proyek individu maupun kolaborasi tim, dan bertekad memberikan kontribusi nyata serta menimba pengalaman berharga melalui Praktik Kerja Lapangan (PKL) di industri.",
-      en: "Software Engineering student at SMK Telkom Banjarbaru with deep passion in software development and digital technologies. Experienced in constructing web and mobile applications using Flutter, Laravel, PHP, MySQL, and Firestore. Practiced in both individual projects and agile teamwork, eager to deliver tangible value and gain professional industry experience through vocational internship (PKL)."
+      id: "Saya adalah mahasiswa jurusan Information Systems di Telkom University dan alumni SMK Telkom Banjarbaru jurusan Rekayasa Perangkat Lunak (RPL) yang memiliki minat tinggi dalam pengembangan perangkat lunak dan teknologi digital. Terbiasa mengerjakan proyek berbasis website dan aplikasi menggunakan berbagai teknologi seperti HTML, CSS, JavaScript, PHP, Laravel, Python, Flask, CodeIgniter 4, serta Flutter & Firebase. Memiliki pengalaman dalam mengerjakan proyek individu maupun kelompok, serta aktif berperan sebagai asisten praktikum Algoritma dan Pemrograman. Saya memiliki pemahaman yang kuat dalam bidang Business Process Management dan arsitektur Enterprise Resource Planning (ERP), serta selalu bersemangat untuk terus berkembang dan memperoleh pengalaman profesional di dunia kerja.",
+      en: "Information Systems undergraduate at Telkom University and Software Engineering (RPL) alumnus of SMK Telkom Banjarbaru with deep passion in software development and digital technologies. Experienced in building web and mobile applications using HTML, CSS, JavaScript, PHP, Laravel, Python, Flask, CodeIgniter 4, as well as Flutter & Firebase. Experienced in delivering individual and group projects, and actively serving as a Teaching Assistant for Algorithm and Programming. Possesses a solid understanding of Business Process Management and Enterprise Resource Planning (ERP) architecture, eager to grow and acquire professional industry experience."
     }
   },
 
   metrics: [
     {
-      value: "3+",
-      label: { id: "Proyek Utama Selesai", en: "Core Projects Shipped" },
-      sub: { id: "E-Commerce, Web Prestasi, Portofolio", en: "E-Commerce, Achievement Portal, App" }
+      value: "4+",
+      label: { id: "Proyek Rekayasa Selesai", en: "Core Projects Shipped" },
+      sub: { id: "E-Commerce, Web Prestasi, Mobile, Python", en: "E-Commerce, Portal, Mobile, Python" }
     },
     {
-      value: "5+",
-      label: { id: "Teknologi Dikuasai", en: "Tech Stacks Mastered" },
-      sub: { id: "Flutter, Laravel, PHP, MySQL, Firestore", en: "Flutter, Laravel, PHP, MySQL, Firestore" }
+      value: "8+",
+      label: { id: "Teknologi & Framework", en: "Tech Stacks Mastered" },
+      sub: { id: "Laravel, Flutter, Python, Flask, CI4, MySQL", en: "Laravel, Flutter, Python, Flask, CI4, MySQL" }
     },
     {
-      value: "2023",
-      label: { id: "Tahun Mulai di SMK Telkom", en: "Enrolled at SMK Telkom" },
-      sub: { id: "Fokus Rekayasa Perangkat Lunak", en: "Software Engineering Track" }
+      value: "Telkom",
+      label: { id: "Telkom University & SMK Telkom", en: "Telkom University & SMK Telkom" },
+      sub: { id: "Sistem Informasi & Rekayasa Perangkat Lunak", en: "Information Systems & Software Engineering" }
     },
     {
       value: "100%",
-      label: { id: "Kesiapan PKL Industri", en: "Internship Readiness" },
-      sub: { id: "Banjarbaru / Remote / On-Site", en: "Banjarbaru / Hybrid / On-Site" }
+      label: { id: "Kesiapan Industri / Magang", en: "Industry Readiness" },
+      sub: { id: "Bandung / Hybrid / Remote", en: "Bandung / Hybrid / Remote" }
     }
   ],
 
@@ -63,7 +82,7 @@ export const portfolioData = {
       tag: "Fullstack Web Application",
       category: "E-Commerce & Retail",
       headline: {
-        id: "Toko digital terpadu untuk buku, perangkat komputer, dan sepatu.",
+        id: "Toko digital terpadu untuk buku, peralatan komputer, dan sepatu.",
         en: "Integrated digital storefront for books, computer hardware, and footwear."
       },
       description: {
@@ -259,30 +278,71 @@ export const portfolioData = {
             name: "Profil",
             badge: "Home",
             title: "Profil & Quick Stats",
-            summary: "Menampilkan bio singkat, pendidikan di SMK Telkom, dan status kesiapan PKL.",
-            stats: "Status: Aktif Mencari PKL · Lokasi: Banjarbaru"
+            summary: "Menampilkan bio singkat, pendidikan di Telkom University & SMK Telkom, dan keahlian.",
+            stats: "Status: Mahasiswa Aktif · Domisili: Bandung"
           },
           {
             name: "Karya",
             badge: "Projects",
             title: "Galeri Proyek Terkurasi",
-            summary: "Koleksi proyek e-commerce, web prestasi siswa, dan aplikasi mobile Flutter.",
-            stats: "3 Proyek Unggulan · Laravel + Flutter"
+            summary: "Koleksi proyek e-commerce, web prestasi siswa, Python logic, dan aplikasi Flutter.",
+            stats: "4 Proyek Unggulan · Laravel, Flutter & Python"
           },
           {
             name: "Keahlian",
             badge: "Skills",
             title: "Matriks Teknologi",
-            summary: "Daftar penguasaan Flutter, Dart, PHP, Laravel, MySQL, dan Cloud Firestore.",
-            stats: "Bahasa: PHP, Dart, JS · DB: MySQL & Firestore"
+            summary: "Penguasaan Flutter, Dart, Python, Flask, Laravel, CodeIgniter 4, MySQL, dan Firestore.",
+            stats: "Web, Mobile, Backend & BPM/ERP"
           },
           {
             name: "Kontak",
             badge: "Contact",
             title: "Hubungi Langsung",
-            summary: "Akses cepat tombol WhatsApp (+62811-5003-018) dan pengiriman email.",
+            summary: "Akses cepat tombol WhatsApp (+62811-5003-018) dan email (hapissf3001@gmail.com).",
             stats: "Respon Cepat · Terbuka Kerja Sama"
           }
+        ]
+      }
+    },
+    {
+      id: "python-logic",
+      title: {
+        id: "Logika Pemrograman & Algoritma Python",
+        en: "Python Algorithms & Logic Implementation"
+      },
+      tag: "Algorithmic Engineering & Backend",
+      category: "Software Logic & Scripting",
+      headline: {
+        id: "Implementasi algoritma, struktur data, dan automasi pemrosesan logika backend.",
+        en: "Algorithmic implementations, data structures, and backend logic automation."
+      },
+      description: {
+        id: "Koleksi implementasi logika pemrograman dan pemecahan masalah algoritma menggunakan Python. Dibangun selama perkuliahan Sistem Informasi Telkom University dan peran aktif sebagai Asisten Praktikum Algoritma dan Pemrograman.",
+        en: "Collection of programming logic implementations and algorithmic problem-solving using Python. Developed through Information Systems coursework at Telkom University and active role as an Algorithm & Programming Teaching Assistant."
+      },
+      stack: ["Python", "Flask", "Data Structures", "Algorithms", "Automation"],
+      architecture: "Modular Python Scripting & Clean Function Pipelines",
+      highlights: [
+        {
+          id: "Implementasi logika pemrosesan data, sorting, dan algoritma rekursif efisien.",
+          en: "Efficient data transformation, sorting logic, and recursive algorithm pipelines."
+        },
+        {
+          id: "Pengalaman praktis membimbing mahasiswa dalam pemahaman sintaks dan debugging Python.",
+          en: "Practical mentoring experience assisting students in Python syntax and runtime debugging."
+        },
+        {
+          id: "Integrasi microservice backend sederhana menggunakan framework Python Flask.",
+          en: "Lightweight microservice and API route integration powered by Python Flask."
+        }
+      ],
+      interactiveSimulator: {
+        type: "python",
+        snippets: [
+          { title: "Binary Search & Sorting", complexity: "O(log n)", lines: 18 },
+          { title: "Recursive Tree Traversal", complexity: "O(n)", lines: 24 },
+          { title: "Flask REST Endpoint", complexity: "HTTP / JSON", lines: 28 }
         ]
       }
     }
@@ -290,78 +350,84 @@ export const portfolioData = {
 
   skillCategories: [
     {
-      domain: { id: "Pengembangan Web", en: "Web Development" },
+      domain: { id: "Pengembangan Web & Backend", en: "Web & Backend Engineering" },
       icon: "Globe",
       description: {
-        id: "Membangun antarmuka web semantik dan arsitektur backend berkinerja tinggi.",
-        en: "Building semantic web interfaces and high-performance backend architectures."
+        id: "Membangun arsitektur backend berkinerja tinggi dan antarmuka web modern.",
+        en: "Constructing high-performance backend architectures and modern web interfaces."
       },
       skills: [
-        { name: "PHP", level: "Mahir", badge: "Core Language", detail: "OOP, script processing, API integration" },
-        { name: "Laravel", level: "Kompeten", badge: "MVC Framework", detail: "Routing, Eloquent ORM, Blade, Migrations" },
-        { name: "HTML5 & CSS3", level: "Mahir", badge: "Markup & Style", detail: "Semantic layout, Flexbox, CSS Grid, Responsive" },
-        { name: "JavaScript / React", level: "Kompeten", badge: "Interactive UI", detail: "DOM, State management, Components" }
+        { name: "PHP", level: "Mahir", badge: "Core Language", detail: "OOP, MVC, API integrations" },
+        { name: "Laravel", level: "Mahir", badge: "MVC Framework", detail: "Eloquent ORM, Routing, Blade, REST API" },
+        { name: "CodeIgniter 4", level: "Kompeten", badge: "PHP Framework", detail: "Lightweight MVC architecture & controllers" },
+        { name: "Python", level: "Mahir", badge: "Core Language", detail: "Algoritma, scripting, data handling" },
+        { name: "Flask", level: "Kompeten", badge: "Microframework", detail: "Lightweight API endpoints & services" },
+        { name: "JavaScript", level: "Kompeten", badge: "Dynamic Web", detail: "ES6+, DOM reactivity, async/await" },
+        { name: "HTML & CSS", level: "Mahir", badge: "Markup & Styling", detail: "Semantic layout, Flexbox, responsive grid" }
       ]
     },
     {
-      domain: { id: "Pengembangan Mobile", en: "Mobile Engineering" },
+      domain: { id: "Aplikasi Mobile & Cloud", en: "Mobile & Cloud Engineering" },
       icon: "Smartphone",
       description: {
-        id: "Mengembangkan aplikasi mobile cross-platform yang mulus dan responsif.",
-        en: "Developing smooth, responsive cross-platform applications."
+        id: "Mengembangkan aplikasi mobile cross-platform yang responsif dan terintegrasi cloud.",
+        en: "Developing responsive cross-platform mobile apps with real-time cloud data."
       },
       skills: [
-        { name: "Flutter", level: "Kompeten", badge: "Mobile Framework", detail: "Widget lifecycle, responsive UI, navigation" },
-        { name: "Dart", level: "Kompeten", badge: "OOP Language", detail: "Asynchronous programming, type safety" },
-        { name: "Firebase Integration", level: "Kompeten", badge: "Backend-as-a-Service", detail: "Auth, Realtime database, Firestore setup" }
+        { name: "Flutter", level: "Mahir", badge: "Mobile Framework", detail: "Widget tree hierarchy, responsive layout, state management" },
+        { name: "Dart", level: "Mahir", badge: "Language", detail: "Type-safe OOP, asynchronous streams" },
+        { name: "Firebase", level: "Kompeten", badge: "Cloud Platform", detail: "Cloud Firestore NoSQL, Auth, cloud services" },
+        { name: "MySQL", level: "Mahir", badge: "Relational RDBMS", detail: "Relational schema design, complex JOINs, indexing" }
       ]
     },
     {
-      domain: { id: "Basis Data & Cloud", en: "Database & Cloud" },
-      icon: "Database",
+      domain: { id: "Sistem Enterprise & Proses Bisnis", en: "Enterprise Systems & BPM" },
+      icon: "Layers",
       description: {
-        id: "Perancangan skema data terstruktur dan penyimpanan cloud real-time.",
-        en: "Structured data schema design and real-time cloud data stores."
+        id: "Pemahaman proses bisnis perusahaan, arsitektur enterprise, dan asisten laboratorium.",
+        en: "Business process workflows, enterprise architecture, and academic lab leadership."
       },
       skills: [
-        { name: "MySQL", level: "Kompeten", badge: "Relational RDBMS", detail: "Schema design, JOIN queries, indexing" },
-        { name: "Cloud Firestore", level: "Kompeten", badge: "NoSQL Cloud", detail: "Document collections, real-time listeners" }
+        { name: "Business Process Management (BPM)", level: "Memahami", badge: "Business Systems", detail: "Workflow modeling, process optimization, business logic" },
+        { name: "Enterprise Resource Planning (ERP)", level: "Memahami", badge: "Enterprise Arch", detail: "Modular integrated systems, resource allocation flows" },
+        { name: "Asisten Praktikum Algoritma", level: "Aktif", badge: "Academic Role", detail: "Membimbing praktikum Algoritma & Pemrograman di kampus" }
       ]
     },
     {
-      domain: { id: "Desain & Prototyping", en: "Design & Prototyping" },
+      domain: { id: "Desain UI/UX & Tooling", en: "UI/UX Design & Tooling" },
       icon: "Figma",
       description: {
-        id: "Penyusunan wireframe, mockup visual, dan alur pengalaman pengguna.",
-        en: "Wireframing, visual mockups, and intuitive user journey mapping."
+        id: "Perancangan pengalaman antarmuka visual dan kontrol versi perangkat lunak.",
+        en: "Visual UI/UX wireframing, component design, and collaborative version control."
       },
       skills: [
-        { name: "Figma", level: "Kompeten", badge: "UI/UX Prototyping", detail: "Wireframing, auto-layout, design tokens" },
-        { name: "Canva", level: "Mahir", badge: "Visual Assets", detail: "Brand collateral, visual presentation" }
+        { name: "Figma", level: "Kompeten", badge: "UI/UX Prototyping", detail: "Wireframing, design tokens, responsive layouts" },
+        { name: "Canva", level: "Mahir", badge: "Visual Media", detail: "Visual presentation, branding assets" },
+        { name: "Git & GitHub", level: "Kompeten", badge: "Version Control", detail: "Branching workflows, commits, collaborative repo sync" }
       ]
     }
   ],
 
   softSkills: [
     {
-      name: { id: "Kerja Tim (Team Collaboration)", en: "Team Collaboration" },
+      name: { id: "Kerja Tim & Kolaborasi", en: "Team Collaboration" },
       desc: {
-        id: "Terbiasa berkolaborasi dalam proyek kelompok di SMK Telkom, membagi modul kerja secara adil, dan menyelaraskan integrasi kode.",
-        en: "Adept at collaborative team projects at SMK Telkom, delegating module ownership, and coordinating code integration."
+        id: "Terbiasa bekerja sama dalam proyek tim akademik maupun praktikum, menyelaraskan pembagian tugas dan integrasi kode.",
+        en: "Experienced in collaborative teamwork across academic and lab projects, coordinating modules and code integration."
       }
     },
     {
       name: { id: "Komunikasi Proaktif", en: "Proactive Communication" },
       desc: {
-        id: "Menyampaikan ide teknis dan hambatan secara jelas, siap menerima masukan, serta aktif berdiskusi dalam proses rekayasa perangkat lunak.",
-        en: "Articulating technical ideas and bottlenecks clearly, receptive to feedback, and actively participating in engineering discussions."
+        id: "Mampu menjelaskan konsep algoritma dan sistem dengan lugas, baik kepada mahasiswa praktikum maupun rekan kerja tim.",
+        en: "Able to communicate algorithmic and system concepts clearly to lab students and engineering peers alike."
       }
     },
     {
-      name: { id: "Kemauan Belajar Tinggi", en: "Rapid Learning & Adaptability" },
+      name: { id: "Analisis Logika & Problem Solving", en: "Analytical Problem Solving" },
       desc: {
-        id: "Antusias mempelajari bahasa, framework, dan metodologi baru yang dibutuhkan oleh standar industri saat ini.",
-        en: "Enthusiastic about learning new languages, frameworks, and workflows required by evolving industry standards."
+        id: "Disiplin dalam memecahkan masalah pemrograman struktural, debugging, dan merancang alur logika yang efisien.",
+        en: "Disciplined in breaking down structural programming challenges, debugging runtime issues, and optimizing logic flows."
       }
     }
   ],
@@ -374,28 +440,51 @@ export const portfolioData = {
     },
     {
       language: { id: "Bahasa Inggris", en: "English" },
-      proficiency: { id: "Pemahaman Teknis & Percakapan (Working Proficiency)", en: "Working & Technical Proficiency" },
+      proficiency: { id: "Pemahaman Teknis & Profesional (Working Proficiency)", en: "Working & Technical Proficiency" },
       badge: "EN"
     }
   ],
 
-  education: {
-    institution: "SMK Telkom Banjarbaru",
-    period: "2023 — Sekarang",
-    status: { id: "Siswa Aktif — Rekayasa Perangkat Lunak", en: "Active Student — Software Engineering" },
-    location: "Banjarbaru, Kalimantan Selatan",
-    summary: {
-      id: "Menempuh pendidikan vokasi kejuruan dengan konsentrasi Rekayasa Perangkat Lunak (RPL). Mempelajari pemrograman berorientasi objek, perancangan web dan mobile, arsitektur basis data, serta standar pengembangan perangkat lunak modern.",
-      en: "Undergoing vocational software engineering studies at SMK Telkom Banjarbaru. Focusing on object-oriented programming, modern web and mobile architecture, database design, and collaborative software lifecycles."
+  educationHistory: [
+    {
+      institution: "Telkom University",
+      period: "2026",
+      status: { id: "Mahasiswa Aktif", en: "Active Undergraduate" },
+      location: "Bandung, Jawa Barat, Indonesia",
+      major: {
+        id: "S1 Sistem Informasi (Information Systems)",
+        en: "B.Sc. in Information Systems"
+      },
+      summary: {
+        id: "Fokus pada rekayasa sistem informasi enterprise, Business Process Management (BPM), arsitektur Enterprise Resource Planning (ERP), serta aktif berperan sebagai Asisten Praktikum Algoritma dan Pemrograman.",
+        en: "Focusing on enterprise information systems, Business Process Management (BPM), Enterprise Resource Planning (ERP) architecture, and actively serving as an Algorithm & Programming Teaching Assistant."
+      },
+      highlights: [
+        "Asisten Praktikum Algoritma & Pemrograman",
+        "Pemahaman Business Process Management (BPM)",
+        "Arsitektur Enterprise Resource Planning (ERP)",
+        "Pengembangan Logika Pemrograman Lanjutan (Python & Flask)"
+      ]
     },
-    competencies: [
-      "Algoritma & Pemrograman Berorientasi Objek (OOP)",
-      "Web Development (HTML5, CSS3, PHP, Laravel)",
-      "Mobile App Engineering (Flutter & Dart)",
-      "Manajemen Basis Data Relasional (MySQL) & NoSQL (Firestore)",
-      "UI/UX Design Workflow (Figma)",
-      "Standar Disiplin Industri & Budaya Kerja Telkom Schools"
-    ]
-  }
+    {
+      institution: "SMK Telkom Banjarbaru",
+      period: "2023 — 2026",
+      status: { id: "Alumni", en: "Alumnus" },
+      location: "Kota Banjarbaru, Kalimantan Selatan, Indonesia",
+      major: {
+        id: "Rekayasa Perangkat Lunak (RPL)",
+        en: "Software Engineering"
+      },
+      summary: {
+        id: "Menyelesaikan pendidikan kejuruan vokasi bidang Rekayasa Perangkat Lunak. Mempelajari fundamental pemrograman web (PHP, Laravel, MySQL), aplikasi mobile (Flutter & Firebase), dan budaya disiplin industri Telkom.",
+        en: "Graduated with vocational software engineering credentials. Mastered fullstack web fundamentals (PHP, Laravel, MySQL), mobile app development (Flutter & Firebase), and Telkom industrial engineering standards."
+      },
+      highlights: [
+        "Pembangunan Aplikasi E-Commerce Multi-Kategori (Laravel + MySQL)",
+        "Pengembangan Portal Dokumentasi Prestasi Siswa",
+        "Aplikasi Portofolio Mobile Native (Flutter & Firestore)",
+        "Standar Disiplin Kerja & Budaya Kejuruan Telkom"
+      ]
+    }
+  ]
 };
-

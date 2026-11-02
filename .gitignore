@@ -35,3 +35,6 @@ lerna-debug.log*
 # Agent/tool artifacts
 .impeccable/
 .agents/
+
+# Superpowers artifacts
+.superpowers/

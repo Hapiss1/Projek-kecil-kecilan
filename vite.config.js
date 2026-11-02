@@ -6,6 +6,15 @@ export default defineConfig({
   server: {
     port: 3000,
     open: false
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'three-vendor': ['three'],
+          'lenis-vendor': ['lenis']
+        }
+      }
+    }
   }
 });
-
