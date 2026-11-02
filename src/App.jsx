@@ -1,9 +1,10 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import Lenis from 'lenis';
+import { Canvas } from '@react-three/fiber';
 import { portfolioData } from './data/portfolioData';
-import { SmoothScrollProvider } from './components/SmoothScrollProvider';
-import { Background3DCanvas } from './components/Background3DCanvas';
+import { ProceduralSceneRig } from './components/ProceduralHeroScene';
+import { HeroSection } from './components/HeroSection';
 import { Navbar } from './components/Navbar';
-import { Hero } from './components/Hero';
 import { ProjectsShowcase } from './components/ProjectsShowcase';
 import { SkillsMatrix } from './components/SkillsMatrix';
 import { EducationTimeline } from './components/EducationTimeline';
@@ -11,72 +12,109 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 
 /**
- * App Component
- * Redesigned to match Dymas Alfin's Dribbble editorial minimalist portfolio aesthetic:
- * Clean typography hierarchy, fluid smooth inertia scroll, and interactive project sandboxes.
+ * App.jsx — Awwwards-Standard Foundation Architecture
+ * 
+ * Integrasi Inti:
+ * 1. Global Lenis Inertia Scroll: Loop RAF 60fps dengan easing eksponensial.
+ * 2. React Three Fiber (R3F) Canvas: Scene WebGL prosedural berbobot ringan (0 KB gltf assets).
+ * 3. Hero Section: Tipografi editorial raksasa + staggered text reveal via GSAP context.
  */
 export default function App() {
   const [lang, setLang] = useState('id'); // 'id' | 'en'
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const lenisRef = useRef(null);
 
-  const handleScroll = useCallback((progress) => {
-    setScrollProgress(progress);
+  // 1. Inisialisasi Global Smooth Inertia Scrolling via Lenis
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential ease-out
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.5,
+    });
+
+    lenisRef.current = lenis;
+
+    // Loop requestAnimationFrame untuk sinkronisasi render & scroll
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    const rafId = requestAnimationFrame(raf);
+
+    // Cleanup saat unmount
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+    };
   }, []);
 
   return (
-    <SmoothScrollProvider onScroll={handleScroll}>
-      <div className="portfolio-app-root">
-        
-        {/* Ambient WebGL 3D Layer */}
-        <Background3DCanvas scrollProgress={scrollProgress} />
-
-        {/* Minimalist Floating HUD Navigation */}
-        <Navbar 
-          lang={lang} 
-          setLang={setLang} 
-          content={portfolioData} 
-        />
-
-        {/* Main Editorial Flow */}
-        <main>
-          {/* Hero Section */}
-          <Hero 
-            lang={lang} 
-            content={portfolioData} 
-          />
-
-          {/* Selected Works / Projects Showcase */}
-          <ProjectsShowcase 
-            lang={lang} 
-            content={portfolioData} 
-          />
-
-          {/* Services & Technical Matrix */}
-          <SkillsMatrix 
-            lang={lang} 
-            content={portfolioData} 
-          />
-
-          {/* Education & Academic Journey */}
-          <EducationTimeline 
-            lang={lang} 
-            content={portfolioData} 
-          />
-
-          {/* High-Impact Contact Section */}
-          <ContactSection 
-            lang={lang} 
-            content={portfolioData} 
-          />
-        </main>
-
-        {/* Minimalist Footer */}
-        <Footer 
-          lang={lang} 
-          content={portfolioData} 
-        />
-
+    <div className="portfolio-app-root">
+      
+      {/* 2. R3F Procedural WebGL Canvas (Fixed Background / Interactive Layer) */}
+      <div className="webgl-canvas-fixed" aria-hidden="true">
+        <Canvas
+          camera={{ position: [0, 0, 5], fov: 45 }}
+          dpr={[1, 1.5]} // Clamped DPR: Menjamin stabilitas 60 FPS di layar Retina & HP
+          gl={{
+            antialias: true,
+            alpha: true,
+            powerPreference: 'high-performance',
+          }}
+        >
+          <ProceduralSceneRig />
+        </Canvas>
       </div>
-    </SmoothScrollProvider>
+
+      {/* Floating HUD Navigation */}
+      <Navbar 
+        lang={lang} 
+        setLang={setLang} 
+        content={portfolioData} 
+      />
+
+      {/* Main Content Flow */}
+      <main style={{ position: 'relative', zIndex: 2 }}>
+        {/* 3. Hero Section dengan Tipografi Editorial & GSAP Text Reveal */}
+        <HeroSection 
+          content={portfolioData} 
+          lang={lang} 
+        />
+
+        {/* Selected Works / Projects Showcase (Akan dirombak menjadi WebGL Image Distortion pada langkah berikutnya) */}
+        <ProjectsShowcase 
+          lang={lang} 
+          content={portfolioData} 
+        />
+
+        {/* Technical Matrix */}
+        <SkillsMatrix 
+          lang={lang} 
+          content={portfolioData} 
+        />
+
+        {/* Academic Journey */}
+        <EducationTimeline 
+          lang={lang} 
+          content={portfolioData} 
+        />
+
+        {/* High-Impact Contact */}
+        <ContactSection 
+          lang={lang} 
+          content={portfolioData} 
+        />
+      </main>
+
+      {/* Minimalist Footer */}
+      <Footer 
+        lang={lang} 
+        content={portfolioData} 
+      />
+
+    </div>
   );
 }

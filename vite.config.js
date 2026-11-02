@@ -8,11 +8,13 @@ export default defineConfig({
     open: false
   },
   build: {
-    chunkSizeWarningLimit: 700,
+    chunkSizeWarningLimit: 900,
     rollupOptions: {
       output: {
         manualChunks: {
           'three-vendor': ['three'],
+          'r3f-vendor': ['@react-three/fiber', '@react-three/drei'],
+          'gsap-vendor': ['gsap'],
           'lenis-vendor': ['lenis']
         }
       }
