@@ -7,22 +7,27 @@ import {
 } from 'lucide-react';
 
 /**
- * Navbar Component (Dribbble Dymas Alfin Minimalist Style)
- * Minimal floating header with status indicator, clean navigation links, and direct contact trigger.
+ * Navbar Component (HUD Minimalist Architecture)
+ * Persistent fixed header that tracks scrolling with frosted glassmorphic backdrop.
  */
-export function Navbar({ lang, setLang, content }) {
+export function Navbar({ lang = 'id', setLang, content }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [timeStr, setTimeStr] = useState('');
 
+  // 1. Persistent Scroll State Tracking
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
+      const offset = window.pageYOffset || document.documentElement.scrollTop;
+      setScrolled(offset > 20);
     };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial check
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // 2. Real-time Bandung WIB Clock
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
@@ -41,8 +46,8 @@ export function Navbar({ lang, setLang, content }) {
 
   const navLinks = [
     { href: "#proyek", label: lang === 'id' ? "Karya Pilihan" : "Selected Works" },
-    { href: "#keahlian", label: lang === 'id' ? "Layanan & Stack" : "Services" },
-    { href: "#pendidikan", label: lang === 'id' ? "Pendidikan" : "Journey" },
+    { href: "#keahlian", label: lang === 'id' ? "Keahlian" : "Capabilities" },
+    { href: "#pendidikan", label: lang === 'id' ? "Pendidikan" : "Education" },
     { href: "#kontak", label: lang === 'id' ? "Kontak" : "Contact" },
   ];
 
@@ -51,20 +56,20 @@ export function Navbar({ lang, setLang, content }) {
       <div className="container">
         <div className="navbar-inner">
           
-          {/* Brand & Availability Status */}
+          {/* Brand & Live Status */}
           <div className="nav-brand-group">
             <a href="#" className="nav-brand-name">
               {content.personal.shortName}
             </a>
             <div className="nav-live-status">
               <span className="live-pulse-dot" />
-              <span className="mono-data" style={{ color: '#94a3b8' }}>
+              <span className="mono-data">
                 Bandung · {timeStr}
               </span>
             </div>
           </div>
 
-          {/* Center Nav Links */}
+          {/* Center Navigation Links (Desktop) */}
           <nav className="nav-links-menu" aria-label="Navigasi Utama">
             {navLinks.map((link) => (
               <li key={link.href} className="nav-link-item">
@@ -73,7 +78,7 @@ export function Navbar({ lang, setLang, content }) {
             ))}
           </nav>
 
-          {/* Right Action: Language + Connect CTA */}
+          {/* Right Action: Language + Connect CTA + Mobile Menu Button */}
           <div className="nav-actions-group">
             <button
               type="button"
@@ -90,25 +95,42 @@ export function Navbar({ lang, setLang, content }) {
               target="_blank"
               rel="noopener noreferrer"
               className="btn-nav-talk"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
             >
               <span>{lang === 'id' ? "Hubungi" : "Let's Talk"}</span>
               <ArrowUpRight size={15} />
             </a>
 
-            {/* Mobile Toggle */}
+            {/* Mobile Toggle Button */}
             <button
               type="button"
               onClick={() => setMobileOpen(!mobileOpen)}
               className="btn-mobile-toggle"
-              style={{ display: 'none' }}
-              aria-label="Toggle menu"
+              aria-label="Buka menu navigasi"
             >
               {mobileOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
 
         </div>
+
+        {/* Mobile Dropdown Menu */}
+        {mobileOpen && (
+          <div className="nav-mobile-dropdown">
+            <div className="nav-mobile-links">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="nav-mobile-link"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
       </div>
     </header>
   );
