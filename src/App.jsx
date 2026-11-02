@@ -9,19 +9,16 @@ import { SkillsMatrix } from './components/SkillsMatrix';
 import { EducationTimeline } from './components/EducationTimeline';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
-import { CvModal } from './components/CvModal';
 
 /**
- * App Root Component
- * Wires the Lenis smooth scroll engine, background Three.js WebGL canvas,
- * and the Anti-Slop editorial components.
+ * App Component
+ * Redesigned to match Dymas Alfin's Dribbble editorial minimalist portfolio aesthetic:
+ * Clean typography hierarchy, fluid smooth inertia scroll, and interactive project sandboxes.
  */
 export default function App() {
   const [lang, setLang] = useState('id'); // 'id' | 'en'
-  const [isCvOpen, setIsCvOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
 
-  // Smooth scroll callback forwarded from Lenis
   const handleScroll = useCallback((progress) => {
     setScrollProgress(progress);
   }, []);
@@ -30,61 +27,52 @@ export default function App() {
     <SmoothScrollProvider onScroll={handleScroll}>
       <div className="portfolio-app-root">
         
-        {/* Fixed 3D WebGL Background Layer */}
+        {/* Ambient WebGL 3D Layer */}
         <Background3DCanvas scrollProgress={scrollProgress} />
 
-        {/* Minimalist HUD Navigation */}
+        {/* Minimalist Floating HUD Navigation */}
         <Navbar 
           lang={lang} 
           setLang={setLang} 
           content={portfolioData} 
-          onOpenCv={() => setIsCvOpen(true)} 
         />
 
-        {/* Main Foreground Architectural Content */}
+        {/* Main Editorial Flow */}
         <main>
-          {/* Hero Section with Authentic Portrait */}
+          {/* Hero Section */}
           <Hero 
             lang={lang} 
             content={portfolioData} 
-            onOpenCv={() => setIsCvOpen(true)} 
           />
 
-          {/* Sticky Depth Projects Showcase & In-Card Interactive Sandbox */}
+          {/* Selected Works / Projects Showcase */}
           <ProjectsShowcase 
             lang={lang} 
             content={portfolioData} 
           />
 
-          {/* Swiss Editorial Skills & Enterprise Architecture Matrix */}
+          {/* Services & Technical Matrix */}
           <SkillsMatrix 
             lang={lang} 
             content={portfolioData} 
           />
 
-          {/* Education & Academic Telematics Track */}
+          {/* Education & Academic Journey */}
           <EducationTimeline 
             lang={lang} 
             content={portfolioData} 
           />
 
-          {/* Industrial Contact & Direct Communication Channels */}
+          {/* High-Impact Contact Section */}
           <ContactSection 
             lang={lang} 
             content={portfolioData} 
           />
         </main>
 
-        {/* Minimalist Baseline Footer */}
+        {/* Minimalist Footer */}
         <Footer 
           lang={lang} 
-          content={portfolioData} 
-        />
-
-        {/* ATS CV Printable Modal */}
-        <CvModal 
-          isOpen={isCvOpen} 
-          onClose={() => setIsCvOpen(false)} 
           content={portfolioData} 
         />
 

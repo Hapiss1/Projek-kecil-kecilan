@@ -1,56 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  FileText, 
   Languages, 
-  Menu, 
-  X, 
-  ArrowUpRight 
+  ArrowUpRight,
+  Menu,
+  X
 } from 'lucide-react';
 
 /**
- * Navbar Component (HUD Minimalist Architecture)
- * Left: Identity & Live Bandung Time (WIB)
- * Center: Clean navigation links
- * Right: Availability, Language Switcher, ATS CV Modal Trigger
+ * Navbar Component (Dribbble Dymas Alfin Minimalist Style)
+ * Minimal floating header with status indicator, clean navigation links, and direct contact trigger.
  */
-export function Navbar({ lang, setLang, content, onOpenCv }) {
+export function Navbar({ lang, setLang, content }) {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [timeStr, setTimeStr] = useState('');
 
-  // Scroll listener for subtle tone-step background
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 25);
+      setScrolled(window.scrollY > 30);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Live Bandung Time (WIB, UTC+7)
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      // Format time in Asia/Jakarta (WIB)
       const formatted = new Intl.DateTimeFormat('id-ID', {
         timeZone: 'Asia/Jakarta',
         hour: '2-digit',
         minute: '2-digit',
-        second: '2-digit',
         hour12: false
       }).format(now);
       setTimeStr(`${formatted} WIB`);
     };
-
     updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
+    const timer = setInterval(updateTime, 1000);
+    return () => clearInterval(timer);
   }, []);
 
   const navLinks = [
-    { href: "#proyek", label: lang === 'id' ? "Karya & Rekayasa" : "Projects" },
-    { href: "#keahlian", label: lang === 'id' ? "Keahlian" : "Skills" },
-    { href: "#pendidikan", label: lang === 'id' ? "Pendidikan" : "Education" },
+    { href: "#proyek", label: lang === 'id' ? "Karya Pilihan" : "Selected Works" },
+    { href: "#keahlian", label: lang === 'id' ? "Layanan & Stack" : "Services" },
+    { href: "#pendidikan", label: lang === 'id' ? "Pendidikan" : "Journey" },
     { href: "#kontak", label: lang === 'id' ? "Kontak" : "Contact" },
   ];
 
@@ -59,18 +51,20 @@ export function Navbar({ lang, setLang, content, onOpenCv }) {
       <div className="container">
         <div className="navbar-inner">
           
-          {/* Brand & Live Bandung Time HUD */}
+          {/* Brand & Availability Status */}
           <div className="nav-brand-group">
             <a href="#" className="nav-brand-name">
               {content.personal.shortName}
             </a>
-            <div className="nav-live-status" title="Zona Waktu Bandung, Jawa Barat (WIB)">
+            <div className="nav-live-status">
               <span className="live-pulse-dot" />
-              <span className="mono-data">{timeStr || "Bandung, ID"}</span>
+              <span className="mono-data" style={{ color: '#94a3b8' }}>
+                Bandung · {timeStr}
+              </span>
             </div>
           </div>
 
-          {/* Desktop Navigation Links */}
+          {/* Center Nav Links */}
           <nav className="nav-links-menu" aria-label="Navigasi Utama">
             {navLinks.map((link) => (
               <li key={link.href} className="nav-link-item">
@@ -79,38 +73,38 @@ export function Navbar({ lang, setLang, content, onOpenCv }) {
             ))}
           </nav>
 
-          {/* Actions: Lang toggle + ATS CV button */}
+          {/* Right Action: Language + Connect CTA */}
           <div className="nav-actions-group">
             <button
               type="button"
               className="btn-lang-toggle"
               onClick={() => setLang(lang === 'id' ? 'en' : 'id')}
-              title={lang === 'id' ? "Ganti ke Bahasa Inggris" : "Switch to Indonesian"}
-              aria-label="Pilih Bahasa"
+              title={lang === 'id' ? "Switch to English" : "Ganti ke Bahasa Indonesia"}
             >
               <Languages size={14} />
               <span className="mono-data">{lang.toUpperCase()}</span>
             </button>
 
-            <button
-              type="button"
-              className="btn-cv-trigger"
-              onClick={onOpenCv}
-              title="Pratinjau & Cetak CV ATS"
+            <a
+              href={`https://wa.me/${content.personal.phoneClean}?text=Halo%20Hafizh,%20saya%20tertarik%20dengan%20portofolio%20Anda`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-nav-talk"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
             >
-              <FileText size={15} />
-              <span>CV ATS</span>
-            </button>
+              <span>{lang === 'id' ? "Hubungi" : "Let's Talk"}</span>
+              <ArrowUpRight size={15} />
+            </a>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Toggle */}
             <button
               type="button"
+              onClick={() => setMobileOpen(!mobileOpen)}
               className="btn-mobile-toggle"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle menu navigasi"
-              style={{ display: 'none', color: '#f8fafc', padding: '6px' }}
+              style={{ display: 'none' }}
+              aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
 

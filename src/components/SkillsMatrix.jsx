@@ -35,8 +35,8 @@ export function SkillsMatrix({ lang, content }) {
           </h2>
           <p className="section-sub">
             {lang === 'id'
-              ? "Kombinasi kompetensi rekayasa perangkat lunak fullstack, aplikasi mobile cross-platform, pemahaman arsitektur proses bisnis (BPM & ERP), serta peran aktif sebagai asisten praktikum kampus."
-              : "A comprehensive stack spanning fullstack backend, cross-platform mobile, enterprise business process management (BPM & ERP), and academic lab leadership."}
+              ? "Kombinasi kompetensi rekayasa perangkat lunak fullstack, aplikasi mobile cross-platform, pemahaman arsitektur proses bisnis (BPM & ERP), serta rekayasa sistem yang terukur."
+              : "A comprehensive stack spanning fullstack backend, cross-platform mobile, enterprise business process management (BPM & ERP), and scalable systems engineering."}
           </p>
         </div>
 

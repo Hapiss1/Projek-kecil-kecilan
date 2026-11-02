@@ -69,3 +69,4 @@ export function SmoothScrollProvider({ children, onScroll }) {
     </div>
   );
 }
+

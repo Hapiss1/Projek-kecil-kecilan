@@ -3,12 +3,12 @@ export const portfolioData = {
     name: "Muhammad Hafizh Farsya Syahputra",
     shortName: "Hafizh Farsya",
     title: {
-      id: "Mahasiswa S1 Sistem Informasi (Telkom University) & Alumni Rekayasa Perangkat Lunak (SMK Telkom Banjarbaru)",
-      en: "Information Systems Student (Telkom University) & Software Engineering Alumnus (SMK Telkom Banjarbaru)"
+      id: "Mahasiswa S1 Sistem Informasi (Telkom University) & Software Engineer",
+      en: "Information Systems Student (Telkom University) & Software Engineer"
     },
     heroTagline: {
-      id: "Membangun sistem web, mobile, dan proses bisnis digital dengan arsitektur kode terstruktur.",
-      en: "Crafting structured web, mobile, and digital business systems with engineered precision."
+      id: "Membangun sistem web, mobile, dan solusi enterprise dengan rekayasa kode yang terstruktur.",
+      en: "Crafting structured web, mobile, and enterprise digital solutions with engineered precision."
     },
     university: {
       name: "Telkom University",
@@ -16,11 +16,7 @@ export const portfolioData = {
         id: "S1 Sistem Informasi (Information Systems)",
         en: "B.Sc. in Information Systems"
       },
-      period: "2026 — Sekarang",
-      role: {
-        id: "Asisten Praktikum Algoritma & Pemrograman",
-        en: "Teaching Assistant for Algorithm & Programming"
-      }
+      period: "2026 — Sekarang"
     },
     school: {
       name: "SMK Telkom Banjarbaru",
@@ -34,25 +30,25 @@ export const portfolioData = {
         en: "Alumnus"
       }
     },
-    location: "Indonesia, Kota Bandung",
+    location: "Bandung, Jawa Barat, Indonesia",
     phone: "+62811-5003-018",
     phoneClean: "628115003018",
     email: "hapissf3001@gmail.com",
     photoUrl: "/hapiss.jpg",
     availability: {
-      id: "Tersedia untuk Peluang Profesional / Magang Industri",
-      en: "Available for Professional Opportunities & Internships"
+      id: "Tersedia untuk Peluang Profesional / Magang",
+      en: "Available for Projects & Internships"
     },
     bio: {
-      id: "Saya adalah mahasiswa jurusan Information Systems di Telkom University dan alumni SMK Telkom Banjarbaru jurusan Rekayasa Perangkat Lunak (RPL) yang memiliki minat tinggi dalam pengembangan perangkat lunak dan teknologi digital. Terbiasa mengerjakan proyek berbasis website dan aplikasi menggunakan berbagai teknologi seperti HTML, CSS, JavaScript, PHP, Laravel, Python, Flask, CodeIgniter 4, serta Flutter & Firebase. Memiliki pengalaman dalam mengerjakan proyek individu maupun kelompok, serta aktif berperan sebagai asisten praktikum Algoritma dan Pemrograman. Saya memiliki pemahaman yang kuat dalam bidang Business Process Management dan arsitektur Enterprise Resource Planning (ERP), serta selalu bersemangat untuk terus berkembang dan memperoleh pengalaman profesional di dunia kerja.",
-      en: "Information Systems undergraduate at Telkom University and Software Engineering (RPL) alumnus of SMK Telkom Banjarbaru with deep passion in software development and digital technologies. Experienced in building web and mobile applications using HTML, CSS, JavaScript, PHP, Laravel, Python, Flask, CodeIgniter 4, as well as Flutter & Firebase. Experienced in delivering individual and group projects, and actively serving as a Teaching Assistant for Algorithm and Programming. Possesses a solid understanding of Business Process Management and Enterprise Resource Planning (ERP) architecture, eager to grow and acquire professional industry experience."
+      id: "Mahasiswa Sistem Informasi di Telkom University dan alumni SMK Telkom Banjarbaru (RPL). Berfokus pada perancangan aplikasi web, mobile, dan sistem enterprise menggunakan Laravel, Flutter, Python, dan arsitektur database modern.",
+      en: "Information Systems undergraduate at Telkom University and Software Engineering (RPL) alumnus of SMK Telkom Banjarbaru. Focused on developing structured web, mobile, and enterprise systems using Laravel, Flutter, Python, and modern relational databases."
     }
   },
 
   metrics: [
     {
       value: "4+",
-      label: { id: "Proyek Rekayasa Selesai", en: "Core Projects Shipped" },
+      label: { id: "Proyek Utama Selesai", en: "Core Projects Shipped" },
       sub: { id: "E-Commerce, Web Prestasi, Mobile, Python", en: "E-Commerce, Portal, Mobile, Python" }
     },
     {
@@ -61,9 +57,9 @@ export const portfolioData = {
       sub: { id: "Laravel, Flutter, Python, Flask, CI4, MySQL", en: "Laravel, Flutter, Python, Flask, CI4, MySQL" }
     },
     {
-      value: "Telkom",
+      value: "Tel-U",
       label: { id: "Telkom University & SMK Telkom", en: "Telkom University & SMK Telkom" },
-      sub: { id: "Sistem Informasi & Rekayasa Perangkat Lunak", en: "Information Systems & Software Engineering" }
+      sub: { id: "Sistem Informasi & RPL", en: "Information Systems & RPL" }
     },
     {
       value: "100%",
@@ -82,7 +78,7 @@ export const portfolioData = {
       tag: "Fullstack Web Application",
       category: "E-Commerce & Retail",
       headline: {
-        id: "Toko digital terpadu untuk buku, peralatan komputer, dan sepatu.",
+        id: "Toko digital terpadu untuk buku, perangkat komputer, dan sepatu.",
         en: "Integrated digital storefront for books, computer hardware, and footwear."
       },
       description: {
@@ -278,7 +274,7 @@ export const portfolioData = {
             name: "Profil",
             badge: "Home",
             title: "Profil & Quick Stats",
-            summary: "Menampilkan bio singkat, pendidikan di Telkom University & SMK Telkom, dan keahlian.",
+            summary: "Menampilkan bio ringkas, pendidikan di Telkom University & SMK Telkom, dan status ketersediaan kerja sama.",
             stats: "Status: Mahasiswa Aktif · Domisili: Bandung"
           },
           {
@@ -318,8 +314,8 @@ export const portfolioData = {
         en: "Algorithmic implementations, data structures, and backend logic automation."
       },
       description: {
-        id: "Koleksi implementasi logika pemrograman dan pemecahan masalah algoritma menggunakan Python. Dibangun selama perkuliahan Sistem Informasi Telkom University dan peran aktif sebagai Asisten Praktikum Algoritma dan Pemrograman.",
-        en: "Collection of programming logic implementations and algorithmic problem-solving using Python. Developed through Information Systems coursework at Telkom University and active role as an Algorithm & Programming Teaching Assistant."
+        id: "Koleksi implementasi logika pemrograman dan pemecahan masalah algoritma menggunakan Python. Dibangun untuk memproses manipulasi data terstruktur, efisiensi pencarian, dan integrasi backend API ringan.",
+        en: "Collection of programming logic implementations and algorithmic problem-solving using Python. Developed for structured data manipulation, search efficiency, and lightweight backend API integration."
       },
       stack: ["Python", "Flask", "Data Structures", "Algorithms", "Automation"],
       architecture: "Modular Python Scripting & Clean Function Pipelines",
@@ -329,8 +325,8 @@ export const portfolioData = {
           en: "Efficient data transformation, sorting logic, and recursive algorithm pipelines."
         },
         {
-          id: "Pengalaman praktis membimbing mahasiswa dalam pemahaman sintaks dan debugging Python.",
-          en: "Practical mentoring experience assisting students in Python syntax and runtime debugging."
+          id: "Penyusunan fungsi komputasi modular dengan dokumentasi kode yang rapi.",
+          en: "Modular computational function pipelines with structured code documentation."
         },
         {
           id: "Integrasi microservice backend sederhana menggunakan framework Python Flask.",
@@ -384,13 +380,12 @@ export const portfolioData = {
       domain: { id: "Sistem Enterprise & Proses Bisnis", en: "Enterprise Systems & BPM" },
       icon: "Layers",
       description: {
-        id: "Pemahaman proses bisnis perusahaan, arsitektur enterprise, dan asisten laboratorium.",
-        en: "Business process workflows, enterprise architecture, and academic lab leadership."
+        id: "Pemahaman proses bisnis perusahaan dan arsitektur enterprise.",
+        en: "Business process workflows and enterprise software architecture."
       },
       skills: [
-        { name: "Business Process Management (BPM)", level: "Memahami", badge: "Business Systems", detail: "Workflow modeling, process optimization, business logic" },
-        { name: "Enterprise Resource Planning (ERP)", level: "Memahami", badge: "Enterprise Arch", detail: "Modular integrated systems, resource allocation flows" },
-        { name: "Asisten Praktikum Algoritma", level: "Aktif", badge: "Academic Role", detail: "Membimbing praktikum Algoritma & Pemrograman di kampus" }
+        { name: "Business Process Management (BPM)", level: "Memahami", badge: "Business Systems", detail: "Pemetaan workflow, optimasi proses bisnis, business logic" },
+        { name: "Enterprise Resource Planning (ERP)", level: "Memahami", badge: "Enterprise Arch", detail: "Arsitektur sistem modular terintegrasi dan alokasi sumber daya" }
       ]
     },
     {
@@ -412,15 +407,15 @@ export const portfolioData = {
     {
       name: { id: "Kerja Tim & Kolaborasi", en: "Team Collaboration" },
       desc: {
-        id: "Terbiasa bekerja sama dalam proyek tim akademik maupun praktikum, menyelaraskan pembagian tugas dan integrasi kode.",
-        en: "Experienced in collaborative teamwork across academic and lab projects, coordinating modules and code integration."
+        id: "Terbiasa bekerja sama dalam proyek tim akademik maupun teknis, menyelaraskan pembagian tugas dan integrasi kode.",
+        en: "Experienced in collaborative teamwork, delegating module ownership, and coordinating code integration."
       }
     },
     {
       name: { id: "Komunikasi Proaktif", en: "Proactive Communication" },
       desc: {
-        id: "Mampu menjelaskan konsep algoritma dan sistem dengan lugas, baik kepada mahasiswa praktikum maupun rekan kerja tim.",
-        en: "Able to communicate algorithmic and system concepts clearly to lab students and engineering peers alike."
+        id: "Menyampaikan ide teknis dan arsitektur solusi secara lugas dan terbuka dalam diskusi tim.",
+        en: "Articulating technical concepts and architectural solutions clearly and constructively."
       }
     },
     {
@@ -448,7 +443,7 @@ export const portfolioData = {
   educationHistory: [
     {
       institution: "Telkom University",
-      period: "2026",
+      period: "2026 — Sekarang",
       status: { id: "Mahasiswa Aktif", en: "Active Undergraduate" },
       location: "Bandung, Jawa Barat, Indonesia",
       major: {
@@ -456,12 +451,11 @@ export const portfolioData = {
         en: "B.Sc. in Information Systems"
       },
       summary: {
-        id: "Fokus pada rekayasa sistem informasi enterprise, Business Process Management (BPM), arsitektur Enterprise Resource Planning (ERP), serta aktif berperan sebagai Asisten Praktikum Algoritma dan Pemrograman.",
-        en: "Focusing on enterprise information systems, Business Process Management (BPM), Enterprise Resource Planning (ERP) architecture, and actively serving as an Algorithm & Programming Teaching Assistant."
+        id: "Fokus pada rekayasa sistem informasi enterprise, Business Process Management (BPM), arsitektur Enterprise Resource Planning (ERP), serta pengembangan perangkat lunak berbasis data.",
+        en: "Focusing on enterprise information systems, Business Process Management (BPM), Enterprise Resource Planning (ERP) architecture, and data-driven software engineering."
       },
       highlights: [
-        "Asisten Praktikum Algoritma & Pemrograman",
-        "Pemahaman Business Process Management (BPM)",
+        "Business Process Management (BPM) & Workflow Modeling",
         "Arsitektur Enterprise Resource Planning (ERP)",
         "Pengembangan Logika Pemrograman Lanjutan (Python & Flask)"
       ]
@@ -476,7 +470,7 @@ export const portfolioData = {
         en: "Software Engineering"
       },
       summary: {
-        id: "Menyelesaikan pendidikan kejuruan vokasi bidang Rekayasa Perangkat Lunak. Mempelajari fundamental pemrograman web (PHP, Laravel, MySQL), aplikasi mobile (Flutter & Firebase), dan budaya disiplin industri Telkom.",
+        id: "Menyelesaikan pendidikan kejuruan vokasi bidang Rekayasa Perangkat Lunak. Menguasai fundamental pemrograman web (PHP, Laravel, MySQL), aplikasi mobile (Flutter & Firebase), dan budaya disiplin industri Telkom.",
         en: "Graduated with vocational software engineering credentials. Mastered fullstack web fundamentals (PHP, Laravel, MySQL), mobile app development (Flutter & Firebase), and Telkom industrial engineering standards."
       },
       highlights: [

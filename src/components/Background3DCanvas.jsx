@@ -158,3 +158,4 @@ export function Background3DCanvas({ scrollProgress = 0 }) {
     />
   );
 }
+

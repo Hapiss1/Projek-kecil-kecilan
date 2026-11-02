@@ -391,7 +391,7 @@ export function ProjectsShowcase({ lang, content }) {
                 <div className="project-sandbox-col">
                   <div className="sandbox-header">
                     <span className="sandbox-title">Algorithmic Pipeline Inspector</span>
-                    <span className="sandbox-badge mono-data">Telkom Lab Assistant Suite</span>
+                    <span className="sandbox-badge mono-data">Python Algorithmic Logic Suite</span>
                   </div>
 
                   {/* Snippet Selector Tabs */}
@@ -418,7 +418,7 @@ export function ProjectsShowcase({ lang, content }) {
 
                   <div className="python-code-box">
                     <div style={{ color: '#64748b', marginBottom: '8px' }}>
-                      # Python 3.10 — Asisten Praktikum Algoritma Telkom University
+                      # Python 3.10 — Structured Algorithmic Pipeline
                     </div>
                     <div>
                       <span style={{ color: '#7dd3fc' }}>def</span>{' '}
@@ -446,7 +446,7 @@ export function ProjectsShowcase({ lang, content }) {
                       if data[mid] == query: <span style={{ color: '#7dd3fc' }}>return</span> mid
                     </div>
                     <div style={{ marginTop: '12px', paddingTop: '8px', borderTop: '1px solid rgba(255,255,255,0.08)', color: '#34d399', fontSize: '0.75rem' }}>
-                      ✓ Syntax verified · Executed in Telkom Lab environment
+                      ✓ Syntax verified · Algorithmic execution verified
                     </div>
                   </div>
                 </div>

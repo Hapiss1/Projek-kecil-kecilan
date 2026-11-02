@@ -1,89 +1,79 @@
 import React from 'react';
 import { 
   ArrowDown, 
-  FileDown, 
-  Mail, 
-  Phone, 
   MapPin, 
   GraduationCap, 
-  ArrowUpRight 
+  ArrowUpRight,
+  Sparkles
 } from 'lucide-react';
 
 /**
- * Hero Component (Anti-Slop Editorial Architecture)
- * Follows Two-Line Headline Rule, incorporates authentic portrait photo,
- * and features clean metrics strip.
+ * Hero Component (Dribbble Dymas Alfin Editorial Style)
+ * 
+ * Features:
+ * - Fluid, oversized headline
+ * - Ultra-concise 2-sentence bio
+ * - Authentic portrait with sleek editorial frame
+ * - Direct primary CTAs without CV buttons
  */
-export function Hero({ lang, content, onOpenCv }) {
+export function Hero({ lang, content }) {
   const { personal, metrics } = content;
 
   return (
     <section className="hero-section">
       <div className="container">
         
-        {/* Main Hero Split Grid */}
         <div className="hero-grid">
           
-          {/* Left: Editorial Content */}
+          {/* Left Column: Editorial Introduction */}
           <div className="hero-content">
             
-            {/* Location & Academic Meta */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px', color: '#94a3b8', fontSize: '0.85rem' }}>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <MapPin size={15} color="#7dd3fc" />
+            {/* Minimal Status & Location Header */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '24px', flexWrap: 'wrap' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(125, 211, 252, 0.08)', border: '1px solid rgba(125, 211, 252, 0.2)', padding: '6px 14px', borderRadius: '9999px', fontSize: '0.8rem', color: '#7dd3fc', fontWeight: '600' }}>
+                <span className="live-pulse-dot" style={{ width: '6px', height: '6px' }} />
+                <span>{personal.availability[lang]}</span>
+              </div>
+              
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#94a3b8', fontSize: '0.85rem' }}>
+                <MapPin size={14} color="#7dd3fc" />
                 <span>{personal.location}</span>
-              </span>
-              <span style={{ color: 'rgba(255,255,255,0.2)' }}>/</span>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <GraduationCap size={15} color="#7dd3fc" />
-                <span>Telkom University & SMK Telkom</span>
-              </span>
+              </div>
             </div>
 
-            {/* Authoritative Two-Line Headline */}
+            {/* Oversized Dynamic Headline */}
             <h1 className="hero-headline">
               Muhammad Hafizh Farsya.<br />
               <span style={{ color: 'var(--accent)' }}>Information Systems & Engineering.</span>
             </h1>
 
-            {/* Supporting Sub-Lead */}
+            {/* Concise Bio */}
             <p className="hero-lead">
               {personal.bio[lang]}
             </p>
 
-            {/* Primary Action Buttons */}
+            {/* Direct Primary Action Buttons */}
             <div className="hero-cta-wrap">
               <a href="#proyek" className="btn-hero-primary">
-                <span>{lang === 'id' ? "Jelajahi Karya" : "Explore Projects"}</span>
+                <span>{lang === 'id' ? "Lihat Karya Pilihan" : "View Selected Works"}</span>
                 <ArrowDown size={17} />
               </a>
 
-              <button 
-                type="button" 
-                onClick={onOpenCv} 
-                className="btn-hero-outline"
-                title="Buka dokumen ringkasan CV ATS"
-              >
-                <FileDown size={17} />
-                <span>{lang === 'id' ? "Unduh CV ATS" : "ATS Resume"}</span>
-              </button>
-
               <a 
-                href={`https://wa.me/${personal.phoneClean}?text=Halo%20Hafizh,%20saya%20melihat%20portofolio%20Anda`} 
+                href={`https://wa.me/${personal.phoneClean}?text=Halo%20Hafizh,%20saya%20melihat%20portofolio%20Anda`}
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="btn-hero-outline"
-                style={{ borderColor: 'rgba(16, 185, 129, 0.4)', color: '#34d399' }}
-                title="Hubungi via WhatsApp"
+                style={{ borderColor: 'rgba(125, 211, 252, 0.3)' }}
               >
-                <Phone size={16} />
-                <span>WhatsApp</span>
+                <span>{lang === 'id' ? "Mulai Diskusi" : "Let's Talk"}</span>
+                <ArrowUpRight size={16} />
               </a>
             </div>
 
           </div>
 
-          {/* Right: Authentic Portrait Frame */}
+          {/* Right Column: Authentic Editorial Portrait */}
           <div className="hero-portrait-col">
             <div className="hero-portrait-card">
               <div className="portrait-image-wrap">
@@ -99,7 +89,7 @@ export function Hero({ lang, content, onOpenCv }) {
               <div className="portrait-meta">
                 <div className="portrait-name">{personal.name}</div>
                 <div className="portrait-sub">
-                  {lang === 'id' ? "Sistem Informasi · Telkom University" : "Information Systems · Telkom University"}
+                  Telkom University & SMK Telkom Banjarbaru
                 </div>
               </div>
             </div>
@@ -107,7 +97,7 @@ export function Hero({ lang, content, onOpenCv }) {
 
         </div>
 
-        {/* Tone-Step Metrics Strip */}
+        {/* Minimal Metrics Strip */}
         <div className="metrics-strip" style={{ marginTop: '72px', borderRadius: 'var(--radius-md)' }}>
           <div className="metrics-grid">
             {metrics.map((m, idx) => (
