@@ -1,151 +1,121 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Code2, 
+  FileText, 
+  Languages, 
   Menu, 
   X, 
-  MessageSquare, 
-  FileText, 
-  Send,
-  Languages,
-  CheckCircle2
+  ArrowUpRight 
 } from 'lucide-react';
 
+/**
+ * Navbar Component (HUD Minimalist Architecture)
+ * Left: Identity & Live Bandung Time (WIB)
+ * Center: Clean navigation links
+ * Right: Availability, Language Switcher, ATS CV Modal Trigger
+ */
 export function Navbar({ lang, setLang, content, onOpenCv }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [timeStr, setTimeStr] = useState('');
 
+  // Scroll listener for subtle tone-step background
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
+      setScrolled(window.scrollY > 25);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Live Bandung Time (WIB, UTC+7)
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      // Format time in Asia/Jakarta (WIB)
+      const formatted = new Intl.DateTimeFormat('id-ID', {
+        timeZone: 'Asia/Jakarta',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      }).format(now);
+      setTimeStr(`${formatted} WIB`);
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   const navLinks = [
-    { href: "#proyek", label: lang === 'id' ? "Proyek" : "Projects" },
-    { href: "#workbench", label: lang === 'id' ? "Live Simulator" : "Live Simulator" },
+    { href: "#proyek", label: lang === 'id' ? "Karya & Rekayasa" : "Projects" },
     { href: "#keahlian", label: lang === 'id' ? "Keahlian" : "Skills" },
     { href: "#pendidikan", label: lang === 'id' ? "Pendidikan" : "Education" },
     { href: "#kontak", label: lang === 'id' ? "Kontak" : "Contact" },
   ];
 
   return (
-    <header className={`navbar-header ${scrolled ? 'navbar-scrolled' : ''}`}>
-      <div className="container navbar-inner">
-        {/* Brand */}
-        <a href="#" className="navbar-brand">
-          <div className="brand-icon">
-            <Code2 size={20} className="brand-svg" />
-          </div>
-          <div className="brand-text">
-            <span className="brand-name">{content.personal.shortName}</span>
-            <span className="brand-role">{content.personal.school} · RPL</span>
-          </div>
-        </a>
-
-        {/* Desktop Nav */}
-        <nav className="desktop-nav" aria-label="Navigasi Utama">
-          {navLinks.map((link) => (
-            <a key={link.href} href={link.href} className="nav-link">
-              {link.label}
+    <header className={`navbar-hud ${scrolled ? 'scrolled' : ''}`}>
+      <div className="container">
+        <div className="navbar-inner">
+          
+          {/* Brand & Live Bandung Time HUD */}
+          <div className="nav-brand-group">
+            <a href="#" className="nav-brand-name">
+              {content.personal.shortName}
             </a>
-          ))}
-        </nav>
-
-        {/* Right Actions */}
-        <div className="navbar-actions">
-          {/* Status Badge */}
-          <div className="status-indicator-pill" title={content.personal.availability[lang]}>
-            <span className="pulse-dot"></span>
-            <span className="status-text">{lang === 'id' ? "Siap PKL" : "Open for PKL"}</span>
+            <div className="nav-live-status" title="Zona Waktu Bandung, Jawa Barat (WIB)">
+              <span className="live-pulse-dot" />
+              <span className="mono-data">{timeStr || "Bandung, ID"}</span>
+            </div>
           </div>
 
-          {/* Lang Toggle */}
-          <button 
-            type="button" 
-            className="lang-btn" 
-            onClick={() => setLang(lang === 'id' ? 'en' : 'id')}
-            title={lang === 'id' ? "Ganti ke Bahasa Inggris" : "Switch to Indonesian"}
-            aria-label="Pilih Bahasa"
-          >
-            <Languages size={15} />
-            <span className="lang-code">{lang.toUpperCase()}</span>
-          </button>
+          {/* Desktop Navigation Links */}
+          <nav className="nav-links-menu" aria-label="Navigasi Utama">
+            {navLinks.map((link) => (
+              <li key={link.href} className="nav-link-item">
+                <a href={link.href}>{link.label}</a>
+              </li>
+            ))}
+          </nav>
 
-          {/* CV Button */}
-          <button 
-            type="button" 
-            className="cv-btn"
-            onClick={onOpenCv}
-            title="Lihat Ringkasan CV ATS"
-          >
-            <FileText size={16} />
-            <span className="cv-btn-text">CV ATS</span>
-          </button>
+          {/* Actions: Lang toggle + ATS CV button */}
+          <div className="nav-actions-group">
+            <button
+              type="button"
+              className="btn-lang-toggle"
+              onClick={() => setLang(lang === 'id' ? 'en' : 'id')}
+              title={lang === 'id' ? "Ganti ke Bahasa Inggris" : "Switch to Indonesian"}
+              aria-label="Pilih Bahasa"
+            >
+              <Languages size={14} />
+              <span className="mono-data">{lang.toUpperCase()}</span>
+            </button>
 
-          {/* Direct CTA */}
-          <a 
-            href={`https://wa.me/${content.personal.phoneClean}?text=Halo%20Hafizh,%20saya%20melihat%20portofolio%20Anda`} 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="cta-contact-btn"
-          >
-            <Send size={15} />
-            <span>{lang === 'id' ? "Hubungi" : "Connect"}</span>
-          </a>
+            <button
+              type="button"
+              className="btn-cv-trigger"
+              onClick={onOpenCv}
+              title="Pratinjau & Cetak CV ATS"
+            >
+              <FileText size={15} />
+              <span>CV ATS</span>
+            </button>
 
-          {/* Mobile Menu Toggle */}
-          <button 
-            type="button" 
-            className="mobile-toggle-btn"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Buka Menu"
-          >
-            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
+            {/* Mobile Menu Button */}
+            <button
+              type="button"
+              className="btn-mobile-toggle"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu navigasi"
+              style={{ display: 'none', color: '#f8fafc', padding: '6px' }}
+            >
+              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
+
         </div>
       </div>
-
-      {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <div className="mobile-drawer">
-          <nav className="mobile-nav-links">
-            {navLinks.map((link) => (
-              <a 
-                key={link.href} 
-                href={link.href} 
-                className="mobile-nav-link"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {link.label}
-              </a>
-            ))}
-            <button 
-              type="button"
-              className="mobile-cv-action"
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenCv();
-              }}
-            >
-              <FileText size={18} />
-              <span>{lang === 'id' ? "Buka Ringkasan CV ATS" : "View ATS Resume"}</span>
-            </button>
-            <a 
-              href={`https://wa.me/${content.personal.phoneClean}?text=Halo%20Hafizh`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mobile-cta-action"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <Send size={18} />
-              <span>WhatsApp (+62811-5003-018)</span>
-            </a>
-          </nav>
-        </div>
-      )}
     </header>
   );
 }
-
