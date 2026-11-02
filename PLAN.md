@@ -3,25 +3,25 @@
 
 > **Vision**: Portofolio 3D interaktif berstandar Awwwards SOTD untuk calon Software Engineer & Mahasiswa Sistem Informasi.  
 > **Aesthetic Tone**: *Clean, Intentional, High Technical Depth* (Anti-Slop, Deep Midnight `#080C14` & Ice Blue `#7DD3FC`, Swiss Editorial Typography, 60fps Mobile Performance).  
-> **Tech Stack**: React 18 (Vite), Three.js & React Three Fiber (`@react-three/fiber` v8, `@react-three/drei` v9), GSAP v3, Lenis.
+> **Tech Stack**: React 18 (Vite), Three.js & React Three Fiber (`@react-three/fiber` v8, `@react-three/drei` v9), GSAP v3, Lenis, Web Audio API.
 
 ---
 
 ## 1. Architectural Decisions (ADR)
 | Decision | Rationale |
 |---|---|
-| **React Three Fiber (R3F) v8 + Drei v9** | Kompatibel penuh dengan React 18, arsitektur scene graph WebGL deklaratif, efisien mengelola shader & animasi per-frame via `useFrame`. |
-| **Procedural 3D Object (No GLTF)** | Objek 3D dibuat murni dengan formula matematika / vertex-fragment shader (fluid glass torus knot + technical wireframe cage), ukuran 0KB asset download, 60 FPS di mobile. |
-| **Hover WebGL Liquid Image Distortion** | Menggantikan kartu generik dengan tipografi editorial raksasa (`01`, `02`, `03`, `04`) yang memicu canvas WebGL distorsi riak cairan (`sin`/`cos` displacement + chromatic aberration RGB split) saat kursor di-hover. |
-| **GSAP Context + ScrollTrigger** | Animasi teks staggered reveal (translateY + clip-path) yang terkoordinasi dengan lifecycle React (`gsap.context()` untuk zero memory leak). |
-| **Studio Freight Lenis Global Engine** | Inertia scrolling yang sinkron dengan loop requestAnimationFrame WebGL, menjamin pergerakan halaman berbobot dan mulus (*buttery smooth*). |
-| **Architectural Deep-Dive Drawer** | Inspeksi teknis mendalam per proyek (arsitektur sistem, skema relasional tabel, highlight kode) via drawer samping responsif. |
+| **Cinematic WebGL Preloader** | Loading screen editorial minimalis 0%-100% yang menyembunyikan kompilasi shader WebGL dan membuka tirai transisi via GSAP (`power4.inOut`). |
+| **Magnetic Custom Cursor** | Kursor presisi tinggi dengan `mix-blend-mode: difference` dan kalkulasi vektor jarak untuk daya tarik magnetis pada tautan & baris proyek. |
+| **Engineering / Debug Mode** | Mode hacker-style monokromatik (`#030704` & `#10B981`), memicu wireframe 3D murni dan FPS telemetry counter untuk memukau senior engineer. |
+| **Micro-Audio Sound Design (Web Audio API)** | Sintesis suara prosedural murni menggunakan `AudioContext` (0 KB audio file download) untuk ketukan mekanis subtil dan ambient hum responsif terhadap scroll velocity. |
+| **Fluid Case Study Page Transition** | Transisi layar penuh tanpa reload kasar dengan transisi gelombang cairan WebGL menuju studi kasus arsitektur mendalam. |
 
 ---
 
 ## 2. Phased Roadmap
 - [x] **Phase 1: Project Setup & Core Dependencies** (Vite, R3F v8, Drei v9, GSAP v3, Lenis, DPR management)
-- [x] **Phase 2: Core Foundation & Hero Section** (`App.jsx` + `SmoothScrollProvider` + R3F Canvas + Procedural Mesh + GSAP Reveal)
+- [x] **Phase 2: Core Foundation & Hero Section** (`App.jsx` + R3F Canvas + Procedural Mesh + GSAP Reveal)
 - [x] **Phase 3: WebGL Liquid Distortion Project Showcase** (Editorial Typography list + Floating WebGL Image Displacement Shader + Architectural Drawer)
 - [x] **Phase 4: Skills Matrix & Academic Track** (Editorial Data Layout, Zero dead code, GSAP Staggered Scroll Reveals)
 - [x] **Phase 5: High-Impact Direct Contact HUD, Zero Dead Code Cleanup & Production Verification**
+- [/] **Phase 6: Awwwards Polish: Preloader, Magnetic Cursor, Debug Mode, Micro-Audio & Fluid Transitions** `[CURRENT FOCUS]`

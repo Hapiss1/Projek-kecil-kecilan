@@ -3,8 +3,11 @@ import {
   Languages, 
   ArrowUpRight,
   Menu,
-  X
+  X,
+  Volume2,
+  VolumeX
 } from 'lucide-react';
+import { soundEngine } from '../utils/soundEngine';
 
 /**
  * Navbar Component (HUD Minimalist Architecture)
@@ -13,6 +16,7 @@ import {
 export function Navbar({ lang = 'id', setLang, content }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [soundActive, setSoundActive] = useState(false);
   const [timeStr, setTimeStr] = useState('');
 
   // 1. Persistent Scroll State Tracking
@@ -23,7 +27,7 @@ export function Navbar({ lang = 'id', setLang, content }) {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Initial check
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -58,7 +62,12 @@ export function Navbar({ lang = 'id', setLang, content }) {
           
           {/* Brand & Live Status */}
           <div className="nav-brand-group">
-            <a href="#" className="nav-brand-name">
+            <a 
+              href="#" 
+              className="nav-brand-name"
+              onMouseEnter={() => soundEngine.playHoverTick()}
+              onClick={() => soundEngine.playMechanicalClick()}
+            >
               {content.personal.shortName}
             </a>
             <div className="nav-live-status">
@@ -73,28 +82,56 @@ export function Navbar({ lang = 'id', setLang, content }) {
           <nav className="nav-links-menu" aria-label="Navigasi Utama">
             {navLinks.map((link) => (
               <li key={link.href} className="nav-link-item">
-                <a href={link.href}>{link.label}</a>
+                <a 
+                  href={link.href}
+                  onMouseEnter={() => soundEngine.playHoverTick()}
+                  onClick={() => soundEngine.playMechanicalClick()}
+                >
+                  {link.label}
+                </a>
               </li>
             ))}
           </nav>
 
-          {/* Right Action: Language + Connect CTA + Mobile Menu Button */}
+          {/* Right Action: Sound Toggle + Language + Connect CTA + Mobile Menu */}
           <div className="nav-actions-group">
+            {/* Subtle UI Audio Toggle (Web Audio API Synthesizer) */}
+            <button
+              type="button"
+              className={`btn-sound-toggle ${soundActive ? 'is-active' : ''}`}
+              onClick={() => {
+                const active = soundEngine.toggleSound();
+                setSoundActive(active);
+              }}
+              title={soundActive ? "Nonaktifkan Micro-Audio" : "Aktifkan Subtle UI Micro-Audio (Web Audio API)"}
+              aria-label="Toggle micro audio"
+            >
+              {soundActive ? <Volume2 size={15} color="#7dd3fc" /> : <VolumeX size={15} />}
+            </button>
+
+            {/* Language Toggle */}
             <button
               type="button"
               className="btn-lang-toggle"
-              onClick={() => setLang(lang === 'id' ? 'en' : 'id')}
+              onClick={() => {
+                soundEngine.playMechanicalClick();
+                setLang(lang === 'id' ? 'en' : 'id');
+              }}
+              onMouseEnter={() => soundEngine.playHoverTick()}
               title={lang === 'id' ? "Switch to English" : "Ganti ke Bahasa Indonesia"}
             >
               <Languages size={14} />
               <span className="mono-data">{lang.toUpperCase()}</span>
             </button>
 
+            {/* Direct Connect CTA */}
             <a
               href={`https://wa.me/${content.personal.phoneClean}?text=Halo%20Hafizh,%20saya%20tertarik%20dengan%20portofolio%20Anda`}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-nav-talk"
+              onMouseEnter={() => soundEngine.playHoverTick()}
+              onClick={() => soundEngine.playMechanicalClick()}
             >
               <span>{lang === 'id' ? "Hubungi" : "Let's Talk"}</span>
               <ArrowUpRight size={15} />
@@ -103,7 +140,10 @@ export function Navbar({ lang = 'id', setLang, content }) {
             {/* Mobile Toggle Button */}
             <button
               type="button"
-              onClick={() => setMobileOpen(!mobileOpen)}
+              onClick={() => {
+                soundEngine.playMechanicalClick();
+                setMobileOpen(!mobileOpen);
+              }}
               className="btn-mobile-toggle"
               aria-label="Buka menu navigasi"
             >
@@ -122,7 +162,10 @@ export function Navbar({ lang = 'id', setLang, content }) {
                   key={link.href}
                   href={link.href}
                   className="nav-mobile-link"
-                  onClick={() => setMobileOpen(false)}
+                  onClick={() => {
+                    soundEngine.playMechanicalClick();
+                    setMobileOpen(false);
+                  }}
                 >
                   {link.label}
                 </a>

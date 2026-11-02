@@ -4,12 +4,12 @@ import { Float, MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 
 /**
- * ProceduralHeroScene
+ * ProceduralHeroMesh
  * Objek 3D WebGL Prosedural Berbobot Ringan (Tanpa GLTF).
  * Menggunakan kombinasi Torus Knot + Dynamic Shader Distortion Material.
- * Bereaksi secara organik terhadap pergerakan mouse (parallax lerp) dan frame timing.
+ * Mendukung Engineering Debug Mode (beralih ke wireframe kerangka murni).
  */
-export function ProceduralHeroMesh() {
+export function ProceduralHeroMesh({ debugMode = false }) {
   const meshRef = useRef(null);
   const wireframeRef = useRef(null);
 
@@ -35,35 +35,44 @@ export function ProceduralHeroMesh() {
 
   return (
     <Float
-      speed={2} // Kecepatan osilasi melayang
-      rotationIntensity={0.6} // Intensitas rotasi mengambang
-      floatIntensity={0.8} // Intensitas jarak mengambang
+      speed={2}
+      rotationIntensity={0.6}
+      floatIntensity={0.8}
     >
       <group>
-        {/* Core Solid Procedural Mesh dengan Dynamic Liquid Distort */}
+        {/* Core Mesh: Solid Liquid Distort di Mode Normal / Pure Wireframe di Debug Mode */}
         <mesh ref={meshRef} position={[0, 0, 0]} scale={1.2}>
-          <torusKnotGeometry args={[1.1, 0.35, 128, 32]} />
-          <MeshDistortMaterial
-            color="#0f172a"
-            emissive="#0284c7"
-            emissiveIntensity={0.15}
-            roughness={0.1}
-            metalness={0.85}
-            distort={0.35} // Distorsi wave prosedural
-            speed={2} // Frekuensi gelombang shader
-            clearcoat={1}
-            clearcoatRoughness={0.1}
-          />
+          <torusKnotGeometry args={[1.1, 0.35, debugMode ? 64 : 128, debugMode ? 16 : 32]} />
+          {debugMode ? (
+            <meshBasicMaterial
+              color="#10b981"
+              wireframe={true}
+              transparent={true}
+              opacity={0.85}
+            />
+          ) : (
+            <MeshDistortMaterial
+              color="#0f172a"
+              emissive="#0284c7"
+              emissiveIntensity={0.15}
+              roughness={0.1}
+              metalness={0.85}
+              distort={0.35}
+              speed={2}
+              clearcoat={1}
+              clearcoatRoughness={0.1}
+            />
+          )}
         </mesh>
 
-        {/* Outer Wireframe Cage untuk Sentuhan Technical Precision Awwwards */}
+        {/* Outer Wireframe Technical Cage */}
         <mesh ref={wireframeRef} position={[0, 0, 0]} scale={1.22}>
           <torusKnotGeometry args={[1.1, 0.35, 64, 16]} />
           <meshBasicMaterial
-            color="#7dd3fc"
+            color={debugMode ? "#34d399" : "#7dd3fc"}
             wireframe={true}
             transparent={true}
-            opacity={0.18}
+            opacity={debugMode ? 0.4 : 0.18}
           />
         </mesh>
       </group>
@@ -74,18 +83,28 @@ export function ProceduralHeroMesh() {
 /**
  * Lighting & Environment Rig
  */
-export function ProceduralSceneRig() {
+export function ProceduralSceneRig({ debugMode = false }) {
   return (
     <>
-      {/* Pencahayaan Ambient & Directional untuk Kedalaman Skulptural */}
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[10, 10, 10]} intensity={1.5} color="#ffffff" />
-      <pointLight position={[-10, -5, -5]} intensity={1.2} color="#38bdf8" />
-      <pointLight position={[0, 5, 5]} intensity={0.8} color="#7dd3fc" />
+      <ambientLight intensity={debugMode ? 0.8 : 0.5} />
+      <directionalLight 
+        position={[10, 10, 10]} 
+        intensity={debugMode ? 1.0 : 1.5} 
+        color={debugMode ? "#10b981" : "#ffffff"} 
+      />
+      <pointLight 
+        position={[-10, -5, -5]} 
+        intensity={1.2} 
+        color={debugMode ? "#059669" : "#38bdf8"} 
+      />
+      <pointLight 
+        position={[0, 5, 5]} 
+        intensity={0.8} 
+        color={debugMode ? "#34d399" : "#7dd3fc"} 
+      />
 
       {/* Objek 3D Prosedural Utama */}
-      <ProceduralHeroMesh />
+      <ProceduralHeroMesh debugMode={debugMode} />
     </>
   );
 }
-

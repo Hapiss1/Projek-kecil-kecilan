@@ -10,20 +10,28 @@ import { SkillsMatrix } from './components/SkillsMatrix';
 import { EducationTimeline } from './components/EducationTimeline';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
+import { Preloader } from './components/Preloader';
+import { CustomCursor } from './components/CustomCursor';
+import { DebugModeHUD } from './components/DebugModeHUD';
+import { soundEngine } from './utils/soundEngine';
 
 /**
- * App.jsx — Awwwards-Standard Foundation Architecture
+ * App.jsx — Awwwards Creative Engineering Foundation Architecture
  * 
- * Integrasi Inti:
- * 1. Global Lenis Inertia Scroll: Loop RAF 60fps dengan easing eksponensial.
- * 2. React Three Fiber (R3F) Canvas: Scene WebGL prosedural berbobot ringan (0 KB gltf assets).
- * 3. Hero Section: Tipografi editorial raksasa + staggered text reveal via GSAP context.
+ * 5 Fitur Unggulan Terintegrasi:
+ * 1. Cinematic WebGL Curtain Preloader (0% -> 100% shader compilation)
+ * 2. Magnetic Custom Cursor dengan blend-mode difference & snapping physics
+ * 3. Engineering / Debug Mode Toggle (hacker wireframe + real-time FPS telemetry)
+ * 4. Subtle UI Sound Design via Web Audio API (prosedural micro-audio & velocity hum)
+ * 5. Fluid Page Transitions (Liquid wave case study view tanpa hard reload)
  */
 export default function App() {
   const [lang, setLang] = useState('id'); // 'id' | 'en'
+  const [debugMode, setDebugMode] = useState(false);
+  const [preloaderDone, setPreloaderDone] = useState(false);
   const lenisRef = useRef(null);
 
-  // 1. Inisialisasi Global Smooth Inertia Scrolling via Lenis
+  // 1. Inisialisasi Global Smooth Inertia Scrolling & Sound Velocity Listener
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -37,14 +45,18 @@ export default function App() {
 
     lenisRef.current = lenis;
 
-    // Loop requestAnimationFrame untuk sinkronisasi render & scroll
+    // Sinkronisasi kecepatan scroll dengan Web Audio ambient hum
+    lenis.on('scroll', (e) => {
+      soundEngine.updateScrollHum(e.velocity);
+    });
+
+    // Loop requestAnimationFrame
     function raf(time) {
       lenis.raf(time);
       requestAnimationFrame(raf);
     }
     const rafId = requestAnimationFrame(raf);
 
-    // Cleanup saat unmount
     return () => {
       cancelAnimationFrame(rafId);
       lenis.destroy();
@@ -52,45 +64,59 @@ export default function App() {
   }, []);
 
   return (
-    <div className="portfolio-app-root">
+    <div className={`portfolio-app-root ${debugMode ? 'debug-mode-active' : ''}`}>
       
-      {/* 2. R3F Procedural WebGL Canvas (Fixed Background / Interactive Layer) */}
+      {/* 1. Cinematic WebGL Curtain Preloader */}
+      {!preloaderDone && (
+        <Preloader onComplete={() => setPreloaderDone(true)} />
+      )}
+
+      {/* 2. Magnetic Precision Custom Cursor */}
+      <CustomCursor />
+
+      {/* 3. Engineering / Debug Mode Telemetry & Toggle */}
+      <DebugModeHUD 
+        debugMode={debugMode} 
+        setDebugMode={setDebugMode} 
+      />
+
+      {/* 4. R3F Procedural WebGL Canvas (Fixed Interactive Background) */}
       <div className="webgl-canvas-fixed" aria-hidden="true">
         <Canvas
           camera={{ position: [0, 0, 5], fov: 45 }}
-          dpr={[1, 1.5]} // Clamped DPR: Menjamin stabilitas 60 FPS di layar Retina & HP
+          dpr={[1, 1.5]} // Clamped DPR untuk 60 FPS mobile
           gl={{
             antialias: true,
             alpha: true,
             powerPreference: 'high-performance',
           }}
         >
-          <ProceduralSceneRig />
+          <ProceduralSceneRig debugMode={debugMode} />
         </Canvas>
       </div>
 
-      {/* Floating HUD Navigation */}
+      {/* Persistent Floating HUD Navigation */}
       <Navbar 
         lang={lang} 
         setLang={setLang} 
         content={portfolioData} 
       />
 
-      {/* Main Content Flow */}
+      {/* Main Editorial Content Flow */}
       <main style={{ position: 'relative', zIndex: 2 }}>
-        {/* 3. Hero Section dengan Tipografi Editorial & GSAP Text Reveal */}
+        {/* Hero Section */}
         <HeroSection 
           content={portfolioData} 
           lang={lang} 
         />
 
-        {/* Selected Works / Projects Showcase with WebGL Liquid Image Distortion Shader */}
+        {/* Selected Works dengan WebGL Liquid Distortion & Fluid Case Studies */}
         <ProjectsShowcase 
           lang={lang} 
           content={portfolioData} 
         />
 
-        {/* Technical Matrix */}
+        {/* Swiss Technical Matrix */}
         <SkillsMatrix 
           lang={lang} 
           content={portfolioData} 
