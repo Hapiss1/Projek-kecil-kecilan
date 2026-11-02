@@ -1,41 +1,70 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 import { 
   Globe, 
   Smartphone, 
   Layers, 
   PenTool, 
-  CheckCircle, 
   Languages as LangIcon,
   Users,
-  Compass
+  CheckCircle2
 } from 'lucide-react';
 
 /**
- * SkillsMatrix Component (Swiss Editorial Clean Data Presentation)
+ * SkillsMatrix Component (Awwwards Swiss Editorial Presentation)
  * 
- * Groups competencies into 4 core software engineering domains:
+ * Mengelompokkan kompetensi ke dalam 4 domain rekayasa utama:
  * 1. Web & Backend Engineering (PHP, Laravel, CI4, Python, Flask, JS, HTML/CSS)
  * 2. Mobile & Cloud Engineering (Flutter, Dart, Firebase, MySQL)
- * 3. Enterprise Systems & BPM (BPM, ERP, Teaching Assistant)
+ * 3. Enterprise Systems & BPM (BPM, ERP, Database Architecture)
  * 4. UI/UX Design & Tooling (Figma, Canva, Git/GitHub)
  */
-export function SkillsMatrix({ lang, content }) {
+export function SkillsMatrix({ lang = 'id', content }) {
   const { skillCategories, softSkills, languages } = content;
+  const sectionRef = useRef(null);
 
   const domainIcons = [Globe, Smartphone, Layers, PenTool];
 
+  // GSAP Staggered Scroll Reveal
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        '.reveal-skill-card',
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.9,
+          stagger: 0.12,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 80%',
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="keahlian" className="skills-section">
+    <section id="keahlian" ref={sectionRef} className="skills-section">
       <div className="container">
         
         {/* Section Header */}
-        <div className="section-head">
-          <h2 className="section-headline">
-            {lang === 'id' ? "Matriks Keahlian & Sistem Enterprise" : "Technical Matrix & Enterprise Systems"}
+        <div className="section-head-editorial">
+          <div className="mono-sub accent-tag">
+            {lang === 'id' ? "02 // MATRIKS KEAHLIAN & ARSITEKTUR" : "02 // TECHNICAL MATRIX & CAPABILITIES"}
+          </div>
+          <h2 className="editorial-section-title">
+            {lang === 'id' ? "Kompetensi Rekayasa & Stack" : "Engineering Stack & Domains"}
           </h2>
-          <p className="section-sub">
+          <p className="editorial-section-desc">
             {lang === 'id'
-              ? "Kombinasi kompetensi rekayasa perangkat lunak fullstack, aplikasi mobile cross-platform, pemahaman arsitektur proses bisnis (BPM & ERP), serta rekayasa sistem yang terukur."
+              ? "Kombinasi kompetensi rekayasa perangkat lunak fullstack, aplikasi mobile cross-platform, pemahaman arsitektur proses bisnis (BPM & ERP), serta perancangan sistem yang terukur."
               : "A comprehensive stack spanning fullstack backend, cross-platform mobile, enterprise business process management (BPM & ERP), and scalable systems engineering."}
           </p>
         </div>
@@ -45,18 +74,20 @@ export function SkillsMatrix({ lang, content }) {
           {skillCategories.map((domainItem, idx) => {
             const IconComponent = domainIcons[idx] || Globe;
             return (
-              <div key={idx} className="domain-card">
+              <div key={idx} className="domain-card reveal-skill-card">
                 <div className="domain-card-head">
-                  <IconComponent size={20} className="domain-icon" />
+                  <div className="domain-icon-box">
+                    <IconComponent size={20} className="domain-icon" />
+                  </div>
                   <h3 className="domain-name">{domainItem.domain[lang]}</h3>
                 </div>
 
                 <div className="skills-chips-wrap">
                   {domainItem.skills.map((skill, sIdx) => (
                     <div key={sIdx} className="skill-chip-row">
-                      <div>
+                      <div className="skill-info-col">
                         <div className="skill-name">{skill.name}</div>
-                        <div style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '2px' }}>
+                        <div className="skill-detail-text">
                           {skill.detail}
                         </div>
                       </div>
@@ -70,23 +101,26 @@ export function SkillsMatrix({ lang, content }) {
         </div>
 
         {/* Soft Skills & Languages Split Section */}
-        <div style={{ marginTop: '56px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
+        <div className="skills-secondary-grid">
           
-          {/* Soft Skills */}
-          <div className="domain-card">
+          {/* Work Ethic & Collaboration */}
+          <div className="domain-card reveal-skill-card">
             <div className="domain-card-head">
-              <Users size={18} className="domain-icon" />
+              <div className="domain-icon-box">
+                <Users size={18} className="domain-icon" />
+              </div>
               <h3 className="domain-name">
                 {lang === 'id' ? "Etos Kerja & Kolaborasi" : "Work Ethic & Collaboration"}
               </h3>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+            <div className="secondary-skills-list">
               {softSkills.map((s, idx) => (
-                <div key={idx}>
-                  <div style={{ fontSize: '0.85rem', fontWeight: '700', color: '#f8fafc', marginBottom: '3px' }}>
-                    {s.name[lang]}
+                <div key={idx} className="secondary-skill-item">
+                  <div className="secondary-skill-title">
+                    <CheckCircle2 size={15} className="highlight-icon" />
+                    <span>{s.name[lang]}</span>
                   </div>
-                  <div style={{ fontSize: '0.8rem', color: '#94a3b8', lineHeight: '1.5' }}>
+                  <div className="secondary-skill-desc">
                     {s.desc[lang]}
                   </div>
                 </div>
@@ -95,25 +129,27 @@ export function SkillsMatrix({ lang, content }) {
           </div>
 
           {/* Languages */}
-          <div className="domain-card">
+          <div className="domain-card reveal-skill-card">
             <div className="domain-card-head">
-              <LangIcon size={18} className="domain-icon" />
+              <div className="domain-icon-box">
+                <LangIcon size={18} className="domain-icon" />
+              </div>
               <h3 className="domain-name">
                 {lang === 'id' ? "Kemampuan Bahasa" : "Language Proficiency"}
               </h3>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+            <div className="secondary-skills-list">
               {languages.map((l, idx) => (
-                <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-ground)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-sm)', padding: '12px 14px' }}>
+                <div key={idx} className="lang-proficiency-item">
                   <div>
-                    <div style={{ fontSize: '0.9rem', fontWeight: '700', color: '#f8fafc' }}>
+                    <div className="lang-name">
                       {l.language[lang]}
                     </div>
-                    <div style={{ fontSize: '0.8rem', color: '#94a3b8' }}>
+                    <div className="lang-level">
                       {l.proficiency[lang]}
                     </div>
                   </div>
-                  <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#7dd3fc', background: 'rgba(125,211,252,0.12)', padding: '4px 10px', borderRadius: '4px', fontFamily: 'var(--font-mono)' }}>
+                  <span className="lang-badge">
                     {l.badge}
                   </span>
                 </div>

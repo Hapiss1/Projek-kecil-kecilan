@@ -1,73 +1,108 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 import { 
   GraduationCap, 
   MapPin, 
   CheckCircle2, 
-  Award,
-  BookOpen
+  Calendar,
+  Building2
 } from 'lucide-react';
 
 /**
  * EducationTimeline Component (Telematics & Academic Track)
  * Displays Telkom University & SMK Telkom Banjarbaru educational milestones.
  */
-export function EducationTimeline({ lang, content }) {
+export function EducationTimeline({ lang = 'id', content }) {
   const { educationHistory } = content;
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        '.reveal-timeline-card',
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.9,
+          stagger: 0.15,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 80%',
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section id="pendidikan" className="timeline-section">
+    <section id="pendidikan" ref={sectionRef} className="timeline-section">
       <div className="container">
         
         {/* Section Header */}
-        <div className="section-head">
-          <h2 className="section-headline">
-            {lang === 'id' ? "Pendidikan & Rekam Jejak Akademik" : "Education & Academic Milestone"}
+        <div className="section-head-editorial">
+          <div className="mono-sub accent-tag">
+            {lang === 'id' ? "03 // REKAM JEJAK AKADEMIK & TELEMATIKA" : "03 // ACADEMIC MILESTONES & TELEMATICS"}
+          </div>
+          <h2 className="editorial-section-title">
+            {lang === 'id' ? "Pendidikan & Rekam Jejak" : "Education & Academic Track"}
           </h2>
-          <p className="section-sub">
+          <p className="editorial-section-desc">
             {lang === 'id'
-              ? "Perjalanan pendidikan tinggi di Telkom University dan fondasi kejuruan rekayasa perangkat lunak di SMK Telkom Banjarbaru."
-              : "Academic journey in Information Systems at Telkom University and foundational software engineering at SMK Telkom Banjarbaru."}
+              ? "Perjalanan pendidikan tinggi bidang Sistem Informasi di Telkom University dengan fondasi kuat kejuruan Rekayasa Perangkat Lunak dari SMK Telkom Banjarbaru."
+              : "Academic journey in Information Systems at Telkom University underpinned by vocational software engineering training from SMK Telkom Banjarbaru."}
           </p>
         </div>
 
         {/* Timeline Track */}
         <div className="timeline-track">
           {educationHistory.map((edu, idx) => (
-            <div key={idx} className="timeline-card">
+            <div key={idx} className="timeline-card reveal-timeline-card">
               
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '8px', marginBottom: '8px' }}>
-                <div>
-                  <h3 className="timeline-institution">{edu.institution}</h3>
-                  <div style={{ fontSize: '0.95rem', fontWeight: '600', color: '#f8fafc', marginBottom: '4px' }}>
+              <div className="timeline-card-header">
+                <div className="timeline-inst-info">
+                  <div className="timeline-inst-head">
+                    <Building2 size={18} className="timeline-icon" />
+                    <h3 className="timeline-institution">{edu.institution}</h3>
+                  </div>
+                  <div className="timeline-major-title">
                     {edu.major[lang]}
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', color: '#94a3b8' }}>
-                    <MapPin size={13} color="#7dd3fc" />
+                  <div className="timeline-location-row">
+                    <MapPin size={13} className="accent-pin" />
                     <span>{edu.location}</span>
                   </div>
                 </div>
 
-                <div style={{ textAlign: 'right' }}>
-                  <div className="timeline-period">{edu.period}</div>
-                  <span style={{ fontSize: '0.75rem', color: '#7dd3fc', background: 'rgba(125,211,252,0.12)', padding: '2px 8px', borderRadius: '4px', fontFamily: 'var(--font-mono)' }}>
+                <div className="timeline-status-col">
+                  <div className="timeline-period-badge">
+                    <Calendar size={13} />
+                    <span>{edu.period}</span>
+                  </div>
+                  <span className="timeline-status-tag">
                     {edu.status[lang]}
                   </span>
                 </div>
               </div>
 
-              <p style={{ fontSize: '0.9rem', color: '#94a3b8', lineHeight: '1.6', margin: '14px 0 16px 0' }}>
+              <p className="timeline-summary-text">
                 {edu.summary[lang]}
               </p>
 
-              {/* Highlights */}
-              <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '14px' }}>
-                <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#64748b', fontWeight: '700', marginBottom: '8px' }}>
-                  {lang === 'id' ? "Pencapaian & Fokus Utama:" : "Key Focus & Accolades:"}
+              {/* Highlights & Accolades */}
+              <div className="timeline-highlights-box">
+                <div className="timeline-highlights-label">
+                  {lang === 'id' ? "Fokus Kompetensi & Pencapaian:" : "Core Focus & Accolades:"}
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '8px' }}>
+                <div className="timeline-highlights-grid">
                   {edu.highlights.map((h, hIdx) => (
-                    <div key={hIdx} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', color: '#cbd5e1' }}>
-                      <CheckCircle2 size={15} color="#7dd3fc" style={{ flexShrink: 0 }} />
+                    <div key={hIdx} className="timeline-highlight-item">
+                      <CheckCircle2 size={15} className="highlight-icon" />
                       <span>{h}</span>
                     </div>
                   ))}

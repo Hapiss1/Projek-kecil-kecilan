@@ -1,22 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
 import { 
   Mail, 
   Phone, 
   Copy, 
   Check, 
-  Send, 
   MapPin, 
-  ArrowUpRight 
+  ArrowUpRight,
+  MessageSquare
 } from 'lucide-react';
 
 /**
- * ContactSection Component (HUD Minimalist Architecture)
+ * ContactSection Component (Awwwards HUD Minimalist Architecture)
  * Direct communication channels: WhatsApp, Email, and Copy Contact.
  */
-export function ContactSection({ lang, content }) {
+export function ContactSection({ lang = 'id', content }) {
   const { personal } = content;
+  const sectionRef = useRef(null);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        '.reveal-contact-box',
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1.0,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 80%',
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const copyToClipboard = (text, type) => {
     navigator.clipboard.writeText(text);
@@ -30,45 +55,46 @@ export function ContactSection({ lang, content }) {
   };
 
   return (
-    <section id="kontak" className="contact-section">
+    <section id="kontak" ref={sectionRef} className="contact-section">
       <div className="container">
         
-        <div className="contact-card-box">
-          <div style={{ fontSize: '0.85rem', color: '#7dd3fc', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '12px', fontFamily: 'var(--font-mono)' }}>
-            {lang === 'id' ? "Saluran Komunikasi Langsung" : "Direct Communications"}
+        <div className="contact-card-box reveal-contact-box">
+          <div className="mono-sub accent-tag" style={{ marginBottom: '16px' }}>
+            {lang === 'id' ? "04 // SALURAN KOMUNIKASI LANGSUNG" : "04 // DIRECT COMMUNICATIONS"}
           </div>
 
-          <h2 className="section-headline" style={{ marginBottom: '16px' }}>
+          <h2 className="editorial-section-title" style={{ marginBottom: '16px', maxWidth: '20ch', marginLeft: 'auto', marginRight: 'auto' }}>
             {lang === 'id' ? "Mari Membangun Solusi Bersama." : "Let's Engineer Software Together."}
           </h2>
 
-          <p style={{ margin: '0 auto 24px', fontSize: '1rem', color: '#94a3b8', lineHeight: '1.6', maxWidth: '58ch' }}>
+          <p className="contact-desc-text">
             {lang === 'id'
-              ? "Terbuka untuk peluang magang kejuruan, kolaborasi rekayasa perangkat lunak web dan mobile, atau diskusi seputar sistem informasi enterprise."
-              : "Open for professional internship opportunities, software engineering collaboration, or discussions on enterprise information systems."}
+              ? "Terbuka untuk peluang magang, proyek rekayasa perangkat lunak web dan mobile berkinerja tinggi, atau diskusi seputar sistem informasi enterprise."
+              : "Open for professional internship opportunities, high-performance web & mobile software engineering, or enterprise systems discussion."}
           </p>
 
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', color: '#64748b', fontSize: '0.85rem', marginBottom: '28px' }}>
-            <MapPin size={15} color="#7dd3fc" />
-            <span>{personal.location} (Bandung, Jawa Barat)</span>
+          <div className="contact-location-tag">
+            <MapPin size={15} className="accent-pin" />
+            <span>{personal.location}</span>
           </div>
 
           <div className="contact-actions-row">
             {/* WhatsApp */}
             <a
-              href={`https://wa.me/${personal.phoneClean}?text=Halo%20Hafizh,%20saya%20melihat%20portofolio%20Anda`}
+              href={`https://wa.me/${personal.phoneClean}?text=Halo%20Hafizh,%20saya%20tertarik%20dengan%20portofolio%20Anda`}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-contact-wa"
+              className="btn-primary-action"
             >
-              <Phone size={17} />
+              <MessageSquare size={17} />
               <span>WhatsApp: {personal.phone}</span>
+              <ArrowUpRight size={15} />
             </a>
 
             {/* Email */}
             <a
               href={`mailto:${personal.email}`}
-              className="btn-contact-email"
+              className="btn-secondary-action"
             >
               <Mail size={17} />
               <span>{personal.email}</span>
@@ -78,21 +104,11 @@ export function ContactSection({ lang, content }) {
             <button
               type="button"
               onClick={() => copyToClipboard(personal.email, 'email')}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                background: 'var(--bg-surface-elevated)',
-                color: '#cbd5e1',
-                border: '1px solid var(--border-subtle)',
-                padding: '12px 18px',
-                borderRadius: 'var(--radius-sm)',
-                fontWeight: '600',
-                fontSize: '0.85rem'
-              }}
+              className="btn-copy-action"
+              title="Salin Alamat Email"
             >
-              {copiedEmail ? <Check size={16} color="#34d399" /> : <Copy size={16} />}
-              <span>{copiedEmail ? "Email Tersalin!" : "Salin Email"}</span>
+              {copiedEmail ? <Check size={16} color="#10b981" /> : <Copy size={16} />}
+              <span>{copiedEmail ? (lang === 'id' ? "Email Tersalin!" : "Email Copied!") : (lang === 'id' ? "Salin Email" : "Copy Email")}</span>
             </button>
           </div>
 

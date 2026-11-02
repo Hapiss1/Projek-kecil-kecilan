@@ -19,7 +19,7 @@ export function Footer({ lang, content }) {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
           <span style={{ fontSize: '0.8rem', color: '#64748b' }}>
-            Built with React, Three.js & Lenis · Bandung, Indonesia
+            Built with React 18, React Three Fiber & Lenis · Bandung, Indonesia
           </span>
 
           <button

@@ -84,7 +84,7 @@ export default function App() {
           lang={lang} 
         />
 
-        {/* Selected Works / Projects Showcase (Akan dirombak menjadi WebGL Image Distortion pada langkah berikutnya) */}
+        {/* Selected Works / Projects Showcase with WebGL Liquid Image Distortion Shader */}
         <ProjectsShowcase 
           lang={lang} 
           content={portfolioData} 

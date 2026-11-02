@@ -172,3 +172,4 @@ export function ProjectDistortionCanvas({ activeProject, mousePos, projects }) {
     </div>
   );
 }
+
