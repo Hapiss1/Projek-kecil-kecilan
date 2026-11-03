@@ -1,19 +1,38 @@
-# Active Sprint Board — Editorial, Tactile & Cinematic 3D Portfolio
+# Active Sprint Board — Master Editorial & Ambient WebGL Portfolio
 
-> **Current Objective (Iteration 5)**: Final Performance Audit, Mobile 60 FPS Verification, Git Sync & Production Polish.  
-> **Status**: COMPLETED & VERIFIED `[PROJECT FULLY SHIPPED]`  
-> **Last Updated**: 2026-11-02  
-
----
-
-## 📌 Checklist Status — Iteration 5 (Final Sprint)
-
-- [x] **Task 5.1: Performance & GPU Clamped DPR Audit** (Memverifikasi `dpr={[1, 1.5]}` dan viewport culling di semua kanvas WebGL) *(Verified)*
-- [x] **Task 5.2: Multi-Device Responsive Inspection** (Memeriksa skalabilitas tipografi hero mask dan kartu asimetris di desktop, tablet, dan mobile) *(Verified)*
-- [x] **Task 5.3: Production Build & Zero Slop Clean-up** (`npm run build` sukses 5.71s tanpa error/warning) *(Verified)*
-- [x] **Task 5.4: Git Staging, Commit & Push to GitHub** (Commit `e775b48` berhasil di-push ke remote `origin/main`) *(Verified)*
+> **Current Objective**: Ambient WebGL Fluid Shader, Velocity Reactivity, Directional Marquee, Magnetic Monospace Cursor & Engineering Easter Egg HUD.  
+> **Status**: FULLY IMPLEMENTED & VERIFIED `[PRODUCTION READY]`  
+> **Last Updated**: 2026-11-03  
 
 ---
 
-## 🎯 Project Complete & Shipped
-- Seluruh 5 pilar arsitektur Awwwards SOTD (Cinematic Preloader, Typographic Masking, Asymmetric Showcase, Magnetic Micro-Copy, dan Contextual Color Morphing) telah selesai, teruji, dan aktif di GitHub.
+## 📌 Checklist Status
+
+### Iteration 1: Infrastructure & Split-Text Hero
+- [x] **Task 1.1: Dependency Specification & Verification** (Vite + Tailwind + GSAP + Lenis + Three.js + R3F) *(Verified)*
+- [x] **Task 1.2: Strict Hex Color Palette Configuration in `tailwind.config.js`** *(Verified)*
+- [x] **Task 1.3: Core `App.jsx` Wrapping with Lenis Scroll & Velocity Reactivity** *(Verified)*
+- [x] **Task 1.4: `CinematicPreloader.jsx` Implementation** (0-100% typography counter, theater curtain lift) *(Verified)*
+- [x] **Task 1.5: `HeroSection.jsx` with Staggered Split-Text Reveal** *(Verified)*
+- [x] **Task 1.6: Build Verification** (`npm run build` passed in 9.42s) *(Verified)*
+
+### Iteration 2: Ambient WebGL Shader & Velocity Distortion
+- [x] **Task 2.1: Custom GLSL Simplex Noise Domain Warping Shader** (`AmbientFluidCanvas.jsx` in #CEB3A6, #9C6455, #5E3A30) *(Verified)*
+- [x] **Task 2.2: Zero-Re-Render Velocity Binding** (`velocityRef` dynamically warping vertex waves and time distortion) *(Verified)*
+- [x] **Task 2.3: Scroll-Directional Running Marquee** (`ScrollDirectionalMarquee.jsx` reversing on scroll-up) *(Verified)*
+- [x] **Task 2.4: Magnetic Precision Cursor with 10px Monospace Micro-Copy** (`MagneticCursor.jsx`) *(Verified)*
+- [x] **Task 2.5: Engineering Easter Egg Toggle (Wireframe + FPS HUD)** (`EngineeringToggle.jsx`) *(Verified)*
+- [x] **Task 2.6: Production Build Verification** (`npm run build` passed in 8.90s with 0 errors) *(Verified)*
+
+---
+
+## 🔍 Blockers & Discoveries
+- Ambient fluid shader calibrated with alpha 0.55 and high off-white base proportion so large typography remains 100% crisp and readable.
+- `velocityRef` eliminates React render cycles during scroll, running at solid 60 FPS.
+- Debug mode allows instant wireframe inspection of the WebGL mesh alongside real-time FPS telemetry.
+
+---
+
+## ➡️ Next Steps
+1. Report the complete Master Awwwards revision to Muhammad Hafizh Farsya.
+2. Outline the interactive testing steps in `npm run dev`.

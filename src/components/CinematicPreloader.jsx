@@ -1,104 +1,109 @@
 import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 
-/**
- * CinematicPreloader Component
- * 
- * Preloader tipografi minimalis (0% - 100%) yang menyembunyikan kompilasi shader WebGL.
- * Menggunakan GSAP dengan custom easing teatrikal untuk menyingkap tirai ke atas
- * saat seluruh inisialisasi selesai.
- */
 export function CinematicPreloader({ onComplete }) {
-  const [percent, setPercent] = useState(0);
-  const [statusText, setStatusText] = useState("INITIALIZING ENGINE...");
-  const preloaderRef = useRef(null);
-  const contentRef = useRef(null);
+  const containerRef = useRef(null);
+  const counterRef = useRef(null);
+  const progressBarRef = useRef(null);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    let current = 0;
-    const interval = setInterval(() => {
-      // Step increment acak yang organik
-      const inc = Math.floor(Math.random() * 9) + 4;
-      current = Math.min(100, current + inc);
-      setPercent(current);
+    // Lock scroll saat preloader aktif
+    document.body.style.overflow = 'hidden';
 
-      if (current < 30) {
-        setStatusText("INITIALIZING R3F SCENE GRAPH...");
-      } else if (current < 65) {
-        setStatusText("COMPILING CUSTOM GLSL LIQUID SHADERS...");
-      } else if (current < 95) {
-        setStatusText("SYNCHRONIZING PROCEDURAL GEOMETRY...");
-      } else {
-        setStatusText("SYSTEMS SYNCHRONIZED · 60 FPS READY");
-        clearInterval(interval);
+    const countObj = { val: 0 };
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        onComplete: () => {
+          document.body.style.overflow = '';
+          if (onComplete) onComplete();
+        },
+      });
 
-        // Memicu animasi tirai teater GSAP saat mencapai 100%
-        setTimeout(() => {
-          const tl = gsap.timeline({
-            onComplete: () => {
-              if (onComplete) onComplete();
-            }
-          });
+      // 1. Numerik Counter dari 0% ke 100%
+      tl.to(countObj, {
+        val: 100,
+        duration: 1.8,
+        ease: 'power2.inOut',
+        onUpdate: () => {
+          setProgress(Math.floor(countObj.val));
+        },
+      });
 
-          // 1. Fade out teks counter & status
-          tl.to(contentRef.current, {
-            opacity: 0,
-            y: -30,
-            duration: 0.35,
-            ease: 'power2.in'
-          });
-
-          // 2. Tarik tirai teater ke atas dengan kurva bespoke Awwwards
-          tl.to(preloaderRef.current, {
-            yPercent: -100,
-            duration: 1.15,
-            ease: 'power4.inOut' // Easing teatrikal yang sangat halus
-          }, '-=0.1');
-        }, 180);
+      // 2. Garis Progress Hairline Melebar
+      if (progressBarRef.current) {
+        tl.to(
+          progressBarRef.current,
+          {
+            scaleX: 1,
+            duration: 1.8,
+            ease: 'power2.inOut',
+          },
+          0
+        );
       }
-    }, 40);
 
-    return () => clearInterval(interval);
+      // 3. Efek Tirai Teater Menyingkap ke Atas (Theater Curtain Lift)
+      tl.to(
+        containerRef.current,
+        {
+          yPercent: -100,
+          duration: 1.1,
+          ease: 'power4.inOut',
+        },
+        '+=0.1'
+      );
+    }, containerRef);
+
+    return () => {
+      document.body.style.overflow = '';
+      ctx.revert();
+    };
   }, [onComplete]);
 
   return (
-    <div ref={preloaderRef} className="cinematic-preloader-curtain" aria-hidden="true">
-      <div ref={contentRef} className="preloader-content-wrap">
-        
-        {/* Top Header Telemetry */}
-        <div className="preloader-header-meta">
-          <span className="mono-sub preloader-pill">
-            <span className="live-pulse-dot" />
-            <span>MUHAMMAD HAFIZH FARSYA</span>
-          </span>
-          <span className="mono-sub" style={{ color: '#64748b' }}>
-            EDITORIAL &amp; CINEMATIC · 2026
-          </span>
-        </div>
-
-        {/* Big Editorial Percentage Display */}
-        <div className="preloader-counter-box">
-          <div className="preloader-percentage-display">
-            {String(percent).padStart(2, '0')}%
-          </div>
-        </div>
-
-        {/* Dynamic Status & Progress Line */}
-        <div className="preloader-footer-meta">
-          <div className="preloader-progress-track">
-            <div 
-              className="preloader-progress-fill" 
-              style={{ width: `${percent}%` }}
-            />
-          </div>
-          <div className="preloader-status-text">
-            <span className="mono-sub accent-tag">&gt;&gt;</span>
-            <span className="mono-sub" style={{ color: '#94a3b8' }}>{statusText}</span>
-          </div>
-        </div>
-
+    <aside
+      ref={containerRef}
+      aria-label="System Initializing Preloader"
+      className="fixed inset-0 z-50 bg-base text-ink flex flex-col justify-between p-8 sm:p-16 select-none border-b border-neutral-line/30"
+      style={{ willChange: 'transform' }}
+    >
+      {/* Top Metadata */}
+      <div className="flex items-center justify-between text-xs tracking-widest uppercase text-neutral-line">
+        <span className="font-semibold text-ink">MHF / 2026</span>
+        <span>Initializing Systems &amp; WebGL</span>
       </div>
-    </div>
+
+      {/* Center: Giant Editorial Percentage Counter */}
+      <div className="my-auto">
+        <div className="overflow-hidden">
+          <div
+            ref={counterRef}
+            className="text-[20vw] sm:text-[18vw] font-black leading-none tracking-ultra text-ink font-sans flex items-baseline"
+          >
+            <span>{String(progress).padStart(2, '0')}</span>
+            <span className="text-[6vw] font-light text-earth-terracotta ml-2">%</span>
+          </div>
+        </div>
+
+        {/* Minimal Progress Line */}
+        <div className="w-full max-w-xl h-[1px] bg-neutral-line/20 mt-4 overflow-hidden">
+          <div
+            ref={progressBarRef}
+            className="w-full h-full bg-earth-terracotta origin-left scale-x-0"
+          />
+        </div>
+      </div>
+
+      {/* Bottom Metadata */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs tracking-wider text-neutral-line gap-2">
+        <p className="font-mono text-[11px] text-ink">
+          [STATUS: COMPILING SHADERS &amp; CALCULATING INERTIA]
+        </p>
+        <p className="font-light">
+          Muhammad Hafizh Farsya — Software Engineering
+        </p>
+      </div>
+    </aside>
   );
 }
-

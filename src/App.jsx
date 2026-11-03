@@ -2,43 +2,30 @@ import React, { useState, useEffect, useRef } from 'react';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { portfolioData } from './data/portfolioData';
-import { HeroSection } from './components/HeroSection';
-import { Navbar } from './components/Navbar';
-import { ProjectsShowcase } from './components/ProjectsShowcase';
-import { SkillsMatrix } from './components/SkillsMatrix';
-import { EducationTimeline } from './components/EducationTimeline';
-import { ContactSection } from './components/ContactSection';
-import { Footer } from './components/Footer';
 import { CinematicPreloader } from './components/CinematicPreloader';
-import { FilmGrainOverlay } from './components/FilmGrainOverlay';
-import { CustomCursor } from './components/CustomCursor';
-import { DebugModeHUD } from './components/DebugModeHUD';
-import { soundEngine } from './utils/soundEngine';
+import { MagneticCursor } from './components/MagneticCursor';
+import { HeroSection } from './components/HeroSection';
+import { ScrollDirectionalMarquee } from './components/ScrollDirectionalMarquee';
+import { EditorialProjects } from './components/EditorialProjects';
+import { EditorialCapabilities } from './components/EditorialCapabilities';
+import { EditorialProfileEducation } from './components/EditorialProfileEducation';
+import { EditorialContactFooter } from './components/EditorialContactFooter';
+import { EngineeringToggle } from './components/EngineeringToggle';
+import { portfolioData } from './data/portfolioData';
 
-/**
- * App.jsx — Awwwards Creative Engineering Foundation Architecture
- * 
- * 5 Fitur Unggulan Terintegrasi:
- * 1. Cinematic WebGL Curtain Preloader (0% -> 100% shader compilation)
- * 2. Magnetic Custom Cursor dengan blend-mode difference & snapping physics
- * 3. Engineering / Debug Mode Toggle (hacker wireframe + real-time FPS telemetry)
- * 4. Subtle UI Sound Design via Web Audio API (prosedural micro-audio & velocity hum)
- * 5. Fluid Page Transitions (Liquid wave case study view tanpa hard reload)
- */
+gsap.registerPlugin(ScrollTrigger);
+
 export default function App() {
-  const [lang, setLang] = useState('id'); // 'id' | 'en'
-  const [debugMode, setDebugMode] = useState(false);
-  const [preloaderDone, setPreloaderDone] = useState(false);
+  const [isPreloaderDone, setIsPreloaderDone] = useState(false);
+  const [isWireframe, setIsWireframe] = useState(false);
   const lenisRef = useRef(null);
+  const velocityRef = useRef(0);
 
-  // 1. Inisialisasi Global Smooth Inertia Scrolling & GSAP ScrollTrigger Integration
+  // 1. Inisialisasi Lenis Smooth Inertia Scroll & Sinkronisasi Ticker GSAP
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
     const lenis = new Lenis({
       duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential ease-out
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Snappy exponential ease-out
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
@@ -48,97 +35,123 @@ export default function App() {
 
     lenisRef.current = lenis;
 
-    // Sinkronisasi frame-perfect antara Lenis, ScrollTrigger, dan Velocity Skew
+    // Sinkronisasi frame-perfect antara Lenis & GSAP ScrollTrigger
     lenis.on('scroll', (e) => {
       ScrollTrigger.update();
-      soundEngine.updateScrollHum(e.velocity);
-      // Sinkronisasi skew organik (maksimal 2.5 deg agar tidak mendistorsi keterbacaan)
-      const clampedSkew = Math.max(-2.5, Math.min(2.5, e.velocity * 0.04));
+      velocityRef.current = e.velocity;
+
+      // Mengikat kecepatan scroll ke CSS transform skew mikro (maks ±1.5deg)
+      const clampedSkew = Math.max(-1.5, Math.min(1.5, e.velocity * 0.03));
       document.documentElement.style.setProperty('--scroll-skew', `${clampedSkew}deg`);
     });
 
-    // Loop requestAnimationFrame
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    const rafId = requestAnimationFrame(raf);
+    // Jalankan Lenis pada clock frame tunggal GSAP ticker
+    const handleTicker = (time) => {
+      lenis.raf(time * 1000);
+    };
+
+    gsap.ticker.add(handleTicker);
+    gsap.ticker.lagSmoothing(0);
 
     return () => {
-      cancelAnimationFrame(rafId);
+      gsap.ticker.remove(handleTicker);
       lenis.destroy();
     };
   }, []);
 
-  return (
-    <div className={`portfolio-app-root ${debugMode ? 'debug-mode-active' : ''}`}>
-      
-      {/* Global Cinematic Film Grain Overlay (Procedural SVG 0% GPU penalty) */}
-      <FilmGrainOverlay />
+  const scrollToSection = (targetId) => {
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(targetId, { offset: -30, duration: 1.2 });
+    }
+  };
 
-      {/* 1. Cinematic WebGL Curtain Preloader */}
-      {!preloaderDone && (
-        <CinematicPreloader onComplete={() => setPreloaderDone(true)} />
+  return (
+    <div className="min-h-screen bg-base text-ink selection:bg-earth-taupe selection:text-ink">
+      
+      {/* 1. Cinematic WebGL Theater Curtain Preloader (0-100%) */}
+      {!isPreloaderDone && (
+        <CinematicPreloader onComplete={() => setIsPreloaderDone(true)} />
       )}
 
-      {/* 2. Magnetic Precision Custom Cursor */}
-      <CustomCursor />
+      {/* 2. Magnetic Precision Cursor with Monospace Micro-Copy */}
+      <MagneticCursor />
 
-      {/* 3. Engineering / Debug Mode Telemetry & Toggle */}
-      <DebugModeHUD 
-        debugMode={debugMode} 
-        setDebugMode={setDebugMode} 
+      {/* 3. Engineering Debug Easter Egg Toggle (Wireframe + FPS HUD) */}
+      <EngineeringToggle
+        isWireframe={isWireframe}
+        onToggleWireframe={() => setIsWireframe((prev) => !prev)}
+        velocityRef={velocityRef}
       />
 
-      {/* Persistent Floating HUD Navigation */}
-      <Navbar 
-        lang={lang} 
-        setLang={setLang} 
-        content={portfolioData} 
-      />
+      {/* Editorial Header / Minimal Top Bar */}
+      <header className="fixed top-0 left-0 w-full z-40 bg-base/90 backdrop-blur-sm border-b border-neutral-line/20 px-6 sm:px-12 py-5 flex items-center justify-between text-xs tracking-wider uppercase">
+        <a
+          href="#"
+          data-microcopy="[Scroll to Top]"
+          className="font-bold text-ink hover:text-earth-terracotta transition-colors duration-200"
+        >
+          MHF — 2026
+        </a>
+        <nav className="flex items-center gap-6 sm:gap-10">
+          <button
+            onClick={() => scrollToSection('#projects')}
+            data-microcopy="[View Works]"
+            className="text-neutral-line hover:text-ink transition-colors duration-200 uppercase font-medium cursor-pointer"
+          >
+            Archive
+          </button>
+          <button
+            onClick={() => scrollToSection('#capabilities')}
+            data-microcopy="[System Stack]"
+            className="hidden sm:inline-block text-neutral-line hover:text-ink transition-colors duration-200 uppercase font-medium cursor-pointer"
+          >
+            Capabilities
+          </button>
+          <button
+            onClick={() => scrollToSection('#about')}
+            data-microcopy="[Foundation]"
+            className="hidden sm:inline-block text-neutral-line hover:text-ink transition-colors duration-200 uppercase font-medium cursor-pointer"
+          >
+            About
+          </button>
+          <button
+            onClick={() => scrollToSection('#contact')}
+            data-microcopy="[Get in Touch]"
+            className="px-3.5 py-1.5 border border-neutral-line/40 hover:bg-earth-terracotta hover:border-earth-terracotta hover:text-base transition-all duration-200 uppercase font-semibold text-[11px] cursor-pointer"
+          >
+            Dispatch
+          </button>
+        </nav>
+      </header>
 
-      {/* Main Editorial Content Flow dengan Velocity Skew Responsive Transform */}
-      <div className="velocity-skew-wrap">
-        <main style={{ position: 'relative', zIndex: 2 }}>
-          {/* Hero Section dengan WebGL Typographic Masking */}
-          <HeroSection 
-            content={portfolioData} 
-            lang={lang} 
-            debugMode={debugMode}
-          />
+      {/* Main Content Flow dengan Velocity Skew */}
+      <main style={{ transform: 'skewY(var(--scroll-skew, 0deg))', transition: 'transform 0.1s linear' }}>
+        
+        {/* Hero Section: Staggered Split-Text & Subtle Ambient R3F Canvas */}
+        <HeroSection
+          isPreloaderDone={isPreloaderDone}
+          velocityRef={velocityRef}
+          isWireframe={isWireframe}
+        />
 
-          {/* Selected Works dengan WebGL Liquid Distortion & Fluid Case Studies */}
-          <ProjectsShowcase 
-            lang={lang} 
-            content={portfolioData} 
-          />
+        {/* Scroll-Directional Running Text Marquee */}
+        <ScrollDirectionalMarquee velocityRef={velocityRef} />
 
-          {/* Swiss Technical Matrix */}
-          <SkillsMatrix 
-            lang={lang} 
-            content={portfolioData} 
-          />
+        {/* 01. Editorial Project Showcase */}
+        <EditorialProjects projects={portfolioData.projects} />
 
-          {/* Academic Journey */}
-          <EducationTimeline 
-            lang={lang} 
-            content={portfolioData} 
-          />
+        {/* 02. Editorial Capabilities & "The One Live Thing" */}
+        <EditorialCapabilities skillCategories={portfolioData.skillCategories} />
 
-          {/* High-Impact Contact */}
-          <ContactSection 
-            lang={lang} 
-            content={portfolioData} 
-          />
-        </main>
-      </div>
+        {/* 03. Editorial Foundation & Academic Timeline */}
+        <EditorialProfileEducation
+          personal={portfolioData.personal}
+          educationHistory={portfolioData.educationHistory}
+        />
 
-      {/* Minimalist Footer */}
-      <Footer 
-        lang={lang} 
-        content={portfolioData} 
-      />
-
+        {/* 04. Editorial Contact & Colophon Footer */}
+        <EditorialContactFooter personal={portfolioData.personal} />
+      </main>
     </div>
   );
 }
