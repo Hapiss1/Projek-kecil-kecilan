@@ -60,6 +60,24 @@ export function EditorialProfileEducation({ personal, educationHistory }) {
         {/* Left Column: Personal Narrative & Focus */}
         <div className="lg:col-span-5 space-y-8">
           <div className="p-8 border border-neutral-line/40 bg-base">
+            
+            {/* Author Editorial Header with Avatar */}
+            <div className="flex items-center gap-4 mb-6 pb-6 border-b border-neutral-line/20">
+              <img
+                src="/avatar.jpg"
+                alt="Muhammad Hafizh Farsya"
+                className="w-16 h-16 rounded-full object-cover object-top border-2 border-earth-terracotta/40 shadow-sm"
+              />
+              <div>
+                <h4 className="font-bold text-base text-ink tracking-tight">
+                  Muhammad Hafizh Farsya S.
+                </h4>
+                <p className="text-xs text-neutral-line font-mono mt-0.5">
+                  S1 Sistem Informasi · Telkom University
+                </p>
+              </div>
+            </div>
+
             <h3 className="text-xl sm:text-2xl font-bold text-ink tracking-tight mb-4">
               Rekayasa Kode yang Terstruktur
             </h3>

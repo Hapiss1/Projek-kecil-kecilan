@@ -1,38 +1,31 @@
 # Active Sprint Board — Master Editorial & Ambient WebGL Portfolio
 
-> **Current Objective**: Ambient WebGL Fluid Shader, Velocity Reactivity, Directional Marquee, Magnetic Monospace Cursor & Engineering Easter Egg HUD.  
+> **Current Objective**: Integrate User 3D Avatar Portrait into Hero Section and Profile with Dribbble Reference Animations (Dymas Alfin Style).  
 > **Status**: FULLY IMPLEMENTED & VERIFIED `[PRODUCTION READY]`  
 > **Last Updated**: 2026-11-03  
 
 ---
 
-## 📌 Checklist Status
+## 📌 Checklist Status — Avatar Integration & Dribbble Motion (Dymas Alfin Inspiration)
 
-### Iteration 1: Infrastructure & Split-Text Hero
-- [x] **Task 1.1: Dependency Specification & Verification** (Vite + Tailwind + GSAP + Lenis + Three.js + R3F) *(Verified)*
-- [x] **Task 1.2: Strict Hex Color Palette Configuration in `tailwind.config.js`** *(Verified)*
-- [x] **Task 1.3: Core `App.jsx` Wrapping with Lenis Scroll & Velocity Reactivity** *(Verified)*
-- [x] **Task 1.4: `CinematicPreloader.jsx` Implementation** (0-100% typography counter, theater curtain lift) *(Verified)*
-- [x] **Task 1.5: `HeroSection.jsx` with Staggered Split-Text Reveal** *(Verified)*
-- [x] **Task 1.6: Build Verification** (`npm run build` passed in 9.42s) *(Verified)*
-
-### Iteration 2: Ambient WebGL Shader & Velocity Distortion
-- [x] **Task 2.1: Custom GLSL Simplex Noise Domain Warping Shader** (`AmbientFluidCanvas.jsx` in #CEB3A6, #9C6455, #5E3A30) *(Verified)*
-- [x] **Task 2.2: Zero-Re-Render Velocity Binding** (`velocityRef` dynamically warping vertex waves and time distortion) *(Verified)*
-- [x] **Task 2.3: Scroll-Directional Running Marquee** (`ScrollDirectionalMarquee.jsx` reversing on scroll-up) *(Verified)*
-- [x] **Task 2.4: Magnetic Precision Cursor with 10px Monospace Micro-Copy** (`MagneticCursor.jsx`) *(Verified)*
-- [x] **Task 2.5: Engineering Easter Egg Toggle (Wireframe + FPS HUD)** (`EngineeringToggle.jsx`) *(Verified)*
-- [x] **Task 2.6: Production Build Verification** (`npm run build` passed in 8.90s with 0 errors) *(Verified)*
+- [x] **Task 4.1: Hero Section Editorial Portrait Card Layout** (Asymmetrical 12-column grid with lg:col-span-8 typography & lg:col-span-4 framed avatar card) *(Verified)*
+- [x] **Task 4.2: GSAP Entrance Animation for Portrait Card** (Smooth masked clip-path `inset(12% -> 0% round 1.25rem)` and upward slide in sync with preloader) *(Verified)*
+- [x] **Task 4.3: Interactive 3D Mouse Parallax Tilt & Magnetic Micro-Copy** (Desktop mouse-tracking tilt effect with `data-microcopy="[Portrait: M. Hafizh Farsya]"`) *(Verified)*
+- [x] **Task 4.4: Profile / Foundation Section Portrait Enhancement** (`EditorialProfileEducation.jsx` displaying author avatar with Telkom credentials) *(Verified)*
+- [x] **Task 4.5: Production Build & Motion Verification** (`npm run build` passed in 7.38s with 0 errors) *(Verified)*
 
 ---
 
 ## 🔍 Blockers & Discoveries
-- Ambient fluid shader calibrated with alpha 0.55 and high off-white base proportion so large typography remains 100% crisp and readable.
-- `velocityRef` eliminates React render cycles during scroll, running at solid 60 FPS.
-- Debug mode allows instant wireframe inspection of the WebGL mesh alongside real-time FPS telemetry.
+- Photo placed at `public/avatar.jpg` and `src/assets/avatar.jpg`.
+- Styled as an interactive 3D Editorial Portrait Card directly inspired by Dymas Alfin's Dribbble animation reference:
+  - Frosted glass capsule overlay with pulsating indicator dot: `Available for Roles · Bandung, ID`.
+  - Identity badge: `MHF / 2026` + `🇮🇩 ID`.
+  - Real-time 3D mouse parallax tilt (`rotateX` / `rotateY` via GSAP `quickTo`).
+- Also integrated as an authentic author avatar inside the Academic Foundation & Bio card.
 
 ---
 
 ## ➡️ Next Steps
-1. Report the complete Master Awwwards revision to Muhammad Hafizh Farsya.
-2. Outline the interactive testing steps in `npm run dev`.
+1. Report the completed avatar implementation and motion design to Muhammad Hafizh Farsya.
+2. Provide instructions to run `npm run dev` to view the animation live.
