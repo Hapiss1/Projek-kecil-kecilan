@@ -1,23 +1,60 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CinematicPreloader } from './components/CinematicPreloader';
-import { MagneticCursor } from './components/MagneticCursor';
-import { HeroSection } from './components/HeroSection';
-import { ScrollDirectionalMarquee } from './components/ScrollDirectionalMarquee';
-import { EditorialProjects } from './components/EditorialProjects';
-import { EditorialCapabilities } from './components/EditorialCapabilities';
-import { EditorialProfileEducation } from './components/EditorialProfileEducation';
-import { EditorialContactFooter } from './components/EditorialContactFooter';
-import { EngineeringToggle } from './components/EngineeringToggle';
 import { portfolioData } from './data/portfolioData';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// ============================================================================
+// CODE SPLITTING & LAZY LOADING (Memory Decoupling & Instant FCP)
+// Dependensi Three.js, WebGL shader, dan modul di luar viewport dimuat
+// secara asinkron di latar belakang tanpa memblokir bundle kritis HTML/CSS awal.
+// ============================================================================
+const HeroSection = lazy(() =>
+  import('./components/HeroSection').then((m) => ({ default: m.HeroSection }))
+);
+const ScrollDirectionalMarquee = lazy(() =>
+  import('./components/ScrollDirectionalMarquee').then((m) => ({
+    default: m.ScrollDirectionalMarquee,
+  }))
+);
+const EditorialProjects = lazy(() =>
+  import('./components/EditorialProjects').then((m) => ({
+    default: m.EditorialProjects,
+  }))
+);
+const EditorialCapabilities = lazy(() =>
+  import('./components/EditorialCapabilities').then((m) => ({
+    default: m.EditorialCapabilities,
+  }))
+);
+const EditorialProfileEducation = lazy(() =>
+  import('./components/EditorialProfileEducation').then((m) => ({
+    default: m.EditorialProfileEducation,
+  }))
+);
+const EditorialContactFooter = lazy(() =>
+  import('./components/EditorialContactFooter').then((m) => ({
+    default: m.EditorialContactFooter,
+  }))
+);
+const MagneticCursor = lazy(() =>
+  import('./components/MagneticCursor').then((m) => ({
+    default: m.MagneticCursor,
+  }))
+);
+const EngineeringToggle = lazy(() =>
+  import('./components/EngineeringToggle').then((m) => ({
+    default: m.EngineeringToggle,
+  }))
+);
+
 export default function App() {
   const [isPreloaderDone, setIsPreloaderDone] = useState(false);
   const [isWireframe, setIsWireframe] = useState(false);
+  const [isShaderWarmed, setIsShaderWarmed] = useState(false);
   const lenisRef = useRef(null);
   const velocityRef = useRef(0);
 
@@ -40,7 +77,7 @@ export default function App() {
       ScrollTrigger.update();
       velocityRef.current = e.velocity;
 
-      // Mengikat kecepatan scroll ke CSS transform skew mikro (maks ±1.5deg)
+      // Hardware-Accelerated: Mengikat kecepatan scroll ke CSS transform skew mikro (maks ±1.5deg)
       const clampedSkew = Math.max(-1.5, Math.min(1.5, e.velocity * 0.03));
       document.documentElement.style.setProperty('--scroll-skew', `${clampedSkew}deg`);
     });
@@ -73,17 +110,7 @@ export default function App() {
         <CinematicPreloader onComplete={() => setIsPreloaderDone(true)} />
       )}
 
-      {/* 2. Magnetic Precision Cursor with Monospace Micro-Copy */}
-      <MagneticCursor />
-
-      {/* 3. Engineering Debug Easter Egg Toggle (Wireframe + FPS HUD) */}
-      <EngineeringToggle
-        isWireframe={isWireframe}
-        onToggleWireframe={() => setIsWireframe((prev) => !prev)}
-        velocityRef={velocityRef}
-      />
-
-      {/* Editorial Header / Minimal Top Bar */}
+      {/* Critical Lightweight Top Bar (Loaded instantly with HTML/CSS) */}
       <header className="fixed top-0 left-0 w-full z-40 bg-base/90 backdrop-blur-sm border-b border-neutral-line/20 px-6 sm:px-12 py-5 flex items-center justify-between text-xs tracking-wider uppercase">
         <a
           href="#"
@@ -124,34 +151,50 @@ export default function App() {
         </nav>
       </header>
 
-      {/* Main Content Flow dengan Velocity Skew */}
-      <main style={{ transform: 'skewY(var(--scroll-skew, 0deg))', transition: 'transform 0.1s linear' }}>
+      {/* 2. React Suspense Lazy Boundary untuk Komponen Berat WebGL & Modules */}
+      <Suspense fallback={null}>
         
-        {/* Hero Section: Staggered Split-Text & Subtle Ambient R3F Canvas */}
-        <HeroSection
-          isPreloaderDone={isPreloaderDone}
-          velocityRef={velocityRef}
+        {/* Precision Magnetic Cursor */}
+        <MagneticCursor />
+
+        {/* Engineering Easter Egg Toggle (Wireframe & FPS HUD) */}
+        <EngineeringToggle
           isWireframe={isWireframe}
+          onToggleWireframe={() => setIsWireframe((prev) => !prev)}
+          velocityRef={velocityRef}
         />
 
-        {/* Scroll-Directional Running Text Marquee */}
-        <ScrollDirectionalMarquee velocityRef={velocityRef} />
+        {/* Main Content Flow dengan Velocity Skew */}
+        <main style={{ transform: 'skewY(var(--scroll-skew, 0deg))', transition: 'transform 0.1s linear' }}>
+          
+          {/* Hero Section: Staggered Split-Text & Subtle Ambient R3F Canvas */}
+          <HeroSection
+            isPreloaderDone={isPreloaderDone}
+            velocityRef={velocityRef}
+            isWireframe={isWireframe}
+            onShaderWarmedUp={() => setIsShaderWarmed(true)}
+          />
 
-        {/* 01. Editorial Project Showcase */}
-        <EditorialProjects projects={portfolioData.projects} />
+          {/* Scroll-Directional Running Text Marquee */}
+          <ScrollDirectionalMarquee velocityRef={velocityRef} />
 
-        {/* 02. Editorial Capabilities & "The One Live Thing" */}
-        <EditorialCapabilities skillCategories={portfolioData.skillCategories} />
+          {/* 01. Editorial Project Showcase */}
+          <EditorialProjects projects={portfolioData.projects} />
 
-        {/* 03. Editorial Foundation & Academic Timeline */}
-        <EditorialProfileEducation
-          personal={portfolioData.personal}
-          educationHistory={portfolioData.educationHistory}
-        />
+          {/* 02. Editorial Capabilities & "The One Live Thing" */}
+          <EditorialCapabilities skillCategories={portfolioData.skillCategories} />
 
-        {/* 04. Editorial Contact & Colophon Footer */}
-        <EditorialContactFooter personal={portfolioData.personal} />
-      </main>
+          {/* 03. Editorial Foundation & Academic Timeline */}
+          <EditorialProfileEducation
+            personal={portfolioData.personal}
+            educationHistory={portfolioData.educationHistory}
+          />
+
+          {/* 04. Editorial Contact & Colophon Footer */}
+          <EditorialContactFooter personal={portfolioData.personal} />
+        </main>
+      </Suspense>
+
     </div>
   );
 }

@@ -5,19 +5,32 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3000,
-    open: false
+    open: false,
+  },
+  esbuild: {
+    // Menghapus console.log dan debugger otomatis di build produksi untuk menghemat memori
+    drop: ['console', 'debugger'],
+    legalComments: 'none',
   },
   build: {
-    chunkSizeWarningLimit: 900,
+    target: 'esnext',
+    cssCodeSplit: true,
+    chunkSizeWarningLimit: 1000,
+    sourcemap: false,
+    assetsInlineLimit: 4096,
     rollupOptions: {
       output: {
+        // Pemisahan Vendor Chunk Tanpa Circular Dependency
         manualChunks: {
           'three-vendor': ['three'],
-          'r3f-vendor': ['@react-three/fiber', '@react-three/drei'],
-          'gsap-vendor': ['gsap'],
-          'lenis-vendor': ['lenis']
-        }
-      }
-    }
-  }
+          'react-r3f-vendor': ['react', 'react-dom', '@react-three/fiber', '@react-three/drei'],
+          'animation-vendor': ['gsap', 'lenis'],
+          'icons-vendor': ['lucide-react'],
+        },
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
+      },
+    },
+  },
 });

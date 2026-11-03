@@ -2,8 +2,7 @@
 ## Muhammad Hafizh Farsya — Information Systems & Software Engineer
 
 > **Core Philosophy**: *"Most portfolios try to impress. This one tries to communicate."*  
-> **Aesthetic Synthesis**: Minimalist Editorial & Clean Brutalism fused with Subtle Ambient WebGL & Advanced GSAP (Inspired by Dribbble: Dymas Alfin — *Personal Portfolio Website Animations*).  
-> **Guiding Principle**: Extreme whitespace, giant typography, zero visual clutter. WebGL acts as a subtle, organic ambient layer (low-key earth tones). The 3D avatar is presented in an interactive editorial card with 3D mouse parallax tilt.
+> **Performance Directive**: Extreme Optimization. Instant FCP, rock-solid 60 FPS on mid-range smartphones, zero thermal throttling (prevent phone overheating), and zero stutter on initial load or scroll.
 
 ---
 
@@ -20,35 +19,25 @@
 
 ---
 
-## 2. Master Feature Roadmap
+## 2. Extreme Performance Architecture (ADR)
 
-### Iteration 1: Infrastructure & Split-Text Hero `[VERIFIED]`
-- [x] Install & verify Vite + TailwindCSS + GSAP + Lenis + Three.js + R3F.
-- [x] Configure strict color tokens in `tailwind.config.js`.
-- [x] Build root `App.jsx` with global Lenis inertia scrolling & scroll-velocity tracking.
-- [x] Build `CinematicPreloader.jsx` (0-100% numerical counter with theater curtain lift).
-- [x] Build `HeroSection.jsx` with Staggered Split-Text reveal (micro-rotation, masked overflow).
-
-### Iteration 2: Subtle Ambient WebGL Shader & Interactive Systems `[VERIFIED]`
-- [x] Implement custom GLSL shader (simplex noise organic fluid/fBm) in strict earth tones (`#CEB3A6`, `#9C6455`, `#5E3A30`).
-- [x] Connect Lenis velocity (`velocityRef`) to shader frequency/distortion uniforms and CSS skew.
-- [x] Build `ScrollDirectionalMarquee.jsx` reacting to scroll velocity and reversing direction when scrolling up.
-- [x] Build `MagneticCursor.jsx` with difference dot & 10px monospace micro-copy.
-- [x] Build `EngineeringToggle.jsx` Easter Egg switching 3D mesh to wireframe and rendering real-time FPS telemetry.
-
-### Iteration 3: 3D Avatar Portrait & Dribbble Motion (Dymas Alfin Inspiration) `[VERIFIED]`
-- [x] Asymmetrical Hero layout balancing 8-column giant typography with 4-column framed portrait card.
-- [x] GSAP clip-path entrance animation (`inset(12% -> 0% round 1.25rem)`) for the avatar card.
-- [x] Interactive 3D mouse parallax tilt on the portrait card using GSAP `quickTo`.
-- [x] Editorial floating status capsule: live pulsating terracotta indicator `Available for Roles · Bandung, ID`.
-- [x] Profile/About section author avatar badge in `EditorialProfileEducation.jsx`.
+| Decision | Rationale |
+|---|---|
+| **GPU Shader Pre-warming (`gl.compile`)** | Calls `gl.compile(scene, camera)` and `gl.render(scene, camera)` inside the R3F initialization hook during the Preloader phase. Guarantees VRAM upload and shader compilation finish before the curtain opens, eliminating first-second frame drops. |
+| **Strict DPR Limiting (`[1, 1.5]`)** | Clamps canvas pixel ratio to a maximum of 1.5x. Prevents 3x/4x mobile retina screens from calculating excessive fragment shader pixels, preventing GPU thermal throttling. |
+| **Dynamic Viewport Culling (`frameloop={isInView ? 'always' : 'never'}`)** | IntersectionObserver actively halts R3F `useFrame` render loop when off-screen. Drops GPU utilization to 0% when the visitor reads other sections. |
+| **Hardware-Accelerated GSAP Only** | Exclusively animates composite-layer GPU properties (`yPercent`, `xPercent`, `scale`, `rotation`, `opacity`). Zero animation of reflow properties (`width`, `height`, `top`, `left`, `margin`), preventing Layout Thrashing. |
+| **Code Splitting & Asynchronous Suspense** | Decouples Three.js (~750kb) and below-the-fold modules from the critical render path using `React.lazy()` and `<Suspense>`. |
+| **Rollup Manual Chunk Splitting** | Isolates `three-vendor`, `react-r3f-vendor`, and `animation-vendor` into distinct immutable chunks for maximal HTTP/2 parallel downloading and browser caching. |
 
 ---
 
 ## 3. Implemented Master Components
 
-- [HeroSection.jsx](file:///d:/Project%20kecil-kecilan/testing/src/components/HeroSection.jsx): Staggered Split-Text reveal + 3D Mouse Tilt Avatar Card + Ambient WebGL Canvas.
+- [OptimizedCanvas.jsx](file:///d:/Project%20kecil-kecilan/testing/src/components/OptimizedCanvas.jsx): Encapsulates strict DPR, GPU shader pre-warming, and IntersectionObserver dynamic culling.
+- [App.jsx](file:///d:/Project%20kecil-kecilan/testing/src/App.jsx): Master application coordinator with `React.lazy()` & `<Suspense>`, Lenis scroll loop, CSS skew velocity sync.
 - [AmbientFluidCanvas.jsx](file:///d:/Project%20kecil-kecilan/testing/src/components/AmbientFluidCanvas.jsx): GLSL Simplex noise domain-warping fluid mesh running on R3F.
+- [HeroSection.jsx](file:///d:/Project%20kecil-kecilan/testing/src/components/HeroSection.jsx): Staggered Split-Text reveal + 3D Mouse Tilt Avatar Card + Ambient WebGL Canvas.
 - [CinematicPreloader.jsx](file:///d:/Project%20kecil-kecilan/testing/src/components/CinematicPreloader.jsx): Minimal theater curtain preloader (0-100%).
 - [ScrollDirectionalMarquee.jsx](file:///d:/Project%20kecil-kecilan/testing/src/components/ScrollDirectionalMarquee.jsx): Dynamic running text with velocity acceleration.
 - [MagneticCursor.jsx](file:///d:/Project%20kecil-kecilan/testing/src/components/MagneticCursor.jsx): Difference precision cursor with contextual micro-copy.

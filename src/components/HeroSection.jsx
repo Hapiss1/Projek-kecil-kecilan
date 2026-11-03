@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from 'react';
-import { Canvas } from '@react-three/fiber';
 import gsap from 'gsap';
+import { OptimizedCanvas } from './OptimizedCanvas';
 import { AmbientFluidMesh } from './AmbientFluidCanvas';
 import { MapPin, Sparkles } from 'lucide-react';
 
 /**
  * SplitText Helper Component
  * Memecah string menjadi huruf-huruf individual dalam wrapper overflow:hidden
- * untuk animasi micro-rotation dan vertical stagger yang presisi.
+ * Hardware-Accelerated: Hanya mentransformasikan yPercent, rotateZ, dan opacity (Composite Layer GPU).
  */
 function SplitTextWord({ word, className = '', letterClassName = '' }) {
   return (
@@ -26,12 +26,18 @@ function SplitTextWord({ word, className = '', letterClassName = '' }) {
   );
 }
 
-export function HeroSection({ isPreloaderDone = false, velocityRef, isWireframe = false }) {
+export function HeroSection({
+  isPreloaderDone = false,
+  velocityRef,
+  isWireframe = false,
+  onShaderWarmedUp,
+}) {
   const containerRef = useRef(null);
   const portraitCardRef = useRef(null);
   const metaRef = useRef([]);
 
   // Inisialisasi animasi GSAP Split-Text & Dribbble Portrait Card Reveal
+  // Hardware-Accelerated: Hanya menggunakan GPU-composited transform & opacity (Zero Layout Thrashing)
   useEffect(() => {
     if (!isPreloaderDone) return;
 
@@ -102,7 +108,7 @@ export function HeroSection({ isPreloaderDone = false, velocityRef, isWireframe 
     return () => ctx.revert();
   }, [isPreloaderDone]);
 
-  // Interactive 3D Mouse Parallax Tilt pada Portrait Card (Dribbble Signature Motion)
+  // Interactive 3D Mouse Parallax Tilt pada Portrait Card (GPU QuickTo)
   useEffect(() => {
     const card = portraitCardRef.current;
     if (!card) return;
@@ -117,10 +123,9 @@ export function HeroSection({ isPreloaderDone = false, velocityRef, isWireframe 
       const mouseDistX = (e.clientX - cardCenterX) / (rect.width / 2);
       const mouseDistY = (e.clientY - cardCenterY) / (rect.height / 2);
 
-      // Aktifkan tilt halus saat kursor berada dalam radius kartu
       if (Math.abs(mouseDistX) < 2.0 && Math.abs(mouseDistY) < 2.0) {
-        rotateX(-mouseDistY * 7); // rotasi X maks 7 deg
-        rotateY(mouseDistX * 7);  // rotasi Y maks 7 deg
+        rotateX(-mouseDistY * 7);
+        rotateY(mouseDistX * 7);
       }
     };
 
@@ -143,15 +148,11 @@ export function HeroSection({ isPreloaderDone = false, velocityRef, isWireframe 
       ref={containerRef}
       className="relative min-h-screen flex flex-col justify-between px-6 sm:px-12 pt-32 pb-16 lg:pb-24 border-b border-neutral-line/30 overflow-hidden bg-base"
     >
-      {/* 1. Subtle Ambient WebGL Canvas (R3F + Custom Simplex Fluid Shader) */}
+      {/* 1. Subtle Ambient WebGL Canvas dengan OptimizedCanvas (Pre-warmed GPU, Dynamic Culling, Strict DPR) */}
       <div className="absolute inset-0 pointer-events-none -z-10 opacity-75">
-        <Canvas
-          dpr={[1, 1.5]}
-          camera={{ position: [0, 0, 5], fov: 45 }}
-          gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
-        >
+        <OptimizedCanvas onWarmedUp={onShaderWarmedUp}>
           <AmbientFluidMesh velocityRef={velocityRef} isWireframe={isWireframe} />
-        </Canvas>
+        </OptimizedCanvas>
       </div>
 
       {/* 2. Top Identity Tagline */}
@@ -159,7 +160,7 @@ export function HeroSection({ isPreloaderDone = false, velocityRef, isWireframe 
         <div className="md:col-span-8 overflow-hidden">
           <p
             ref={(el) => (metaRef.current[0] = el)}
-            className="text-sm sm:text-base text-ink-secondary font-normal tracking-tight flex items-center gap-2"
+            className="text-sm sm:text-base text-ink-secondary font-normal tracking-tight flex items-center gap-2 will-change-transform"
           >
             <span>Muhammad Hafizh Farsya Syahputra</span>
             <span className="text-neutral-line">/</span>
@@ -171,7 +172,7 @@ export function HeroSection({ isPreloaderDone = false, velocityRef, isWireframe 
         <div className="md:col-span-4 overflow-hidden md:text-right">
           <p
             ref={(el) => (metaRef.current[1] = el)}
-            className="text-xs sm:text-sm text-neutral-line uppercase tracking-widest flex items-center justify-start md:justify-end gap-1.5"
+            className="text-xs sm:text-sm text-neutral-line uppercase tracking-widest flex items-center justify-start md:justify-end gap-1.5 will-change-transform"
           >
             <MapPin className="w-3.5 h-3.5 text-earth-terracotta" />
             <span>Telkom University · Bandung</span>
@@ -211,7 +212,7 @@ export function HeroSection({ isPreloaderDone = false, velocityRef, isWireframe 
                 />
                 <span
                   ref={(el) => (metaRef.current[2] = el)}
-                  className="inline-block text-2xl sm:text-4xl lg:text-5xl font-light text-earth-terracotta tracking-normal"
+                  className="inline-block text-2xl sm:text-4xl lg:text-5xl font-light text-earth-terracotta tracking-normal will-change-transform"
                 >
                   / SE
                 </span>
@@ -223,7 +224,7 @@ export function HeroSection({ isPreloaderDone = false, velocityRef, isWireframe 
             <div className="mt-8 overflow-hidden max-w-xl">
               <p
                 ref={(el) => (metaRef.current[3] = el)}
-                className="text-base sm:text-lg text-ink-secondary font-light leading-relaxed"
+                className="text-base sm:text-lg text-ink-secondary font-light leading-relaxed will-change-transform"
               >
                 Mahasiswa Sistem Informasi Telkom University &amp; Alumni Rekayasa Perangkat Lunak.
                 Fokus merancang web, aplikasi mobile, dan arsitektur data enterprise.
@@ -248,7 +249,9 @@ export function HeroSection({ isPreloaderDone = false, velocityRef, isWireframe 
                   <img
                     src="/avatar.jpg"
                     alt="Muhammad Hafizh Farsya 3D Avatar Portrait"
-                    className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                    loading="eager"
+                    decoding="async"
+                    className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
                   />
 
                   {/* Top Identifier Badge */}
@@ -298,7 +301,7 @@ export function HeroSection({ isPreloaderDone = false, velocityRef, isWireframe 
         <div className="md:col-span-6 overflow-hidden">
           <blockquote
             ref={(el) => (metaRef.current[4] = el)}
-            className="text-lg sm:text-xl md:text-2xl font-light text-ink leading-snug tracking-tight max-w-xl"
+            className="text-lg sm:text-xl md:text-2xl font-light text-ink leading-snug tracking-tight max-w-xl will-change-transform"
           >
             &ldquo;Most portfolios try to impress.{' '}
             <span className="font-semibold text-earth-espresso">
@@ -310,7 +313,7 @@ export function HeroSection({ isPreloaderDone = false, velocityRef, isWireframe 
         <div className="md:col-span-3 overflow-hidden">
           <p
             ref={(el) => (metaRef.current[5] = el)}
-            className="text-xs uppercase tracking-widest text-neutral-line mb-1"
+            className="text-xs uppercase tracking-widest text-neutral-line mb-1 will-change-transform"
           >
             Focus
           </p>
@@ -322,7 +325,7 @@ export function HeroSection({ isPreloaderDone = false, velocityRef, isWireframe 
         <div className="md:col-span-3 overflow-hidden md:text-right">
           <p
             ref={(el) => (metaRef.current[6] = el)}
-            className="text-xs uppercase tracking-widest text-neutral-line mb-1"
+            className="text-xs uppercase tracking-widest text-neutral-line mb-1 will-change-transform"
           >
             Status
           </p>
